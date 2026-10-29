@@ -1,0 +1,32 @@
+.button {
+  position: fixed;
+  right: calc(24px + env(safe-area-inset-right, 0px));
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  z-index: 10;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-width: 60px;
+  min-height: 56px;
+  padding: 8px 10px;
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  background: var(--surface);
+  color: var(--accent);
+  box-shadow: 0 4px 16px #080f1859;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.button[hidden] { display: none; }
+.button:hover { background: var(--surface-alt); color: var(--ink); }
+.button:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+@media (min-width: 1600px) {
+  .button { right: calc((100vw - var(--content-max-width)) / 2 + 16px); }
+}
+@media (max-width: 760px) {
+  .button { right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+}

@@ -1,0 +1,35 @@
+.page { padding-block: 28px 52px; }
+.session { padding: 20px 32px 30px; }
+.command { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; margin: 0 0 22px; font-size: 14px; overflow-wrap: anywhere; }
+.command > span { min-width: 0; color: var(--accent); }
+.command > code { font: inherit; }
+.intro { max-width: 760px; margin-bottom: 30px; }
+.intro h1 { margin-bottom: 14px; font-size: clamp(27px, 3.5vw, 36px); }
+.intro p:last-child { margin-bottom: 0; }
+.guides { padding-top: 25px; border-top: 1px solid var(--line); }
+.sectionHeading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 22px; }
+.sectionHeading h2 { margin: 0; font-size: 22px; }
+.sectionHeading > span { color: var(--muted); font-size: 12px; }
+.guideList { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.guide { position: relative; display: block; cursor: pointer; padding: 18px 20px 20px 42px; border: 1px solid transparent; border-radius: 2px; }
+.guide::before { content: "├─"; position: absolute; left: 7px; top: 18px; color: var(--muted); font-size: 16px; line-height: 1.5; }
+.guideList > li:last-child .guide::before { content: "└─"; }
+.guide:hover, .guide:focus-visible { border-color: var(--line); background: var(--surface); }
+.guide:hover::before, .guide:focus-visible::before { color: var(--accent); }
+.guide h3 { margin: 0 0 12px; font-size: 21px; }
+.directory { display: block; color: var(--accent); font-family: var(--mono); font-size: 14px; font-weight: 500; letter-spacing: 0; overflow-wrap: anywhere; }
+.eventName { display: block; margin-top: 7px; color: var(--ink); font-size: 16px; }
+.dates { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 9px; margin-bottom: 10px; color: var(--muted); font-size: 11px; }
+.dates > span:first-child { margin-inline-end: 5px; color: var(--accent); }
+.description { max-width: 720px; margin: 0; color: var(--muted); font-size: 12px; line-height: 2; }
+.dateNote { max-width: 760px; margin: 20px 0 0; color: var(--muted); font-size: 11px; line-height: 1.9; }
+@media (max-width: 760px) {
+  .page { padding-block: 22px 36px; }
+  .session { padding: 16px 20px 24px; }
+  .command { font-size: 12px; }
+  .intro { margin-bottom: 26px; }
+  .intro p { font-size: 13px; }
+  .guide { padding: 16px 10px 18px 30px; }
+  .guide::before { left: 0; top: 16px; }
+  .guide h3 { font-size: 19px; }
+}

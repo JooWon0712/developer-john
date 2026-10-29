@@ -1,0 +1,5 @@
+Tool: built-in imagegen
+Reference: wombat-computer-scratch-v1.png
+Background: transparent
+
+Edit the provided wombat-at-computer illustration. Change ONLY the pose of the forelimb that is reaching behind the wombat: remove the back-scratching gesture, the paw on its back, and all scratching motion marks. The same wombat should simply sit comfortably at the computer, with BOTH forepaws resting naturally in front of its body on the desk near the keyboard. The farther forepaw can be partly occluded naturally. Show a relaxed ordinary seated posture, not scratching or stretching. Preserve the character identity, friendly face, rounded body, warm taupe fur, cream muzzle and belly, bold brown outlines, softly shaded cartoon style, original short hindlegs and feet, stool, desk, navy monitor and keyboard, code-like screen lines, composition and framing. Ensure exactly two forelimbs and two hindlimbs, with anatomically clear attachment and no spare paw behind the shoulder. Do not add clothing, objects, readable text, logos or watermarks. Preserve the existing transparent background and alpha.

@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="noindex,nofollow">
+<title>언어 선택 시안 | developer-john</title>
+<style>
+:root { color-scheme: dark; --paper:#101923; --surface:#172432; --surface-alt:#1d2d3e; --ink:#fff7e9; --muted:#a9b5c0; --accent:#e9b66d; --line:#3b4c5e; --mono:"Cascadia Code","Cascadia Mono",Consolas,"Malgun Gothic",monospace; }
+* { box-sizing:border-box; }
+[hidden] { display:none !important; }
+body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--mono); line-height:1.8; word-break:keep-all; }
+button { font:inherit; cursor:pointer; }
+button:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+svg { flex-shrink:0; vertical-align:middle; }
+main { width:min(1500px,calc(100% - 48px)); margin:0 auto; padding:40px 0 48px; }
+.page-heading { max-width:850px; margin-bottom:32px; }
+.eyebrow { margin:0 0 12px; color:var(--accent); font-size:11px; letter-spacing:.5px; }
+h1 { margin:0 0 12px; font-size:28px; line-height:1.5; font-weight:650; letter-spacing:-.04em; }
+.page-heading > p:last-child { color:var(--muted); font-size:13px; margin:0; }
+.candidate { margin:0 0 24px; padding:24px; border:1px solid var(--line); border-radius:3px; background:var(--surface); min-width:0; }
+.candidate.recommended { border-top-color:var(--accent); }
+.candidate-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:20px 36px; margin-bottom:22px; }
+.candidate-heading > p { max-width:620px; margin:4px 0 0; font-size:12px; color:var(--muted); line-height:1.9; }
+.candidate-key { display:flex; align-items:center; gap:12px; margin:0 0 6px; color:var(--accent); font-size:11px; }
+.recommend-badge { padding:1px 7px; border:1px solid var(--accent); border-radius:2px; font-size:10px; }
+h2 { margin:0; font-size:20px; line-height:1.5; font-weight:600; letter-spacing:-.03em; }
+.comparison { display:grid; grid-template-columns:minmax(0,1fr) 390px; gap:24px; align-items:start; }
+.preview { min-width:0; margin:0; }
+figcaption { margin-bottom:8px; color:var(--muted); font-size:10px; }
+.viewport { border:1px solid var(--line); border-radius:3px; background:var(--paper); }
+.desktop-viewport { overflow-x:auto; }
+.mobile-viewport { width:min(100%,390px); }
+.sample-header { display:flex; align-items:center; justify-content:space-between; gap:24px; min-height:88px; padding:18px 22px; border-bottom:1px solid var(--line); }
+.desktop-header { min-width:780px; }
+.brand { display:inline-flex; align-items:center; gap:12px; font-size:17px; font-weight:600; white-space:nowrap; flex-shrink:0; }
+.brand img { display:block; flex-shrink:0; }
+.header-main { display:flex; flex-wrap:wrap; justify-content:flex-end; align-items:center; min-width:0; gap:12px 22px; }
+.mock-nav { display:flex; flex-wrap:wrap; align-items:center; gap:18px; min-width:0; color:var(--muted); font-size:11px; }
+.mock-nav > span { display:inline-flex; align-items:center; min-height:44px; padding:8px 0; border-bottom:1px solid transparent; white-space:nowrap; }
+.mock-nav .active-path { color:var(--accent); border-bottom-color:var(--accent); }
+.nav-cursor { display:inline-block; width:1ch; margin-left:3px; }
+.language-control { flex-shrink:0; font-size:11px; }
+.command-control { display:inline-flex; align-items:center; gap:1px; }
+.command-label { margin-right:7px; color:var(--muted); font:inherit; }
+.command-control button { display:inline-flex; align-items:center; justify-content:center; min-height:44px; min-width:64px; padding:8px 3px; border:0; border-radius:0; background:transparent; color:var(--muted); font-size:11px; }
+.command-control button:hover { color:var(--ink); }
+.command-control button[aria-pressed="true"] { color:var(--accent); }
+.bracket { display:inline-block; width:1ch; visibility:hidden; color:var(--accent); }
+.command-control button[aria-pressed="true"] .bracket { visibility:visible; }
+.segment-control { display:inline-flex; border:1px solid var(--line); border-radius:3px; background:var(--surface); }
+.segment-control button { min-height:44px; min-width:78px; padding:8px 11px; border:0; border-radius:2px; color:var(--muted); background:transparent; font-size:11px; }
+.segment-control button + button { border-left:1px solid var(--line); border-top-left-radius:0; border-bottom-left-radius:0; }
+.segment-control button:hover { color:var(--ink); background:var(--surface-alt); }
+.segment-control button[aria-pressed="true"] { color:var(--paper); background:var(--accent); }
+.dropdown { position:relative; }
+.dropdown-trigger { display:inline-flex; align-items:center; justify-content:space-between; gap:20px; min-height:44px; min-width:132px; padding:8px 12px; border:1px solid var(--line); border-radius:3px; background:var(--surface); color:var(--ink); font-size:11px; }
+.dropdown-trigger:hover, .dropdown-trigger[aria-expanded="true"] { border-color:var(--accent); }
+.dropdown-trigger > svg { color:var(--accent); }
+.dropdown-menu { position:absolute; top:calc(100% + 7px); right:0; z-index:5; display:grid; width:166px; padding:4px; border:1px solid var(--line); border-radius:3px; background:var(--surface); box-shadow:0 10px 24px #00000030; }
+.menu-option { display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:44px; width:100%; padding:8px 10px; border:0; border-radius:2px; color:var(--muted); background:transparent; text-align:left; font-size:12px; }
+.menu-option:hover, .menu-option:focus-visible { color:var(--ink); background:var(--surface-alt); }
+.menu-option[aria-checked="true"] { color:var(--accent); }
+.selection-dot { display:block; width:5px; height:5px; background:var(--accent); visibility:hidden; }
+.menu-option[aria-checked="true"] .selection-dot { visibility:visible; }
+.sample-body { display:flex; flex-direction:column; gap:13px; min-height:132px; padding:23px 22px; color:var(--muted); font-size:10px; }
+.sample-body code { font:inherit; color:var(--muted); overflow-wrap:anywhere; }
+.sample-body > span { color:var(--accent); font-size:12px; }
+.sample-body small { margin-left:12px; color:var(--muted); font-size:10px; }
+.mobile-header { flex-wrap:wrap; justify-content:flex-start; gap:12px; padding:16px 18px; }
+.mobile-header .brand { font-size:16px; }
+.mobile-header .brand img { width:36px; height:36px; }
+.mobile-header .header-main { width:100%; justify-content:flex-start; gap:8px 16px; }
+.mobile-header .mock-nav { gap:8px 12px; }
+.mobile-header .dropdown-menu { left:0; right:auto; }
+.mobile-viewport .sample-body { padding-inline:18px; }
+.candidate-footer { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px 20px; margin-top:16px; }
+.candidate-footer p { margin:0; color:var(--muted); font-size:11px; }
+.candidate-footer .state-note { color:var(--accent); }
+.keyboard-note { margin:24px 0 0; color:var(--muted); font-size:11px; }
+@media (max-width:1350px) { .comparison { grid-template-columns:minmax(0,1fr); gap:20px; } }
+@media (max-width:760px) { main { width:calc(100% - 28px); padding-block:28px; } h1 { font-size:24px; } .candidate { padding:17px; } .candidate-heading { flex-direction:column; gap:12px; margin-bottom:20px; } .candidate-heading > p { margin:0; } h2 { font-size:18px; } .page-heading { margin-bottom:24px; } }
+@media (forced-colors:active) { .command-control button[aria-pressed="true"], .segment-control button[aria-pressed="true"], .menu-option[aria-checked="true"] { outline:1px solid Highlight; color:HighlightText; background:Highlight; } .bracket { color:inherit; } .selection-dot { background:HighlightText; } }
+</style>
+</head>
+<body>
+<main>
+  <header class="page-heading">
+    <p class="eyebrow">design / language</p>
+    <h1>언어 선택 시안</h1>
+    <p>A 명령어형을 추천합니다. 현재의 Linux 경로 탐색과 같은 문법으로 읽힙니다.<br>각 시안의 버튼을 누르면 해당 시안의 데스크톱·모바일 선택 상태가 함께 바뀝니다.</p>
+  </header>
+  <section class="candidate recommended" data-candidate="a" data-language="ko" aria-labelledby="title-a">
+    <div class="candidate-heading"><div><p class="candidate-key">OPTION A<span class="recommend-badge">추천</span></p><h2 id="title-a">명령어형</h2></div><p>헤더의 Linux 경로와 자연스럽게 이어집니다. 두 언어를 바로 비교하고 선택할 수 있어 추천합니다.</p></div>
+    <div class="comparison"><figure class="preview preview-desktop">
+      <figcaption>데스크톱</figcaption>
+      <div class="viewport desktop-viewport">
+        <div class="sample-header desktop-header">
+          <div class="brand"><img src="/brand/jw-mark.svg" width="40" height="40" alt=""><span>john</span></div>
+          <div class="header-main">
+            <div class="mock-nav" aria-hidden="true"><span>/home/john</span><span class="active-path">/home/john/services<span class="nav-cursor">_</span></span></div>
+            <div class="language-control command-control" role="group" aria-label="A형 언어 선택">
+      <code class="command-label" aria-hidden="true">lang</code>
+      <button type="button" lang="ko" aria-pressed="true" data-select-language="ko"><span class="bracket" aria-hidden="true">[</span><span>한국어</span><span class="bracket" aria-hidden="true">]</span></button><button type="button" lang="en" aria-pressed="false" data-select-language="en"><span class="bracket" aria-hidden="true">[</span><span>English</span><span class="bracket" aria-hidden="true">]</span></button>
+    </div>
+          </div>
+        </div>
+        <div class="sample-body" aria-hidden="true"><code>$ ls /home/john/services</code><span>./the-division-2/ <small>디비전2</small></span></div>
+      </div>
+    </figure><figure class="preview preview-mobile">
+      <figcaption>모바일 · 390px 기준</figcaption>
+      <div class="viewport mobile-viewport">
+        <div class="sample-header mobile-header">
+          <div class="brand"><img src="/brand/jw-mark.svg" width="40" height="40" alt=""><span>john</span></div>
+          <div class="header-main">
+            <div class="mock-nav" aria-hidden="true"><span>/home/john</span><span class="active-path">/home/john/services<span class="nav-cursor">_</span></span></div>
+            <div class="language-control command-control" role="group" aria-label="A형 언어 선택">
+      <code class="command-label" aria-hidden="true">lang</code>
+      <button type="button" lang="ko" aria-pressed="true" data-select-language="ko"><span class="bracket" aria-hidden="true">[</span><span>한국어</span><span class="bracket" aria-hidden="true">]</span></button><button type="button" lang="en" aria-pressed="false" data-select-language="en"><span class="bracket" aria-hidden="true">[</span><span>English</span><span class="bracket" aria-hidden="true">]</span></button>
+    </div>
+          </div>
+        </div>
+        <div class="sample-body" aria-hidden="true"><code>$ ls /home/john/services</code><span>./the-division-2/ <small>디비전2</small></span></div>
+      </div>
+    </figure></div>
+    <div class="candidate-footer"><p>가벼운 강조 · 두 언어가 항상 보임</p><p class="state-note" role="status" aria-live="polite" aria-atomic="true">현재 선택: 한국어</p></div>
+  </section>
+<section class="candidate " data-candidate="b" data-language="ko" aria-labelledby="title-b">
+    <div class="candidate-heading"><div><p class="candidate-key">OPTION B</p><h2 id="title-b">분할 버튼형</h2></div><p>선택된 언어가 면으로 또렷하게 드러납니다. 익숙한 버튼 형태를 선호할 때 어울립니다.</p></div>
+    <div class="comparison"><figure class="preview preview-desktop">
+      <figcaption>데스크톱</figcaption>
+      <div class="viewport desktop-viewport">
+        <div class="sample-header desktop-header">
+          <div class="brand"><img src="/brand/jw-mark.svg" width="40" height="40" alt=""><span>john</span></div>
+          <div class="header-main">
+            <div class="mock-nav" aria-hidden="true"><span>/home/john</span><span class="active-path">/home/john/services<span class="nav-cursor">_</span></span></div>
+            <div class="language-control segment-control" role="group" aria-label="B형 언어 선택">
+      
+      <button type="button" lang="ko" aria-pressed="true" data-select-language="ko"><span>한국어</span></button><button type="button" lang="en" aria-pressed="false" data-select-language="en"><span>English</span></button>
+    </div>
+          </div>
+        </div>
+        <div class="sample-body" aria-hidden="true"><code>$ ls /home/john/services</code><span>./the-division-2/ <small>디비전2</small></span></div>
+      </div>
+    </figure><figure class="preview preview-mobile">
+      <figcaption>모바일 · 390px 기준</figcaption>
+      <div class="viewport mobile-viewport">
+        <div class="sample-header mobile-header">
+          <div class="brand"><img src="/brand/jw-mark.svg" width="40" height="40" alt=""><span>john</span></div>
+          <div class="header-main">
+            <div class="mock-nav" aria-hidden="true"><span>/home/john</span><span class="active-path">/home/john/services<span class="nav-cursor">_</span></span></div>
+            <div class="language-control segment-control" role="group" aria-label="B형 언어 선택">
+      
+      <button type="button" lang="ko" aria-pressed="true" data-select-language="ko"><span>한국어</span></button><button type="button" lang="en" aria-pressed="false" data-select-language="en"><span>English</span></button>
+    </div>
+          </div>
+        </div>
+        <div class="sample-body" aria-hidden="true"><code>$ ls /home/john/services</code><span>./the-division-2/ <small>디비전2</small></span></div>
+      </div>
+    </figure></div>
+    <div class="candidate-footer"><p>분명한 선택 상태 · 버튼의 존재감이 큼</p><p class="state-note" role="status" aria-live="polite" aria-atomic="true">현재 선택: 한국어</p></div>
+  </section>
+<section class="candidate " data-candidate="c" data-language="ko" aria-labelledby="title-c">
+    <div class="candidate-heading"><div><p class="candidate-key">OPTION C</p><h2 id="title-c">현재 언어 드롭다운</h2></div><p>헤더 공간을 가장 적게 차지합니다. 언어를 바꾸려면 목록을 한 번 열어야 합니다.</p></div>
+    <div class="comparison"><figure class="preview preview-desktop">
+      <figcaption>데스크톱</figcaption>
+      <div class="viewport desktop-viewport">
+        <div class="sample-header desktop-header">
+          <div class="brand"><img src="/brand/jw-mark.svg" width="40" height="40" alt=""><span>john</span></div>
+          <div class="header-main">
+            <div class="mock-nav" aria-hidden="true"><span>/home/john</span><span class="active-path">/home/john/services<span class="nav-cursor">_</span></span></div>
+            <div class="dropdown language-control">
+        <button class="dropdown-trigger" type="button" id="c-desktop-trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="c-desktop-menu">
+          <span class="current-language" lang="ko">한국어</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="dropdown-menu" id="c-desktop-menu" role="menu" aria-labelledby="c-desktop-trigger" hidden>
+          <button class="menu-option" type="button" role="menuitemradio" aria-checked="true" tabindex="-1" data-select-language="ko"><span lang="ko">한국어</span><span class="selection-dot" aria-hidden="true"></span></button>
+          <button class="menu-option" type="button" role="menuitemradio" aria-checked="false" tabindex="-1" data-select-language="en"><span lang="en">English</span><span class="selection-dot" aria-hidden="true"></span></button>
+        </div>
+      </div>
+          </div>
+        </div>
+        <div class="sample-body" aria-hidden="true"><code>$ ls /home/john/services</code><span>./the-division-2/ <small>디비전2</small></span></div>
+      </div>
+    </figure><figure class="preview preview-mobile">
+      <figcaption>모바일 · 390px 기준</figcaption>
+      <div class="viewport mobile-viewport">
+        <div class="sample-header mobile-header">
+          <div class="brand"><img src="/brand/jw-mark.svg" width="40" height="40" alt=""><span>john</span></div>
+          <div class="header-main">
+            <div class="mock-nav" aria-hidden="true"><span>/home/john</span><span class="active-path">/home/john/services<span class="nav-cursor">_</span></span></div>
+            <div class="dropdown language-control">
+        <button class="dropdown-trigger" type="button" id="c-mobile-trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="c-mobile-menu">
+          <span class="current-language" lang="ko">한국어</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="dropdown-menu" id="c-mobile-menu" role="menu" aria-labelledby="c-mobile-trigger" hidden>
+          <button class="menu-option" type="button" role="menuitemradio" aria-checked="true" tabindex="-1" data-select-language="ko"><span lang="ko">한국어</span><span class="selection-dot" aria-hidden="true"></span></button>
+          <button class="menu-option" type="button" role="menuitemradio" aria-checked="false" tabindex="-1" data-select-language="en"><span lang="en">English</span><span class="selection-dot" aria-hidden="true"></span></button>
+        </div>
+      </div>
+          </div>
+        </div>
+        <div class="sample-body" aria-hidden="true"><code>$ ls /home/john/services</code><span>./the-division-2/ <small>디비전2</small></span></div>
+      </div>
+    </figure></div>
+    <div class="candidate-footer"><p>공간 절약 · 목록을 열어 다른 언어 확인</p><p class="state-note" role="status" aria-live="polite" aria-atomic="true">현재 선택: 한국어</p></div>
+  </section>
+  <p class="keyboard-note">Tab으로 이동하고 Enter·Space로 선택할 수 있습니다. C는 방향키로 언어를 고르고 Esc로 닫을 수 있습니다.</p>
+</main>
+<script>
+(() => {
+  const labels = { ko: "한국어", en: "English" };
+  const dropdowns = [...document.querySelectorAll(".dropdown")];
+  function closeDropdown(dropdown, restoreFocus = false) {
+    const trigger = dropdown.querySelector(".dropdown-trigger");
+    const menu = dropdown.querySelector(".dropdown-menu");
+    trigger.setAttribute("aria-expanded", "false");
+    menu.hidden = true;
+    menu.querySelectorAll(".menu-option").forEach(option => { option.tabIndex = -1; });
+    if (restoreFocus) trigger.focus();
+  }
+  function focusOption(dropdown, index) {
+    const options = [...dropdown.querySelectorAll(".menu-option")];
+    const target = (index + options.length) % options.length;
+    options.forEach((option, item) => { option.tabIndex = item === target ? 0 : -1; });
+    options[target].focus();
+  }
+  function openDropdown(dropdown, last = false) {
+    dropdowns.forEach(other => { if (other !== dropdown) closeDropdown(other); });
+    const root = dropdown.closest("[data-candidate]");
+    dropdown.querySelector(".dropdown-trigger").setAttribute("aria-expanded", "true");
+    dropdown.querySelector(".dropdown-menu").hidden = false;
+    const options = [...dropdown.querySelectorAll(".menu-option")];
+    const selected = options.findIndex(option => option.dataset.selectLanguage === root.dataset.language);
+    focusOption(dropdown, last ? options.length - 1 : Math.max(0, selected));
+  }
+  document.querySelectorAll("[data-candidate]").forEach(root => {
+    function choose(language) {
+      root.dataset.language = language;
+      root.querySelectorAll("button[aria-pressed]").forEach(button => {
+        button.setAttribute("aria-pressed", String(button.dataset.selectLanguage === language));
+      });
+      root.querySelectorAll(".menu-option").forEach(button => {
+        button.setAttribute("aria-checked", String(button.dataset.selectLanguage === language));
+      });
+      root.querySelectorAll(".current-language").forEach(label => {
+        label.textContent = labels[language];
+        label.lang = language;
+      });
+      root.querySelector(".state-note").textContent = "현재 선택: " + labels[language];
+    }
+    root.querySelectorAll("[data-select-language]").forEach(button => {
+      button.addEventListener("click", () => {
+        choose(button.dataset.selectLanguage);
+        const dropdown = button.closest(".dropdown");
+        if (dropdown) closeDropdown(dropdown, true);
+      });
+    });
+  });
+  dropdowns.forEach(dropdown => {
+    const trigger = dropdown.querySelector(".dropdown-trigger");
+    const menu = dropdown.querySelector(".dropdown-menu");
+    trigger.addEventListener("click", () => {
+      if (trigger.getAttribute("aria-expanded") === "true") closeDropdown(dropdown, true);
+      else openDropdown(dropdown);
+    });
+    trigger.addEventListener("keydown", event => {
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        openDropdown(dropdown, event.key === "ArrowUp");
+      } else if (event.key === "Escape") {
+        event.preventDefault();
+        closeDropdown(dropdown, true);
+      }
+    });
+    menu.addEventListener("keydown", event => {
+      const options = [...menu.querySelectorAll(".menu-option")];
+      const index = options.indexOf(document.activeElement);
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        focusOption(dropdown, index + (event.key === "ArrowDown" ? 1 : -1));
+      } else if (event.key === "Home" || event.key === "End") {
+        event.preventDefault();
+        focusOption(dropdown, event.key === "Home" ? 0 : options.length - 1);
+      } else if (event.key === "Escape") {
+        event.preventDefault();
+        closeDropdown(dropdown, true);
+      }
+    });
+    dropdown.addEventListener("focusout", event => {
+      if (!dropdown.contains(event.relatedTarget)) closeDropdown(dropdown);
+    });
+  });
+  document.addEventListener("pointerdown", event => {
+    dropdowns.forEach(dropdown => {
+      if (!dropdown.contains(event.target)) closeDropdown(dropdown);
+    });
+  });
+})();
+</script>
+</body>
+</html>

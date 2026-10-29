@@ -1,0 +1,29 @@
+name: ${COMPOSE_PROJECT_NAME:-johnwest-lab}
+
+services:
+  web:
+    image: ${JOHNWEST_IMAGE:-johnwest-lab:local}
+    platform: linux/amd64
+    pull_policy: never
+    init: true
+    restart: unless-stopped
+    ports:
+      - "${JOHNWEST_BIND_ADDRESS:-127.0.0.1}:${JOHNWEST_PORT:-3310}:3000"
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: "1"
+      HOSTNAME: 0.0.0.0
+      PORT: "3000"
+      NODE_OPTIONS: --max-old-space-size=256
+    mem_limit: 512m
+    cpus: 1.0
+    pids_limit: 100
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: 5m
+        max-file: "3"

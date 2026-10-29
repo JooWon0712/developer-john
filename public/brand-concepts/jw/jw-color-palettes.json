@@ -1,0 +1,348 @@
+{
+  "shapes": [
+    {
+      "key": "a",
+      "name": "기본형",
+      "en": "Classic",
+      "file": "jw-01-classic.svg"
+    },
+    {
+      "key": "b",
+      "name": "라인형",
+      "en": "Monoline",
+      "file": "jw-02-monoline.svg"
+    },
+    {
+      "key": "c",
+      "name": "연결형",
+      "en": "Connected",
+      "file": "jw-03-connected.svg"
+    },
+    {
+      "key": "d",
+      "name": "상하형",
+      "en": "Stacked",
+      "file": "jw-04-stacked.svg"
+    },
+    {
+      "key": "e",
+      "name": "커서형",
+      "en": "Cursor",
+      "file": "jw-05-cursor.svg"
+    },
+    {
+      "key": "f",
+      "name": "테두리형",
+      "en": "Outline",
+      "file": "jw-06-outline.svg"
+    }
+  ],
+  "palettes": [
+    {
+      "id": "01",
+      "name": "초록 · 아이보리 글자",
+      "en": "Forest / Ivory",
+      "bg": "#254d3e",
+      "ink": "#f7f7f2",
+      "accent": "#d6e39e"
+    },
+    {
+      "id": "02",
+      "name": "아이보리 · 초록 글자",
+      "en": "Ivory / Forest",
+      "bg": "#f7f7f2",
+      "ink": "#254d3e",
+      "accent": "#647139"
+    },
+    {
+      "id": "03",
+      "name": "라임 · 포레스트",
+      "en": "Lime / Forest",
+      "bg": "#d6e39e",
+      "ink": "#254d3e",
+      "accent": "#805437"
+    },
+    {
+      "id": "04",
+      "name": "초록 · 연두 글자",
+      "en": "Forest / Lime",
+      "bg": "#254d3e",
+      "ink": "#d6e39e",
+      "accent": "#f7f7f2"
+    },
+    {
+      "id": "05",
+      "name": "네이비 · 샌드",
+      "en": "Navy / Sand",
+      "bg": "#243447",
+      "ink": "#fff7e9",
+      "accent": "#e9b66d"
+    },
+    {
+      "id": "06",
+      "name": "차콜 · 민트",
+      "en": "Charcoal / Mint",
+      "bg": "#292d32",
+      "ink": "#f4f3ed",
+      "accent": "#9fc8b3"
+    },
+    {
+      "id": "07",
+      "name": "크림 · 브라운",
+      "en": "Cream / Brown",
+      "bg": "#f5eee3",
+      "ink": "#4f3930",
+      "accent": "#8f4e33"
+    },
+    {
+      "id": "08",
+      "name": "테라코타 · 크림",
+      "en": "Terracotta / Cream",
+      "bg": "#9c4d35",
+      "ink": "#fff7e8",
+      "accent": "#ffe0aa"
+    }
+  ],
+  "variants": [
+    {
+      "shape": "a",
+      "palette": "01",
+      "file": "colors/jw-01-classic-p01.svg"
+    },
+    {
+      "shape": "b",
+      "palette": "01",
+      "file": "colors/jw-02-monoline-p01.svg"
+    },
+    {
+      "shape": "c",
+      "palette": "01",
+      "file": "colors/jw-03-connected-p01.svg"
+    },
+    {
+      "shape": "d",
+      "palette": "01",
+      "file": "colors/jw-04-stacked-p01.svg"
+    },
+    {
+      "shape": "e",
+      "palette": "01",
+      "file": "colors/jw-05-cursor-p01.svg"
+    },
+    {
+      "shape": "f",
+      "palette": "01",
+      "file": "colors/jw-06-outline-p01.svg"
+    },
+    {
+      "shape": "a",
+      "palette": "02",
+      "file": "colors/jw-01-classic-p02.svg"
+    },
+    {
+      "shape": "b",
+      "palette": "02",
+      "file": "colors/jw-02-monoline-p02.svg"
+    },
+    {
+      "shape": "c",
+      "palette": "02",
+      "file": "colors/jw-03-connected-p02.svg"
+    },
+    {
+      "shape": "d",
+      "palette": "02",
+      "file": "colors/jw-04-stacked-p02.svg"
+    },
+    {
+      "shape": "e",
+      "palette": "02",
+      "file": "colors/jw-05-cursor-p02.svg"
+    },
+    {
+      "shape": "f",
+      "palette": "02",
+      "file": "colors/jw-06-outline-p02.svg"
+    },
+    {
+      "shape": "a",
+      "palette": "03",
+      "file": "colors/jw-01-classic-p03.svg"
+    },
+    {
+      "shape": "b",
+      "palette": "03",
+      "file": "colors/jw-02-monoline-p03.svg"
+    },
+    {
+      "shape": "c",
+      "palette": "03",
+      "file": "colors/jw-03-connected-p03.svg"
+    },
+    {
+      "shape": "d",
+      "palette": "03",
+      "file": "colors/jw-04-stacked-p03.svg"
+    },
+    {
+      "shape": "e",
+      "palette": "03",
+      "file": "colors/jw-05-cursor-p03.svg"
+    },
+    {
+      "shape": "f",
+      "palette": "03",
+      "file": "colors/jw-06-outline-p03.svg"
+    },
+    {
+      "shape": "a",
+      "palette": "04",
+      "file": "colors/jw-01-classic-p04.svg"
+    },
+    {
+      "shape": "b",
+      "palette": "04",
+      "file": "colors/jw-02-monoline-p04.svg"
+    },
+    {
+      "shape": "c",
+      "palette": "04",
+      "file": "colors/jw-03-connected-p04.svg"
+    },
+    {
+      "shape": "d",
+      "palette": "04",
+      "file": "colors/jw-04-stacked-p04.svg"
+    },
+    {
+      "shape": "e",
+      "palette": "04",
+      "file": "colors/jw-05-cursor-p04.svg"
+    },
+    {
+      "shape": "f",
+      "palette": "04",
+      "file": "colors/jw-06-outline-p04.svg"
+    },
+    {
+      "shape": "a",
+      "palette": "05",
+      "file": "colors/jw-01-classic-p05.svg"
+    },
+    {
+      "shape": "b",
+      "palette": "05",
+      "file": "colors/jw-02-monoline-p05.svg"
+    },
+    {
+      "shape": "c",
+      "palette": "05",
+      "file": "colors/jw-03-connected-p05.svg"
+    },
+    {
+      "shape": "d",
+      "palette": "05",
+      "file": "colors/jw-04-stacked-p05.svg"
+    },
+    {
+      "shape": "e",
+      "palette": "05",
+      "file": "colors/jw-05-cursor-p05.svg"
+    },
+    {
+      "shape": "f",
+      "palette": "05",
+      "file": "colors/jw-06-outline-p05.svg"
+    },
+    {
+      "shape": "a",
+      "palette": "06",
+      "file": "colors/jw-01-classic-p06.svg"
+    },
+    {
+      "shape": "b",
+      "palette": "06",
+      "file": "colors/jw-02-monoline-p06.svg"
+    },
+    {
+      "shape": "c",
+      "palette": "06",
+      "file": "colors/jw-03-connected-p06.svg"
+    },
+    {
+      "shape": "d",
+      "palette": "06",
+      "file": "colors/jw-04-stacked-p06.svg"
+    },
+    {
+      "shape": "e",
+      "palette": "06",
+      "file": "colors/jw-05-cursor-p06.svg"
+    },
+    {
+      "shape": "f",
+      "palette": "06",
+      "file": "colors/jw-06-outline-p06.svg"
+    },
+    {
+      "shape": "a",
+      "palette": "07",
+      "file": "colors/jw-01-classic-p07.svg"
+    },
+    {
+      "shape": "b",
+      "palette": "07",
+      "file": "colors/jw-02-monoline-p07.svg"
+    },
+    {
+      "shape": "c",
+      "palette": "07",
+      "file": "colors/jw-03-connected-p07.svg"
+    },
+    {
+      "shape": "d",
+      "palette": "07",
+      "file": "colors/jw-04-stacked-p07.svg"
+    },
+    {
+      "shape": "e",
+      "palette": "07",
+      "file": "colors/jw-05-cursor-p07.svg"
+    },
+    {
+      "shape": "f",
+      "palette": "07",
+      "file": "colors/jw-06-outline-p07.svg"
+    },
+    {
+      "shape": "a",
+      "palette": "08",
+      "file": "colors/jw-01-classic-p08.svg"
+    },
+    {
+      "shape": "b",
+      "palette": "08",
+      "file": "colors/jw-02-monoline-p08.svg"
+    },
+    {
+      "shape": "c",
+      "palette": "08",
+      "file": "colors/jw-03-connected-p08.svg"
+    },
+    {
+      "shape": "d",
+      "palette": "08",
+      "file": "colors/jw-04-stacked-p08.svg"
+    },
+    {
+      "shape": "e",
+      "palette": "08",
+      "file": "colors/jw-05-cursor-p08.svg"
+    },
+    {
+      "shape": "f",
+      "palette": "08",
+      "file": "colors/jw-06-outline-p08.svg"
+    }
+  ]
+}

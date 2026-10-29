@@ -1,0 +1,41 @@
+# Dependencies and generated output
+node_modules/
+.next/
+out/
+build/
+dist/
+coverage/
+.turbo/
+.vercel/
+.cache/
+artifacts/
+*.tar
+*.tar.gz
+*.tsbuildinfo
+next-env.d.ts
+
+# Local environment and deployment credentials
+.env*
+!.env.example
+!.env.*.example
+deploy.nas.local.json
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Runtime data
+/data/
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.log
+
+# Local editor and OS files
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
