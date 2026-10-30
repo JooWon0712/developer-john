@@ -33,7 +33,6 @@ src/
     terminal-window.tsx      홈·서비스·디비전2 목록·레드 문 상세 공용 터미널 창
     terminal-window.module.css  터미널 프레임·제목 표시줄
     home/home-terminal.tsx   겹쳐진 소개·서비스 창과 링크형 사이트 맵
-    lab-workbench.tsx        이전 홈의 시각 요소 (현재 미사용)
     icons.tsx                공통 아이콘
   features/
     site/                    홈·서비스·프로젝트 공용 화면과 언어별 문구

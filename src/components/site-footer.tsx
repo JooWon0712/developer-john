@@ -21,7 +21,7 @@ export function SiteFooter() {
         </address>}
         <Link className="footer-privacy" href={localizePath("/privacy", language)} aria-current={pathname === localizePath("/privacy", language) ? "page" : undefined}>{english ? "Privacy Policy" : "개인정보처리방침"}</Link>
       </div>
-      <p className="copyright">© 2026 {brand.name}</p>
+      <p className="copyright" lang="en">© 2026 {brand.name} <span>All rights reserved.</span></p>
     </div>
   </footer>;
 }

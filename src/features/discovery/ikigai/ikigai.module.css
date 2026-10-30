@@ -84,10 +84,6 @@
 .resultSummary { max-width: 850px; margin: 0 0 22px; color: var(--muted); font-size: 13px; line-height: 2; }
 .resultSummary > summary { min-height: 44px; padding-block: 8px; color: var(--ink); cursor: pointer; }
 .resultSummary[open] > .reviewGrid { margin-top: 14px; }
-.signalOverview { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 28px; }
-.summaryCell { min-width: 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: 2px; background: var(--surface); }
-.summaryCell strong { display: block; color: var(--ink); font-size: 15px; margin-bottom: 5px; }
-.summaryCell span, .summaryCell p { color: var(--muted); font-size: 11px; line-height: 1.9; margin: 0; }
 .cards { display: flex; flex-direction: column; gap: 20px; }
 .recommendation { min-width: 0; border: 1px solid var(--line); border-radius: 3px; background: var(--surface); scroll-margin-top: 24px; }
 .recommendationHeader { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; padding: 22px 24px; border-bottom: 1px solid var(--line); }
@@ -150,7 +146,6 @@
 }
 @media (max-width: 960px) {
   .activityBody { grid-template-columns: minmax(0, 1fr); gap: 22px; }
-  .signalOverview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 760px) {
   .page { margin-block: 18px 36px; }
@@ -181,8 +176,6 @@
   .resultHeader { gap: 16px; }
   .resultHeader h2 { font-size: 26px; }
   .resultSummary { font-size: 12px; }
-  .summaryCell { padding: 12px; }
-  .summaryCell strong { font-size: 13px; }
   .recommendationHeader { padding: 18px; gap: 10px; }
   .recommendationHeader h3 { font-size: 19px; }
   .description { margin: 18px 18px 0; font-size: 12px; }
@@ -204,7 +197,6 @@
   .resultActions { width: 100%; }
   .resultActions > button, .resultActions > a { flex: 1 1 auto; }
   .signals { grid-template-columns: minmax(0, 1fr); }
-  .summaryCell { padding: 11px; }
   .reflectionChoice { padding-inline: 9px; }
 }
 @media (prefers-reduced-motion: reduce) {
