@@ -16,6 +16,13 @@ function getSiteUrl(): URL {
 
 export const siteUrl = getSiteUrl();
 
+export const socialPreviewImage = {
+  url: new URL("/brand/social-preview-v1.png", siteUrl).href,
+  width: 1730,
+  height: 909,
+  alt: site.name,
+} as const;
+
 export function pageMetadata(title: string, description: string, path: string): Metadata {
   return {
     title,
@@ -28,6 +35,7 @@ export function pageMetadata(title: string, description: string, path: string): 
         "x-default": new URL(localizePath(path, "ko"), siteUrl).href,
       },
     },
-    openGraph: { title: `${title} | ${site.name}`, description, url: new URL(path, siteUrl).href, siteName: site.name, locale: getLanguage(path) === "en" ? "en_US" : "ko_KR", type: "website" },
+    openGraph: { title: `${title} | ${site.name}`, description, url: new URL(path, siteUrl).href, siteName: site.name, locale: getLanguage(path) === "en" ? "en_US" : "ko_KR", type: "website", images: [socialPreviewImage] },
+    twitter: { card: "summary_large_image", title: `${title} | ${site.name}`, description, images: [socialPreviewImage] },
   };
 }

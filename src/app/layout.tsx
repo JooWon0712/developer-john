@@ -4,7 +4,7 @@ import { BackToTop } from "@/components/back-to-top";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteContent } from "@/components/site-content";
 import { GoogleAnalytics } from "@/components/google-analytics";
-import { site, siteUrl } from "@/lib/site";
+import { site, siteUrl, socialPreviewImage } from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   description: site.description,
   applicationName: site.name,
   metadataBase: siteUrl,
+  openGraph: { images: [socialPreviewImage] },
+  twitter: { card: "summary_large_image", images: [socialPreviewImage] },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
