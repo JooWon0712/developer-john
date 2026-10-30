@@ -57,7 +57,8 @@ function Assert-SourcePath {
     param([string]$SourcePath)
     if ($SourcePath -notmatch '^[A-Za-z0-9_.@+\[\]()-]+(?:/[A-Za-z0-9_.@+\[\]()-]+)*/?$' -or
         $SourcePath -match '(^|/)\.{1,2}(/|$)') { throw 'The archive contains an unsupported source path.' }
-    if ($SourcePath -match '(^|/)(\.git|node_modules|\.next|\.cache|dist|artifacts|coverage|data|\.ssh|\.aws|\.codex|\.agents)(/|$)' -or
+    if ($SourcePath -match '(^|/)(\.git|node_modules|\.next|\.cache|dist|artifacts|coverage|\.ssh|\.aws|\.codex|\.agents)(/|$)' -or
+        $SourcePath -match '^data(/|$)' -or
         $SourcePath -match '(^|/)(deploy\.nas\.local\.json|id_(rsa|dsa|ecdsa|ed25519)(\.pub)?|credentials(\.[^/]*)?|\.npmrc|\.netrc)$' -or
         $SourcePath -match '\.(pem|key|p12|pfx|db|sqlite|sqlite3|log|tar|tar\.gz)$') {
         throw 'A credential, runtime file or generated directory was found in committed source.'
