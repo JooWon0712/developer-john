@@ -84,6 +84,11 @@ owner_file="$app_root/.deployment-owner"
 if [ -e "$owner_file" ]; then
   [ -f "$owner_file" ] && [ ! -L "$owner_file" ] && [ "$(cat "$owner_file")" = "$project" ] || die 'Unexpected deployment owner marker.'
 fi
+management_file="$app_root/docker-compose.yaml"
+[ ! -L "$management_file" ] || die 'The management Compose file must not be a symlink.'
+if [ -e "$management_file" ]; then
+  [ -f "$management_file" ] || die 'The management Compose path must be a regular file.'
+fi
 previous_release=''
 if [ -f "$app_root/current-release" ]; then
   [ ! -L "$app_root/current-release" ] || die 'Release state must not be a symlink.'
@@ -98,7 +103,7 @@ else
     [ -f "$owner_file" ] || die 'The first installation requires an empty app directory.'
     for existing_entry in "$app_root"/* "$app_root"/.[!.]*; do
       [ -e "$existing_entry" ] || continue
-      case "$(basename "$existing_entry")" in releases|logs|.deployment-owner|.deploy-lock) ;; *) die 'Unexpected files in the initial deployment directory.' ;; esac
+      case "$(basename "$existing_entry")" in releases|logs|.deployment-owner|.deploy-lock|docker-compose.yaml) ;; *) die 'Unexpected files in the initial deployment directory.' ;; esac
     done
   fi
   if command -v netstat >/dev/null 2>&1 && netstat -lnt 2>/dev/null | awk -v suffix=":$http_port" '$4 ~ (suffix "$") {found=1} END {exit !found}'; then die 'The HTTP port is already in use.'; fi
@@ -130,6 +135,11 @@ lock_dir="$app_root/.deploy-lock"
 mkdir "$lock_dir" 2>/dev/null || die 'Another deployment holds the lock; inspect it before retrying.'
 printf '%s\n' "pid=$$ release=$release" > "$lock_dir/owner"
 release_dir="$app_root/releases/$release"
+management_backup="$release_dir/.docker-compose.previous.yaml"
+management_next="$app_root/docker-compose.yaml.next-$release"
+management_rollback="$app_root/docker-compose.yaml.rollback-$release"
+management_had_file=0
+management_changed=0
 changed=0
 completed=0
 finish() {
@@ -156,6 +166,20 @@ finish() {
     fi
     result=1
   fi
+  if [ "$completed" != 1 ] && [ "$management_changed" = 1 ]; then
+    if [ "$management_had_file" = 1 ]; then
+      if cp -p "$management_backup" "$management_rollback" && mv "$management_rollback" "$management_file"; then
+        log 'Previous management Compose file restored.'
+      else
+        printf '\nERROR: Could not restore the management Compose file.\n' >&2
+        result=1
+      fi
+    elif ! rm -f "$management_file"; then
+      printf '\nERROR: Could not remove the failed initial management Compose file.\n' >&2
+      result=1
+    fi
+  fi
+  rm -f "$management_next" "$management_rollback"
   rm -f "$app_root/current-release.next-$release" "$app_root/current-release.rollback-$release"
   rm -f "$lock_dir/owner"
   rmdir "$lock_dir" 2>/dev/null || true
@@ -210,6 +234,13 @@ new_container=$(container_id)
 [ -n "$new_container" ] && [ "$(printf '%s\n' "$new_container" | wc -l | tr -d ' ')" = 1 ] || die 'Expected one web container.'
 [ "$("$docker_bin" inspect --format '{{len .Mounts}}' "$new_container")" = 0 ] || die 'Unexpected container mounts.'
 wait_ready || { compose_at "$release_dir" logs --tail=80 web >&2; die 'Health or HTTP verification failed.'; }
+if [ -f "$management_file" ]; then
+  cp -p "$management_file" "$management_backup"
+  management_had_file=1
+fi
+cp "$app_root/logs/$release.compose.yaml" "$management_next"
+management_changed=1
+mv "$management_next" "$management_file"
 printf 'revision=%s\nrelease=%s\nport=%s\n' "$revision" "$release" "$http_port" > "$app_root/logs/$release.result"
 printf '%s\n' "$release" > "$app_root/current-release.next-$release"
 mv "$app_root/current-release.next-$release" "$app_root/current-release"

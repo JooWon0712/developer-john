@@ -46,7 +46,7 @@ while [ "$#" -gt 0 ]; do
  shift
 done
 case "$command" in
- config) case "$all" in *--services*) printf 'web\\n' ;; *--images*) sed -n 's/^JOHNWEST_IMAGE=//p' "$env_file" ;; *) printf 'services: {web: {image: fixture}}\\n' ;; esac ;;
+ config) case "$all" in *--services*) printf 'web\\n' ;; *--images*) sed -n 's/^JOHNWEST_IMAGE=//p' "$env_file" ;; *) printf 'services: {web: {image: %s}}\\n' "$(sed -n 's/^JOHNWEST_IMAGE=//p' "$env_file")" ;; esac ;;
  up) next=$(sed -n 's/^JOHNWEST_IMAGE=.*://p' "$env_file"); printf '%s\\n' "$next" > "$TEST_STATE/current"; if [ "\u0024{TEST_FAIL_NEW:-0}" = 1 ] && [ "$next" != old ]; then printf 'unhealthy\\n' > "$TEST_STATE/health"; else printf 'healthy\\n' > "$TEST_STATE/health"; fi ;;
  down) rm -f "$TEST_STATE/current" "$TEST_STATE/health" ;;
  logs) printf 'fixture logs\\n' ;;
@@ -79,12 +79,13 @@ fi
         env: { ...process.env, MSYS2_ARG_CONV_EXCL: '*', TEST_APP_ROOT: posix(app), TEST_FAKE_BIN: posix(bin), TEST_STATE: posix(state), TEST_REVISION: revision, ...overrides },
       });
     },
-    seedOld() {
+    seedOld(withManagementFile = true) {
       fs.mkdirSync(path.join(app, 'releases/old'), { recursive: true });
       fs.writeFileSync(path.join(app, '.deployment-owner'), 'developer-john\n');
       fs.writeFileSync(path.join(app, 'current-release'), 'old\n');
       fs.writeFileSync(path.join(app, 'releases/old/compose.nas.yaml'), 'fixture\n');
       fs.writeFileSync(path.join(app, 'releases/old/.env'), 'JOHNWEST_IMAGE=developer-john:old\n');
+      if (withManagementFile) fs.writeFileSync(path.join(app, 'docker-compose.yaml'), 'services: {web: {image: developer-john:old}}\n');
       fs.writeFileSync(path.join(state, 'current'), 'old\n');
       fs.writeFileSync(path.join(state, 'health'), 'healthy\n');
     },
@@ -98,6 +99,8 @@ test('first installation verifies health and records the deployed release', () =
   assert.equal(read(path.join(f.app, 'current-release')), 'first-success');
   assert.equal(read(path.join(f.state, 'current')), 'first-success');
   assert.match(read(path.join(f.app, 'logs/first-success.result')), new RegExp(`revision=${revision}`));
+  assert.equal(read(path.join(f.app, 'docker-compose.yaml')), read(path.join(f.app, 'logs/first-success.compose.yaml')));
+  assert.match(read(path.join(f.app, 'docker-compose.yaml')), /image: developer-john:first-success/);
 });
 test('a failed initial build preserves logs and permits a clean retry', () => {
   const f = fixture(); assert.notEqual(f.run('first-failed', { TEST_BUILD_FAIL: '1' }).status, 0);
@@ -114,25 +117,45 @@ test('a failed first marker move removes temporary state and permits a new relea
   assert.equal(fs.existsSync(path.join(f.app, 'current-release')), false);
   assert.equal(fs.existsSync(path.join(f.app, 'current-release.next-first-marker-failed')), false);
   assert.equal(fs.existsSync(path.join(f.app, 'current-release.rollback-first-marker-failed')), false);
+  assert.equal(fs.existsSync(path.join(f.app, 'docker-compose.yaml')), false);
+  assert.equal(fs.existsSync(path.join(f.app, 'docker-compose.yaml.next-first-marker-failed')), false);
+  assert.equal(fs.existsSync(path.join(f.app, 'docker-compose.yaml.rollback-first-marker-failed')), false);
   assert.equal(fs.existsSync(path.join(f.state, 'current')), false);
   succeeded(f.run('first-marker-retry'));
   assert.equal(read(path.join(f.app, 'current-release')), 'first-marker-retry');
   assert.equal(read(path.join(f.state, 'current')), 'first-marker-retry');
+  assert.match(read(path.join(f.app, 'docker-compose.yaml')), /image: developer-john:first-marker-retry/);
 });
 test('a successful update changes only this project release', () => {
   const f = fixture(); f.seedOld(); succeeded(f.run('next-success'));
   assert.equal(read(path.join(f.app, 'current-release')), 'next-success');
   assert.equal(fs.existsSync(path.join(f.app, 'releases/old/.env')), true);
+  assert.match(read(path.join(f.app, 'docker-compose.yaml')), /image: developer-john:next-success/);
+  assert.equal(read(path.join(f.app, 'releases/next-success/.docker-compose.previous.yaml')), 'services: {web: {image: developer-john:old}}');
 });
 test('an unhealthy update restores the previous container and release marker', () => {
   const f = fixture(); f.seedOld(); assert.notEqual(f.run('next-failed', { TEST_FAIL_NEW: '1' }).status, 0);
   assert.equal(read(path.join(f.app, 'current-release')), 'old');
   assert.equal(read(path.join(f.state, 'current')), 'old');
+  assert.equal(read(path.join(f.app, 'docker-compose.yaml')), 'services: {web: {image: developer-john:old}}');
 });
 test('an interruption after marker replacement restores matching old state', () => {
   const f = fixture(); f.seedOld(); assert.notEqual(f.run('next-interrupted', { TEST_INTERRUPT_AFTER_MARKER: '1' }).status, 0);
   assert.equal(read(path.join(f.app, 'current-release')), 'old');
   assert.equal(read(path.join(f.state, 'current')), 'old');
+  assert.equal(read(path.join(f.app, 'docker-compose.yaml')), 'services: {web: {image: developer-john:old}}');
+  assert.equal(fs.existsSync(path.join(f.app, 'docker-compose.yaml.next-next-interrupted')), false);
+  assert.equal(fs.existsSync(path.join(f.app, 'docker-compose.yaml.rollback-next-interrupted')), false);
+});
+
+test('a failed legacy update removes a newly created management file', () => {
+  const f = fixture(); f.seedOld(false);
+  assert.notEqual(f.run('legacy-interrupted', { TEST_INTERRUPT_AFTER_MARKER: '1' }).status, 0);
+  assert.equal(read(path.join(f.app, 'current-release')), 'old');
+  assert.equal(read(path.join(f.state, 'current')), 'old');
+  assert.equal(fs.existsSync(path.join(f.app, 'docker-compose.yaml')), false);
+  assert.equal(fs.existsSync(path.join(f.app, 'docker-compose.yaml.next-legacy-interrupted')), false);
+  assert.equal(fs.existsSync(path.join(f.app, 'docker-compose.yaml.rollback-legacy-interrupted')), false);
 });
 test('unsafe targets and an unowned populated directory are rejected', () => {
   const f = fixture(); assert.notEqual(f.run('unsafe-target', {}, '/volume1/docker/m0n_r').status, 0);
