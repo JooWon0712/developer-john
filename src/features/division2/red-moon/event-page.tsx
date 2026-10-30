@@ -73,8 +73,8 @@ export function redMoonMetadata(language: Language): Metadata {
 export function RedMoonEventPage({ language }: { language: Language }) {
   const text = pageText[language];
   return <article className={styles.page} lang={language} aria-labelledby="red-moon-title">
-    <TerminalWindow title={`${shell.division2}/${event.slug}`} bodyClassName={styles.session} parentLink={{ href: division2Paths[language], label: text.parent, command: "cd .." }}>
-      <p className={styles.command} aria-hidden="true"><span>{shell.user}:{shell.division2.replace(shell.home, "~")}/{event.slug}$</span><code lang="en">cat rewards</code></p>
+    <TerminalWindow title={getEventPath(language)} bodyClassName={styles.session} parentLink={{ href: division2Paths[language], label: text.parent }}>
+      <p className={styles.command} aria-hidden="true"><span>{shell.user}:~{shell.division2}/{event.slug}$</span><code lang="en">cat rewards</code></p>
       <header className={styles.hero}>
         <div>
           <p className={styles.eyebrow}>THE DIVISION 2 · EVENT REWARDS</p>

@@ -14,7 +14,7 @@ export function ServicesPage({ language }: { language: Language }) {
       </section>
       <section className="directory-panel" aria-labelledby="directory-title" lang={language}>
         <h2 id="directory-title" className="visually-hidden">{text.title}</h2>
-        <TerminalWindow title={shell.services} bodyClassName="directory-session" parentLink={{ href: localizePath("/", language), label: language === "en" ? "Home" : "홈", command: "cd .." }}>
+        <TerminalWindow title={localizePath(shell.services, language)} bodyClassName="directory-session" parentLink={{ href: localizePath("/", language), label: language === "en" ? "Home" : "홈" }}>
           <ServiceDirectory services={services} language={language} />
         </TerminalWindow>
       </section>

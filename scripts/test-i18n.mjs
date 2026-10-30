@@ -10,7 +10,7 @@ function moduleUrl(relative, replacements = {}) {
 }
 const { getLanguage, getBasePath, localizePath } = await import(moduleUrl("src/lib/i18n.ts"));
 
-const paths = ["/", "/services", "/projects", "/services/game/the-division-2", "/services/game/the-division-2/red-moon-unleashed-2026", "/discovery/ikigai", "/missing-page"];
+const paths = ["/", "/services", "/privacy", "/projects", "/services/game/the-division-2", "/services/game/the-division-2/red-moon-unleashed-2026", "/discovery/ikigai", "/missing-page"];
 
 test("every page switches language reversibly without duplicating the English prefix", () => {
   for (const path of paths) {

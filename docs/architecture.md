@@ -32,7 +32,7 @@ src/
     service-directory.tsx    게임 서비스 목록과 준비 중 안내
     terminal-window.tsx      홈·서비스·디비전2 목록·레드 문 상세 공용 터미널 창
     terminal-window.module.css  터미널 프레임·제목 표시줄
-    home/home-terminal.tsx   정적 터미널 소개와 픽셀 웜뱃
+    home/home-terminal.tsx   겹쳐진 소개·서비스 창과 링크형 사이트 맵
     lab-workbench.tsx        이전 홈의 시각 요소 (현재 미사용)
     icons.tsx                공통 아이콘
   features/
@@ -52,17 +52,17 @@ scripts/
   test-analytics.mjs         운영 origin 제한과 GA4 초기화 검증
 ```
 
-홈은 whoami 명령의 결과처럼 픽셀 웜뱃·소개글·서비스 링크를 즉시 보여주는 정적 터미널 화면입니다. HomeTerminal은 서버 컴포넌트이며 타이머·클라이언트 상태·재생 기록·클립 효과를 사용하지 않습니다. 기존 픽셀 PNG를 Next Image의 unoptimized와 image-rendering:pixelated로 표시하며 이미지 크기를 지정해 공간을 예약합니다. 터미널은 공통 container 안에서 헤더의 로고·메뉴와 같은 폭을 사용합니다. 이미지 대체 설명과 읽을 수 있는 소개 원문을 제공하고, 마지막의 빈 명령 프롬프트는 표시하지 않습니다. 소개글은 `일상에서 떠오른 아이디어를 작은 웹서비스로 만들어 공유하려고 합니다.`이며 영어도 일상에서 떠오른 아이디어로 표현합니다.
+홈은 `about` 소개 창, 타이포 링크 형태의 서비스 창과 `site map` 창이 겹치는 정적 화면입니다. HomeTerminal은 서버 컴포넌트이며 타이머·클라이언트 상태·재생 기록·명령 프롬프트를 사용하지 않습니다. 사이트 맵은 접근 가능한 nav와 목록으로 구성하고 `about` → `privacy` → `services/` 순서의 링크를 제공합니다. 소개는 현재 홈의 `#about` 영역으로 이동하며 키보드 초점을 받을 수 있고, 방침과 서비스는 현재 언어의 페이지로 이동합니다. 장식 아이콘과 가지 문자만 접근성 트리에서 숨깁니다. 모바일에서는 소개·서비스·사이트 맵 순서로 표시하며, 창 전체 영역은 공통 container 안에서 헤더와 같은 폭을 사용합니다. 소개글은 `일상에서 떠오른 아이디어를 작은 웹서비스로 만들어 공유하려고 합니다.`이며 영어도 같은 의미로 제공합니다.
 
 홈·서비스·디비전2 이벤트 목록·레드 문 상세는 서버 컴포넌트 `TerminalWindow`의 프레임·제목 표시줄을 공유합니다. 공통 프레임은 `overflow: clip`을 사용해 스크롤 컨테이너를 추가하지 않고, 기존 카테고리 사이드바의 sticky 배치를 유지합니다. 서비스 화면의 상단 두 줄 설명은 표시하지 않고, 터미널 안에 `john:~/services$ ls`와 디렉토리 가지 모양의 서비스 링크를 표시합니다. 서비스 이름 옆에는 `[게임]` 또는 `[Games]`처럼 카테고리를 표시하고 분야 버튼·개수 표시는 제공하지 않습니다. ServiceDirectory는 모든 등록 서비스를 표시하는 서버 컴포넌트이며 실제 입력·명령 실행이나 애니메이션 없이 카드 전체 링크를 유지합니다.
 
-셸 테마의 사용자와 표시 경로는 `src/data/shell.ts`에서 관리합니다. 사용자는 `john`, 홈은 `/home/john`, 서비스는 `/home/john/services`, 디비전2는 `shell.division2`의 `/home/john/services/game/the-division-2`로 표시합니다. 홈 터미널 제목은 `/home/john`, 명령 프롬프트는 `john:~$`이며 헤더·서비스 진입 경로·디비전2 목록과 상세의 제목·ls/cat 명령줄에서도 같은 계층을 사용합니다. 헤더와 명령줄은 가상 홈 디렉토리 계층을 사용하고, 서비스 목록의 항목은 실제 주소의 `/services`만 생략한 `/game/the-division-2`를 표시하며, 실제 링크 주소는 유지합니다. 셸 표시 경로는 두 언어에서 동일하며, 실제 영어 웹 주소에만 `/en` 접두사를 사용합니다. 디비전2의 실제 웹 주소는 `/services/game/the-division-2` 계층으로 이동하며 사이트 이름 `developer-john`과 공개 도메인은 유지합니다.
+셸 테마의 사용자와 기본 경로는 `src/data/shell.ts`에서 관리합니다. 사용자는 `john`, 홈은 `/`, 서비스는 `/services`, 개인정보처리방침은 `/privacy`, 디비전2는 `/services/game/the-division-2`입니다. 헤더 메뉴·경로형 터미널 제목·홈의 서비스 진입 경로는 실제 링크 주소와 같으며, 영어에서는 `/en` 접두사를 포함합니다. 서비스·방침 등의 화면은 `john:~/services$`, `john:~/privacy$`처럼 언어와 관계없이 기존 셸 형식을 유지합니다. 서비스 목록의 항목은 현재 목록 아래의 경로를 나타내도록 실제 기본 주소의 `/services`만 생략한 `/game/the-division-2`를 표시하며 실제 링크 주소는 유지합니다. 사이트 이름 `developer-john`과 공개 도메인은 유지합니다.
 
 공통 푸터는 한국어 `아이디어를 일상으로`, 영어 `Ideas into everyday life.`와 `© 2026 developer-john`을 유지하고, 모든 페이지에 `contact` 메일 [devjw0712@gmail.com](mailto:devjw0712@gmail.com)을 표시합니다. 메일 링크의 최소 높이는 44px입니다. 공개 연락처는 `src/data/contact.ts`에서 관리하며, `githubUrl`은 현재 `null`이므로 GitHub 프로필 링크는 표시하지 않습니다. 별도의 브랜드 링크는 두지 않습니다.
 
 홈은 개발자 소개와 서비스 진입 링크로 구성하며, 이전 소개 주소 `/about`은 홈으로 이동합니다. 목록은 `src/data/catalog.ts`를 사용합니다. 현재 프로젝트는 developer-john 한 개이며, 서비스 목록에는 게임 분야의 디비전2만 등록합니다. 목록 패널의 큰 제목과 별도의 분야 소개 섹션은 표시하지 않습니다. 서비스 카드의 제목은 실제 기본 주소에서 `/services`만 생략한 표시 경로(`/game/the-division-2`)와 카테고리를 표시합니다. 영어 화면에서도 표시 경로는 동일하며 실제 링크에만 `/en`을 붙입니다. 준비 중 서비스는 카테고리의 pathPrefix와 directory를 조합합니다. 언어별 주제 이름(topic)은 접근성 이름으로 유지하고 기능 이름(title)을 함께 제공합니다. 완성된 서비스 카드 전체를 하나의 링크로 제공하며 이벤트 가이드 목록 `/services/game/the-division-2`로 연결합니다. 별도 진입 버튼은 표시하지 않고, 링크의 접근성 이름은 카드 제목과 기능 이름을 참조합니다. 키보드 Tab·Enter 이동과 카드 전체의 포커스 표시를 지원합니다. 목록의 이벤트를 선택하면 해당 보상 가이드로 이동합니다. 이키가이는 서비스 목록에서 표시하지 않지만 `/discovery/ikigai`, `/en/discovery/ikigai`의 직접 주소와 소스·기존 저장 기록·자동 테스트를 유지합니다. 디비전2 레드 문 보상 가이드는 보상 진행을, 이키가이 도구는 질문 답변과 실험 후기를 각각의 브라우저 저장 키로 관리합니다. 구체적인 기능과 후속 기획은 [서비스 구현과 후속 기획](service-plan.md)을 참고합니다.
 
-`TerminalWindow`의 선택적 `parentLink`는 `href`·`label`·`command`를 받아 본문 첫 부분에 왼쪽 SVG 화살표 → 강조한 cd 명령 → 대괄호로 감싼 언어별 이름 순서로 상위 목록 링크 하나를 표시합니다. 서비스 목록은 `[홈]`/`[Home]`으로 `/` 또는 `/en`에 연결하고 `cd ..`를 표시합니다. 디비전2 목록은 `[서비스 목록]`/`[Services]`로 `/services` 또는 `/en/services`에 연결하고 `cd ~/services`를 표시합니다. 레드 문 상세는 `[디비전2]`/`[The Division 2]`로 현재 언어의 `division2Paths`에 연결하고 `cd ..`를 표시합니다. 홈 프레임에만 상위 링크를 추가하지 않습니다.
+`TerminalWindow`의 선택적 `parentLink`는 `href`·`label`을 받아 제목 표시줄 오른쪽에 왼쪽 SVG 화살표와 언어별 목적지 이름을 표시합니다. 서비스 목록과 개인정보처리방침은 `홈`/`Home`, 디비전2 목록은 `서비스 목록`/`Services`, 레드 문 상세는 `디비전2`/`The Division 2`로 연결합니다. 링크의 title 속성은 실제 목적지 주소이며, cd 명령이나 대괄호 경로는 표시하지 않습니다. 가운데 현재 경로는 실제 URL을 유지하고, 모바일에서는 현재 경로를 첫 줄, 한 줄짜리 이동 링크를 다음 줄에 배치합니다. 본문은 기존 john 명령·출력으로 바로 시작합니다. 홈 프레임의 오른쪽은 비워둡니다.
 
 ## 한국어·영어 지원
 
@@ -99,7 +99,7 @@ scripts/
 
 이전 `/game/the-division-2`, `/en/game/the-division-2`와 하위 이벤트 주소는 대응하는 새 `/services/game/...`, `/en/services/game/...` 주소로 영구 리디렉션합니다. 체크 ID·이벤트 ID·저장 키·스키마와 기존 개인 기록은 유지합니다.
 
-서비스 목록의 디비전2는 특정 이벤트가 아닌 이벤트·보상 정보 전체를 안내합니다. 한국어 `/services/game/the-division-2`와 영어 `/en/services/game/the-division-2`에서 `game-page.tsx`를 공유하며 언어별 메타데이터와 이벤트 링크를 제공합니다. `event-guides.ts`에 이벤트별 `directory`·이름·설명·주소·메인 이벤트 공지 기간을 등록합니다. 현재 레드 문의 `directory`는 `redMoon.slug`이며, 카드에 `./red-moon-unleashed-2026/`와 한국어·영어 이벤트 이름을 함께 표시합니다. 두 언어 모두 이벤트 카드 전체를 하나의 링크로 제공하고 별도 가이드 보기 버튼은 표시하지 않습니다. 링크 이름은 이벤트 제목을 참조하며 Tab·Enter 이동과 카드 포커스 표시를 지원합니다. 새 이벤트는 기존 가이드와 별도로 추가합니다. 디비전2 목록과 이벤트 상세는 전체 경로를 나열하는 breadcrumb를 두지 않고 제목 표시줄과 ls/cat 명령줄로 현재 경로를 표현합니다. 단일 상위 목록 링크는 지정된 현재 언어의 주소로 이동합니다. 이벤트 링크는 현재 언어의 실제 웹 경로로 이동합니다. 목록의 터미널 제목은 `shell.division2`의 `/home/john/services/game/the-division-2`, 명령줄은 `john:~/services/game/the-division-2$ ls`입니다. 이벤트는 디렉토리 가지 모양의 전체 링크로 표시합니다. 레드 문 상세는 전체 보상 내용을 같은 `TerminalWindow`로 감쌉니다. 제목은 `shell.division2`와 `event.slug`를 연결한 `/home/john/services/game/the-division-2/red-moon-unleashed-2026`, 안쪽 명령줄은 `john:~/services/game/the-division-2/red-moon-unleashed-2026$ cat rewards`입니다. 보상 안내·체크·검색·아코디언·이미지 대화상자 등 기존 기능 UI는 유지합니다. 서비스의 ready 상태는 링크 제공 여부를 구분하는 데이터로 유지하고, 이용 가능 배지는 표시하지 않습니다. 내부 이동 화살표는 글리프 대신 SVG를 사용합니다.
+서비스 목록의 디비전2는 특정 이벤트가 아닌 이벤트·보상 정보 전체를 안내합니다. 한국어 `/services/game/the-division-2`와 영어 `/en/services/game/the-division-2`에서 `game-page.tsx`를 공유하며 언어별 메타데이터와 이벤트 링크를 제공합니다. `event-guides.ts`에 이벤트별 `directory`·이름·설명·주소·메인 이벤트 공지 기간을 등록합니다. 현재 레드 문의 `directory`는 `redMoon.slug`이며, 카드에 `./red-moon-unleashed-2026/`와 한국어·영어 이벤트 이름을 함께 표시합니다. 두 언어 모두 이벤트 카드 전체를 하나의 링크로 제공하고 별도 가이드 보기 버튼은 표시하지 않습니다. 링크 이름은 이벤트 제목을 참조하며 Tab·Enter 이동과 카드 포커스 표시를 지원합니다. 새 이벤트는 기존 가이드와 별도로 추가합니다. 디비전2 목록과 이벤트 상세는 전체 경로를 나열하는 breadcrumb를 두지 않고 제목 표시줄과 ls/cat 명령줄로 현재 경로를 표현합니다. 단일 상위 목록 링크는 지정된 현재 언어의 주소로 이동합니다. 이벤트 링크는 현재 언어의 실제 웹 경로로 이동합니다. 목록의 터미널 제목은 `shell.division2`의 `/services/game/the-division-2`에 현재 언어를 반영한 실제 주소이며, 명령줄은 `john:~/services/game/the-division-2$ ls`입니다. 이벤트는 디렉토리 가지 모양의 전체 링크로 표시합니다. 레드 문 상세는 전체 보상 내용을 같은 `TerminalWindow`로 감쌉니다. 제목은 `shell.division2`와 `event.slug`를 연결하고 현재 언어를 반영한 실제 주소이며, 안쪽 명령줄은 `john:~/services/game/the-division-2/red-moon-unleashed-2026$ cat rewards`입니다. 보상 안내·체크·검색·아코디언·이미지 대화상자 등 기존 기능 UI는 유지합니다. 서비스의 ready 상태는 링크 제공 여부를 구분하는 데이터로 유지하고, 이용 가능 배지는 표시하지 않습니다. 내부 이동 화살표는 글리프 대신 SVG를 사용합니다.
 
 ## 레드 문 언어 지원
 

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="color-scheme" content="dark">
+  <title>홈 화면 시안 10개 | developer-john</title>
+  <link rel="stylesheet" href="gallery.css">
+  <script type="module" src="gallery.js"></script>
+</head>
+<body>
+  <main>
+    <header class="gallery-heading">
+      <div class="gallery-topline"><a class="gallery-brand" href="/" aria-label="현재 홈으로"><img src="/brand/jw-mark.svg" width="34" height="34" alt=""><span>john <span class="dim">/ design lab</span></span></a><a class="back-link" href="/">현재 홈 보기 <span aria-hidden="true">↗</span></a></div>
+      <p class="eyebrow">HOME EXPLORATIONS / 01—10</p>
+      <h1>같은 웜뱃, 열 가지 홈.</h1>
+      <p class="intro">네이비·샌드와 픽셀 웜뱃은 그대로. 배치와 정보 밀도가 다른 시안을 비교해보세요.</p>
+      <div class="gallery-toolbar"><p>시안을 누르면 크게 볼 수 있습니다. <span class="dim">기존 홈은 유지됩니다.</span></p><div class="view-controls" role="group" aria-label="미리보기 화면 크기"><button type="button" data-mode="desktop" aria-pressed="true">데스크톱</button><button type="button" data-mode="mobile" aria-pressed="false">모바일</button></div></div>
+    </header>
+    <div class="concept-grid" id="concept-grid"></div>
+    <noscript>시안을 비교하려면 브라우저의 JavaScript를 사용해주세요. <a href="preview.html?concept=01">첫 번째 시안 보기</a></noscript>
+    <footer class="gallery-footer"><span>어느 시안이든 기존 한국어·영어 페이지에 맞춰 적용할 수 있습니다.</span><a href="/">← 현재 홈으로</a></footer>
+  </main>
+  <dialog id="preview-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-header"><div><p class="dialog-eyebrow" id="dialog-eyebrow"></p><h2 id="dialog-title"></h2></div><button type="button" class="close-button" id="close-dialog" aria-label="시안 닫기">닫기 <span aria-hidden="true">×</span></button></div>
+    <div class="dialog-toolbar"><div class="dialog-navigation"><button type="button" id="previous-concept" aria-label="이전 시안">←</button><span id="dialog-index"></span><button type="button" id="next-concept" aria-label="다음 시안">→</button></div><div class="view-controls" role="group" aria-label="확대 화면 크기"><button type="button" data-mode="desktop" aria-pressed="true">데스크톱</button><button type="button" data-mode="mobile" aria-pressed="false">모바일</button></div><a id="open-preview" href="preview.html?concept=01" target="_blank" rel="noopener">새 탭으로 보기 ↗</a></div>
+    <div class="dialog-stage" id="dialog-stage"><iframe id="large-preview" title="홈 화면 시안 확대" src="about:blank"></iframe></div>
+    <p class="dialog-description" id="dialog-description"></p>
+  </dialog>
+</body>
+</html>

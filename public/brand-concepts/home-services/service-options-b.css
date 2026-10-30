@@ -1,0 +1,22 @@
+/* 04 · Keycap launcher */
+.service-option-04 { display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:128px; padding:22px 24px; }
+.service-option-04 .key-launcher-copy { display:flex; flex-direction:column; gap:9px; min-width:0; }
+.service-option-04 .key-launcher-path { color:var(--muted); font-family:var(--mono); font-size:10px; line-height:1.6; }
+.service-option-04 .key-launcher-label { color:var(--ink); font-size:15px; font-weight:600; line-height:1.6; }
+.service-option-04 .key-launcher-key { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; min-width:69px; min-height:47px; padding:7px 12px; border:1px solid #8b775c; border-bottom-width:4px; border-radius:6px; background:var(--surface); box-shadow:inset 0 1px 0 #ffffff08; color:var(--accent); font-family:var(--mono); font-size:12px; font-weight:500; line-height:1.5; }
+.service-option-04:hover .key-launcher-key { background:var(--accent); border-color:#c59654; color:var(--paper); }
+/* 05 · Typographic link */
+.service-option-05 { display:flex; flex-direction:column; align-items:flex-start; min-height:132px; padding:20px 24px 22px; }
+.service-option-05 .type-launcher-path { color:var(--muted); font-family:var(--mono); font-size:9px; line-height:1.6; }
+.service-option-05 .type-launcher-label { margin-top:9px; color:var(--ink); font-size:23px; font-weight:600; letter-spacing:-.05em; line-height:1.5; }
+.service-option-05 .type-launcher-rule { display:block; width:100%; height:2px; margin-top:14px; background:var(--line); }
+.service-option-05 .type-launcher-rule i { display:block; width:44px; height:100%; background:var(--accent); }
+.service-option-05:hover .type-launcher-label { color:var(--accent); }
+.service-option-05:hover .type-launcher-rule { background:var(--accent); }
+@media (max-width:440px) {
+  .service-option-04 { gap:12px; min-height:116px; padding:20px 18px; }
+  .service-option-04 .key-launcher-label { font-size:13px; }
+  .service-option-04 .key-launcher-key { min-width:59px; min-height:44px; padding-inline:9px; font-size:11px; }
+  .service-option-05 { min-height:124px; padding:20px 18px; }
+  .service-option-05 .type-launcher-label { font-size:20px; }
+}

@@ -8,7 +8,7 @@ import styles from "./ikigai.module.css";
 export function IkigaiPageContent({ language = "ko" }: { language?: Language }) {
   const t = (ko: string, en: string) => ikigaiText(language, ko, en);
   return <div className={styles.page}>
-    <Link href={localizePath("/services", language)} className={`text-link ${styles.breadcrumb}`}>← {shell.services}</Link>
+    <Link href={localizePath("/services", language)} className={`text-link ${styles.breadcrumb}`}>← {localizePath(shell.services, language)}</Link>
     <section className={styles.intro} aria-labelledby="ikigai-title">
       <p className={styles.kicker} aria-hidden="true">$ explore ./ikigai</p>
       <h1 id="ikigai-title">{t("좋아하는 일,", "Find what you enjoy,")}<br />{t("작게 해보면서 찾기.", "one small step at a time.")}</h1>

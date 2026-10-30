@@ -4,9 +4,16 @@ export const sitePageCopy = {
   ko: {
     home: {
       title: "소개",
+      headline: "호기심을 펼쳐두는 곳.",
       introduction: brand.description,
-      imageAlt: "컴퓨터 앞에 앉아 있는 픽셀 스타일 웜뱃",
+      directory: {
+        label: "사이트 맵",
+        services: "서비스",
+        privacy: "개인정보처리방침",
+        caption: "일상 속 아이디어가 모이는 곳.",
+      },
       browseServices: "서비스 둘러보기",
+      contactLabel: "john에게 이메일 보내기",
     },
     services: {
       title: "서비스",
@@ -31,9 +38,16 @@ export const sitePageCopy = {
   en: {
     home: {
       title: "About",
+      headline: "A small place for curious ideas.",
       introduction: "I turn ideas from everyday life into small web services to share.",
-      imageAlt: "A pixel-art wombat sitting at a computer",
+      directory: {
+        label: "Site map",
+        services: "Services",
+        privacy: "Privacy Policy",
+        caption: "A place for everyday ideas.",
+      },
       browseServices: "Explore services",
+      contactLabel: "Email john",
     },
     services: {
       title: "Services",

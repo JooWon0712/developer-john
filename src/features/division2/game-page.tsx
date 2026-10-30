@@ -49,8 +49,8 @@ export function Division2Page({ language }: { language: Division2Language }) {
   const text = copy[language];
   return (
     <article className={styles.page} lang={language} aria-labelledby="division2-title">
-      <TerminalWindow title={shell.division2} bodyClassName={styles.session} parentLink={{ href: localizePath("/services", language), label: text.parent, command: "cd ~/services" }}>
-        <p className={styles.command} aria-hidden="true"><span>{shell.user}:{shell.division2.replace(shell.home, "~")}$</span><code lang="en">ls</code></p>
+      <TerminalWindow title={division2Paths[language]} bodyClassName={styles.session} parentLink={{ href: localizePath("/services", language), label: text.parent }}>
+        <p className={styles.command} aria-hidden="true"><span>{shell.user}:~{shell.division2}$</span><code lang="en">ls</code></p>
         <header className={styles.intro}>
           <h1 id="division2-title">{text.title}</h1>
           <p className="lead">{text.introduction}</p>

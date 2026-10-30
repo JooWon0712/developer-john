@@ -36,7 +36,8 @@ export function SiteHeader() {
           {navigation.map(({ href, label, englishLabel, directory }) => {
             const active = basePath === href ? "page" : href === "/services" && (basePath.startsWith("/services/") || basePath.startsWith("/discovery/")) ? "location" : undefined;
             const navigationLabel = english ? englishLabel : label;
-            return <Link key={href} href={localizePath(href, language)} aria-label={`${directory} (${navigationLabel})`} title={`${shell.user} ${navigationLabel}`} aria-current={active}><span aria-hidden="true">{directory}</span><span className="nav-cursor" aria-hidden="true">{active ? "_" : ""}</span></Link>;
+            const directoryPath = localizePath(directory, language);
+            return <Link key={href} href={localizePath(href, language)} aria-label={`${directoryPath} (${navigationLabel})`} title={`${shell.user} ${navigationLabel}`} aria-current={active}><span aria-hidden="true">{directoryPath}</span><span className="nav-cursor" aria-hidden="true" /></Link>;
           })}
         </nav>
         <LanguageSwitch />
