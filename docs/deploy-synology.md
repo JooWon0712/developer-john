@@ -92,7 +92,11 @@ SSH로 Compose를 실행한 컨테이너가 Container Manager의 전체 컨테�
 
 배포가 성공하면 앱 루트의 `docker-compose.yaml`을 현재 release의 해석된 Compose 설정으로 동기화합니다. 이미지 태그·포트·환경값이 포함되어 있어 DSM 등록 시 별도 `.env`를 입력할 필요가 없습니다. 실패한 배포에서는 이전 관리 파일을 복구합니다.
 
-최초 등록은 Container Manager의 **프로젝트 → 생성**에서 진행합니다.
+Synology의 `synowebapi` 관리 도구가 있으면 배포 스크립트가 Container Manager에 프로젝트를 자동 등록합니다. 설치된 DSM의 `SYNO.Docker.Project` 조회·생성 기능을 사용하며, 같은 이름과 경로로 이미 등록된 프로젝트는 재사용합니다. 등록 단계에서는 컨테이너 빌드·시작·중지·정리·삭제 API를 호출하지 않습니다. 등록 전후 컨테이너 ID·프로젝트 라벨·이미지·실행 상태와 DSM의 컨테이너 연결을 확인합니다.
+
+앱 건강 상태 확인과 관리 파일 갱신 이후 등록을 수행합니다. DSM 등록에 실패하면 오류로 보고하되, 이미 정상 실행 중인 새 앱을 등록 오류 때문에 되돌리지는 않습니다. 등록 결과 요약은 해당 release의 `.registration.log`에 저장하며 원시 API 응답은 임시 파일에서 처리 후 삭제합니다.
+
+관리 API를 사용할 수 없는 환경의 수동 등록은 Container Manager의 **프로젝트 → 생성**에서 진행합니다.
 
 1. 프로젝트 이름은 개인 설정의 `ProjectName`과 같은 `developer-john`으로 지정합니다.
 2. 경로는 배포 앱 루트(예: `/volume1/docker/developer-john`)를 선택합니다.

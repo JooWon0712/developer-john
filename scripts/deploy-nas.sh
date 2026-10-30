@@ -246,3 +246,9 @@ printf '%s\n' "$release" > "$app_root/current-release.next-$release"
 mv "$app_root/current-release.next-$release" "$app_root/current-release"
 completed=1
 log "Deployment healthy: revision=$revision release=$release NAS loopback port=$http_port"
+if [ -x /usr/syno/bin/synowebapi ]; then
+  log 'Registering the project with DSM Container Manager.'
+  sh "$release_dir/scripts/register-nas-project.sh" "$app_root" "$project" "$release"
+else
+  log 'DSM management API is unavailable; Container Manager registration was skipped.'
+fi
