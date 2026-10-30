@@ -16,7 +16,6 @@ services:
       PORT: "3000"
       NODE_OPTIONS: --max-old-space-size=256
     mem_limit: 512m
-    cpus: 1.0
     pids_limit: 100
     cap_drop:
       - ALL

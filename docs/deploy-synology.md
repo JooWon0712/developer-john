@@ -64,7 +64,7 @@ Docker 작업에 관리자 권한이 필요하면 설정의 `UseSudo`를 사용�
 5. release별 `.env`에 해당 이미지 태그·프로젝트·loopback 포트 등 실행값을 생성하고 `compose.nas.yaml`로 서비스 `web`을 시작하거나 교체합니다.
 6. 컨테이너 건강 상태와 HTTP 경로를 확인하고 release·이미지·로그 기록을 남깁니다.
 
-Dockerfile은 NAS의 Linux 빌드 단계에서 `public`, `.next/standalone`, `.next/static`을 준비합니다. PC의 Windows `.next`를 NAS로 복사하지 않습니다. Compose의 메모리·CPU 제한은 앱 실행 설정이며 Docker 빌드 전체의 자원 상한을 뜻하지 않습니다.
+Dockerfile은 NAS의 Linux 빌드 단계에서 `public`, `.next/standalone`, `.next/static`을 준비합니다. PC의 Windows `.next`를 NAS로 복사하지 않습니다. Compose의 메모리 제한은 앱 실행 설정이며 Docker 빌드 전체의 자원 상한을 뜻하지 않습니다. CPU CFS quota를 지원하지 않는 Synology 커널에서도 실행할 수 있도록 `cpus` 제한은 설정하지 않습니다.
 
 `NEXT_PUBLIC_SITE_URL`은 정적 페이지와 메타데이터의 **빌드 시 설정**이며 기본값은 `https://developer-john.com`입니다. 주소를 바꾸려면 해당 빌드 설정으로 새 이미지를 만들어야 합니다. runtime `.env`만 바꿔도 이미 생성된 canonical·Open Graph 주소가 바뀌지는 않습니다.
 
