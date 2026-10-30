@@ -1,8 +1,8 @@
-name: ${COMPOSE_PROJECT_NAME:-johnwest-lab}
+name: ${COMPOSE_PROJECT_NAME:-developer-john}
 
 services:
   web:
-    image: ${JOHNWEST_IMAGE:-johnwest-lab:local}
+    image: ${JOHNWEST_IMAGE:-developer-john:local}
     platform: linux/amd64
     pull_policy: never
     init: true

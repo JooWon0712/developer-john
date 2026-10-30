@@ -1,0 +1,11 @@
+{
+  "NasHost": "example.invalid",
+  "SshUser": "",
+  "SshPort": 22,
+  "IdentityFile": "",
+  "RemotePath": "/volume1/docker/developer-john",
+  "ProjectName": "developer-john",
+  "ImageName": "developer-john",
+  "HttpPort": 3310,
+  "UseSudo": true
+}

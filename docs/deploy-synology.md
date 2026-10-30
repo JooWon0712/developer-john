@@ -1,129 +1,112 @@
-# Synology NAS 배포 준비
+# Synology NAS 배포
 
-이 문서는 **PC 또는 CI에서 developer-john 사이트의 Linux 이미지를 빌드하고 Synology NAS에서는 실행만 하는 방식**을 설명합니다. 예시는 `linux/amd64` 환경을 대상으로 하므로 사용할 NAS의 CPU 아키텍처와 Container Manager 지원 여부를 먼저 확인합니다. 실제 NAS 배포·DNS·HTTPS·프록시 설정은 별도 단계입니다.
+기본 배포는 **PC에서 푸시한 커밋의 소스를 SSH로 전송하고 NAS에서 Docker 이미지를 빌드하는 방식**입니다. PC에 Docker는 필요하지 않습니다. 이 문서는 배포 절차를 설명하며, 실제 NAS 배포나 외부 도메인 공개가 완료됐다는 기록이 아닙니다.
 
-기본 사이트 주소는 `https://developer-john.com`입니다. 모든 소스 명령은 프로젝트 루트에서 실행합니다. 내부 프로젝트·이미지 이름은 `johnwest-lab`을 유지하며 아래 NAS 경로와 포트는 실제 장비 설정이 아닌 배포 예시입니다.
+모든 PC 명령은 프로젝트 루트에서 실행합니다. 실제 NAS 주소·로그인 계정·SSH 개인키 경로는 문서나 Git에 넣지 않습니다. 다른 사이트의 폴더·컨테이너·이미지·DNS·인증서·프록시는 변경하지 않습니다. 로컬 개발 서버의 `127.0.0.1:3004`도 배포 작업과 별개로 유지합니다.
 
-다른 애플리케이션의 폴더·컨테이너·이미지·프록시를 덮어쓰지 않도록 이 사이트에 독립된 프로젝트 이름·배포 경로·호스트 포트를 사용합니다.
-
-## 준비한 구성
+## 구성
 
 | 파일/설정 | 역할 |
 | --- | --- |
-| `Dockerfile` | Node.js 24 Alpine 다단계 빌드, `npm ci`, Next.js standalone, 일반 사용자 실행 |
-| `compose.nas.yaml` | 이미 가져온 이미지 실행 전용. NAS에서 빌드하거나 레지스트리에서 자동 다운로드하지 않음 |
-| `.env.example` | 기본 사이트 주소 `https://developer-john.com`. 로컬에서는 필요하면 `.env.local`로 복사해 변경 |
-| `.env.nas.example` | Compose 프로젝트·이미지·바인딩 주소·호스트 포트 예시 |
-| NAS 폴더 예시 | `/volume1/docker/johnwest-lab` — 실제 볼륨과 가용 경로 확인 필요 |
-| 포트 예시 | NAS `127.0.0.1:3310` → 컨테이너 `3000`. `3310` 가용성은 미확인 |
+| `scripts/deploy-nas.ps1` | 로컬 검사, 커밋 확인, 소스 압축, SSH 전송과 원격 실행 |
+| `scripts/deploy-nas.sh` | NAS 점검, 최초 설치·업데이트, 건강 상태 확인과 실패 복구 |
+| `deploy.nas.example.json` | 개인 NAS 접속·배포 설정의 구조 예시 |
+| `deploy.nas.local.json` | 실제 개인 설정. Git에서 제외하며 비밀번호는 넣지 않음 |
+| `Dockerfile` | NAS의 `linux/amd64` 이미지 빌드, npm 잠금 파일 설치와 Next.js standalone 출력 |
+| `compose.nas.yaml` | 이미 빌드된 release 이미지를 서비스 `web`으로 실행 |
+| release별 `.env` | NAS에서 생성하는 Compose 실행값. 소스의 로컬 환경 파일을 복사하지 않음 |
 
-현재 웹 기능에는 DB나 호스트 데이터 볼륨이 필요하지 않습니다. Compose의 컨테이너 메모리 `512m`, Node.js V8 힙 `256MB`, CPU 1코어는 예시 시작값이며 NAS 전체 사양이나 실측 사용량을 뜻하지 않습니다. 배포 후 이 앱과 다른 서비스의 자원 사용량을 확인해 조정합니다. 로그는 파일당 5MB, 3개로 제한합니다.
+배포 경로는 `/volume1/docker/developer-john`, Compose 프로젝트와 이미지는 `developer-john`, 서비스는 `web`을 예시로 사용합니다. 경로와 포트는 실제 NAS에서 확인해야 하며 이미 다른 프로젝트가 사용 중인 위치를 재사용하지 않습니다. 앱의 NAS 바인딩은 **`127.0.0.1:3310` → 컨테이너 `3000`**으로 유지합니다.
 
-## 1. PC/CI의 Docker 확인
+## 1. 최초 준비
 
-```powershell
-docker version
-docker compose version
-```
+PC에는 Node.js 24, npm으로 설치한 프로젝트 의존성, Git, OpenSSH 클라이언트와 `tar`가 필요합니다. NAS에는 해당 CPU 아키텍처를 지원하는 Docker·Compose와 Container Manager, 빌드에 필요한 디스크·메모리 여유가 필요합니다. 이미지 빌드 중에는 의존성과 기본 이미지를 받기 위한 NAS의 네트워크 연결도 필요합니다.
 
-Linux 컨테이너를 빌드할 수 있는 Docker 엔진이 필요합니다. Docker 명령이나 엔진이 없다면 여기에서 이미지 검증을 멈춥니다. 대신 Node.js로 TypeScript 검사와 프로덕션 빌드를 진행할 수 있습니다. Docker를 자동 설치하거나 NAS에 연결해 대신 빌드하지 않습니다.
-
-**Docker 이미지 빌드·실행과 실제 NAS 동작은 아직 검증하지 않았습니다.** 아래 절차는 배포 준비 가이드입니다.
-
-## 2. Linux 이미지 만들기
-
-프로젝트 루트에서 실행합니다. `20261028`은 버전 태그 예시이며 실제 배포마다 구분되는 태그를 사용합니다.
+개인 설정 파일을 만듭니다.
 
 ```powershell
-docker build --platform linux/amd64 -t johnwest-lab:20261028 .
+Copy-Item deploy.nas.example.json deploy.nas.local.json
 ```
 
-위 명령은 기본값 `https://developer-john.com`으로 메타데이터를 생성합니다. 선택한 주소를 명시하려면 빌드 인자를 전달합니다.
+예시 JSON의 NAS 호스트·SSH 사용자·SSH 포트·키 파일과 배포 경로를 실제 환경에 맞게 확인합니다. 대상 프로젝트·서비스·이미지 이름과 HTTP 포트도 Compose 실행값과 일치해야 합니다. 이 파일은 개인 PC에만 보관합니다. SSH 키 인증에 사용할 개인키를 NAS에 복사하지 않습니다.
+
+Docker 작업에 관리자 권한이 필요하면 설정의 `UseSudo`를 사용합니다. 배포 도구가 실제 별도 터미널에서 SSH의 대화형 sudo 프롬프트를 열면 **사용자가 그 터미널에 직접 비밀번호를 입력**합니다. 비밀번호를 채팅·설정 파일·환경 변수·명령 인자·파이프로 전달하거나 저장하지 않습니다.
+
+## 2. 전송할 커밋 확정
+
+배포 대상 변경을 먼저 검토하고 커밋·push합니다. 배포 도구는 로컬 테스트와 타입 검사를 수행하고, 작업 트리가 깨끗하며 **`HEAD`가 `origin/main`과 일치하는지** 확인합니다. 변경 파일이나 아직 푸시하지 않은 커밋이 있으면 먼저 정리합니다.
+
+배포 압축은 현재 폴더의 미커밋 파일을 모으는 대신 **`git archive`로 확인된 HEAD 커밋에서 생성**합니다. 따라서 실제 NAS 소스는 확인한 푸시 커밋에 고정됩니다. 개인 설정·환경 파일·키·의존성·로컬 빌드 결과는 전송 대상 소스에 넣지 않습니다.
+
+## 3. 점검과 배포
+
+배포 스크립트의 최초 설치·업데이트·빌드 실패 후 재시도·상태 확인 실패 및 종료 신호 후 복구는 `node --test scripts/test-nas-deploy.mjs`로 모의 실행할 수 있습니다. 실제 NAS에 연결하지 않으며 Windows에서는 Git Bash가 필요합니다. 실제 배포의 로컬 검사와 원격 상태 확인은 아래 명령이 수행합니다.
 
 ```powershell
-docker build --platform linux/amd64 --build-arg NEXT_PUBLIC_SITE_URL=https://developer-john.com -t johnwest-lab:20261028 .
+# NAS 접속 없이 로컬 검사·커밋 확인·배포 압축 생성
+./scripts/deploy-nas.ps1 -PackageOnly
+
+# SSH로 NAS의 배포 환경 확인
+./scripts/deploy-nas.ps1 -Check
+
+# 소스 전송 → NAS 빌드 → 최초 설치 또는 업데이트 → 상태 확인
+./scripts/deploy-nas.ps1
 ```
 
-다른 공개 주소나 로컬 주소를 메타데이터에 쓰려면 `--build-arg NEXT_PUBLIC_SITE_URL=http://localhost:3310`처럼 빌드 인자를 변경합니다. 인자를 생략하거나 환경 변수 값이 비어 있어도 앱은 `https://developer-john.com`을 기본값으로 사용합니다. 기본 주소 설정은 도메인 구매·DNS·HTTPS 연결을 완료한다는 의미가 아닙니다.
+`-PackageOnly`는 NAS에 연결하지 않습니다. `-Check`는 원격 실행 스크립트 전송과 접속·경로·Docker·Compose·포트 등 필요한 점검을 하지만 앱을 배포하지 않습니다. 기본 실행은 최초 설치와 기존 developer-john 업데이트를 지원합니다.
 
-`NEXT_PUBLIC_SITE_URL`은 정적 페이지와 메타데이터를 만드는 **빌드 시 설정**입니다. 이미지 실행 시 `.env`만 변경해도 빌드된 페이지의 주소는 바뀌지 않습니다. 주소를 바꾸면 이미지를 새로 빌드합니다. `.env*`는 Docker 빌드 컨텍스트에서 제외되므로 PC의 `.env.local`을 이미지가 자동으로 읽는 것으로 가정하지 않습니다. `NEXT_PUBLIC_*` 값은 공개되므로 비밀번호를 넣지 않습니다.
+일반 실행은 다음 순서로 진행합니다.
 
-Dockerfile은 `public`, `.next/standalone`, `.next/static`을 Linux 빌드 단계에서 가져옵니다. Windows에서 만든 `.next`를 NAS에 복사하지 않습니다. 의존성은 저장소의 `package-lock.json`으로 설치합니다.
+1. 로컬 검사와 깨끗한 Git·푸시 커밋 확인 후 소스 압축을 생성합니다.
+2. 전용 SSH 연결로 소스와 배포 실행 스크립트를 보냅니다.
+3. NAS에서 대상 경로·프로젝트·서비스·포트와 이전 release 상태를 확인합니다.
+4. 버전별 release 영역에서 `linux/amd64` 이미지를 빌드합니다. **새 이미지 빌드가 성공하기 전에는 기존 developer-john 컨테이너를 교체하지 않습니다.**
+5. release별 `.env`에 해당 이미지 태그·프로젝트·loopback 포트 등 실행값을 생성하고 `compose.nas.yaml`로 서비스 `web`을 시작하거나 교체합니다.
+6. 컨테이너 건강 상태와 HTTP 경로를 확인하고 release·이미지·로그 기록을 남깁니다.
 
-## 3. PC에서 이미지 확인
+Dockerfile은 NAS의 Linux 빌드 단계에서 `public`, `.next/standalone`, `.next/static`을 준비합니다. PC의 Windows `.next`를 NAS로 복사하지 않습니다. Compose의 메모리·CPU 제한은 앱 실행 설정이며 Docker 빌드 전체의 자원 상한을 뜻하지 않습니다.
 
-Docker를 사용할 수 있을 때만 수행합니다. 로컬 `3310` 포트도 비어 있는지 확인하고 필요한 경우 변경합니다.
+`NEXT_PUBLIC_SITE_URL`은 정적 페이지와 메타데이터의 **빌드 시 설정**이며 기본값은 `https://developer-john.com`입니다. 주소를 바꾸려면 해당 빌드 설정으로 새 이미지를 만들어야 합니다. runtime `.env`만 바꿔도 이미 생성된 canonical·Open Graph 주소가 바뀌지는 않습니다.
 
-```powershell
-docker run --rm -d --name johnwest-lab-check --platform linux/amd64 -p 127.0.0.1:3310:3000 johnwest-lab:20261028
-docker inspect --format '{{json .State.Health}}' johnwest-lab-check
-Invoke-WebRequest http://localhost:3310/
-Invoke-WebRequest http://localhost:3310/about
-Invoke-WebRequest http://localhost:3310/projects
-Invoke-WebRequest http://localhost:3310/services
-docker logs johnwest-lab-check
+## 4. 배포 후 확인과 복구
+
+NAS 내부 점검은 `http://127.0.0.1:3310`을 사용합니다. 컨테이너가 `healthy`인지 확인한 뒤 아래 한국어·영어 10개 경로를 점검합니다.
+
+| 화면 | 한국어 | 영어 |
+| --- | --- | --- |
+| 홈 | `/` | `/en` |
+| 서비스 | `/services` | `/en/services` |
+| 디비전2 목록 | `/services/game/the-division-2` | `/en/services/game/the-division-2` |
+| 레드 문 보상 | `/services/game/the-division-2/red-moon-unleashed-2026` | `/en/services/game/the-division-2/red-moon-unleashed-2026` |
+| 개인정보처리방침 | `/privacy` | `/en/privacy` |
+
+각 경로의 HTTP 성공과 실제 콘텐츠를 확인합니다. 컨테이너 상태·HTTP 확인은 외부 도메인 접속이나 브라우저 화면 검증을 대신하지 않습니다.
+
+기존 설치에서는 교체 후 점검이 실패하면 보관한 이전 release와 이미지로 복구를 시도합니다. 첫 설치가 실패하면 이전 버전이 없으므로 이번 developer-john 프로젝트만 내립니다. 다른 프로젝트를 중지하거나 NAS 전체 컨테이너·이미지를 정리하지 않습니다. 자동 복구도 실패할 수 있으므로 배포 로그와 이전 release·이미지를 보존하고 결과를 확인합니다.
+
+단순 컨테이너 재시작은 소스 변경을 반영하거나 이미지를 다시 빌드하지 않습니다. 다음 업데이트도 동일한 배포 스크립트로 새 커밋을 전달합니다. release·로그·이전 이미지 정리는 정상 동작을 확인한 뒤 별도로 진행합니다.
+
+## 5. PC에서 확인하는 SSH 터널
+
+NAS의 앱 포트는 loopback 바인딩을 유지합니다. PC에서 NAS 내부 IP의 `3310`으로 직접 접속하도록 바인딩을 넓히지 않습니다.
+
+같은 PC에서 개인 설정의 SSH 호스트·포트·키를 사용하는 별도 연결에 **`-L 127.0.0.1:3310:127.0.0.1:3310`** 포워딩을 추가하면 PC의 `127.0.0.1:3310`만 NAS의 loopback 앱 포트로 연결할 수 있습니다. 로컬 포트가 비어 있는지 확인하고 터널을 유지하는 동안 다음 주소로 확인합니다.
+
+```text
+http://127.0.0.1:3310/
 ```
 
-각 경로의 HTTP `200`, 한글 표시, 탐색, 정적 CSS·아이콘을 확인합니다. 헬스체크는 컨테이너 내부 `/`의 HTTP `200`을 확인합니다. 시작 직후에는 `starting`일 수 있으므로 첫 검사 이후 `healthy`인지 확인합니다. 확인을 마치면 임시 컨테이너만 중지합니다. `--rm`으로 자동 제거됩니다.
+이 연결은 로컬 개발 서버 `127.0.0.1:3004`와 별개입니다. 포워딩을 다른 네트워크 인터페이스에 공개하거나 앱 포트를 인터넷으로 포트포워딩하지 않습니다. 터널은 확인이 끝나면 해당 연결만 종료합니다.
 
-```powershell
-docker stop johnwest-lab-check
-```
+## 외부 도메인 연결은 별도 단계
 
-이미지 파일을 저장합니다. `dist/`는 Git과 Docker 빌드 대상에서 제외됩니다.
+NAS 배포와 SSH 터널 확인은 웹사이트의 외부 공개를 뜻하지 않습니다. `developer-john.com`의 DNS·HTTPS 인증서와 이 사이트 전용 역방향 프록시는 별도 작업으로 설정하고 외부 네트워크에서 확인합니다. 기존 사이트의 DNS·인증서·프록시 규칙은 유지합니다.
 
-```powershell
-New-Item -ItemType Directory -Force dist
-docker save --output dist/johnwest-lab-20261028.tar johnwest-lab:20261028
-```
+이후 프록시 대상은 NAS의 `127.0.0.1:3310`을 사용합니다. 도메인·인증서·프록시를 준비하기 위해 앱 바인딩을 바꿀 필요는 없습니다. GA4는 기존 코드의 운영 HTTPS origin 조건을 유지하므로 NAS 내부 HTTP 주소나 PC 터널 확인만으로 운영 수집을 검증한 것으로 간주하지 않습니다.
 
-## 4. NAS에서 별도 프로젝트 준비
+## 선택 사항: PC에서 이미지 만들기
 
-이 단계부터는 실제 배포 요청을 받은 뒤 수행합니다.
-
-1. Container Manager 지원 여부, DSM 세부 버전, Docker/Compose 버전과 여유 메모리·디스크를 확인합니다.
-2. 예를 들어 `/volume1/docker/johnwest-lab`에 새 프로젝트 폴더를 만듭니다. 실제 볼륨과 가용 경로를 확인하고 기존 프로젝트 폴더는 사용하지 않습니다.
-3. 이미지 TAR를 업로드하고 Container Manager의 **이미지 → 작업 → 가져오기**에서 이미지로 불러옵니다. TAR는 소스 압축 파일처럼 풀지 않습니다.
-4. 새 폴더에 `compose.nas.yaml`과 `.env.nas.example`을 복사합니다. 예시 환경 파일을 `.env`라는 이름으로 복사하고 값을 확인합니다.
-
-   ```dotenv
-   COMPOSE_PROJECT_NAME=johnwest-lab
-   JOHNWEST_IMAGE=johnwest-lab:20261028
-   JOHNWEST_BIND_ADDRESS=127.0.0.1
-   JOHNWEST_PORT=3310
-   ```
-
-5. 새 프로젝트 이름이 기존 이름과 겹치지 않는지, `3310`이 비어 있는지 확인합니다. 이미지 태그는 가져온 이미지와 정확히 일치시킵니다.
-6. Container Manager에서 **새 프로젝트**를 만들고 이 폴더의 Compose 구성을 사용합니다. 기존 프로젝트를 선택해 덮어쓰지 않습니다. GUI가 Compose 파일명을 지정하게 하면 `compose.nas.yaml`을 지정하고 YAML 입력 방식이면 내용을 사용합니다. `.env`가 같은 프로젝트 폴더에서 읽히는지도 확인합니다.
-
-이 Compose는 `build:`가 없으며 `pull_policy: never`입니다. 이미지가 없다는 오류가 나면 가져온 태그를 확인합니다. NAS에서 빌드하도록 변경하지 않습니다.
-
-SSH 사용이 별도로 허용된 환경에서는 새 프로젝트 폴더에서 다음 명령으로 구성을 확인하고 실행할 수 있습니다. `config` 결과에 개인 설정이 표시될 수 있으므로 공개 로그나 Git에 저장하지 않습니다.
-
-```sh
-docker compose --env-file .env -f compose.nas.yaml config
-docker compose --env-file .env -f compose.nas.yaml up -d
-docker compose --env-file .env -f compose.nas.yaml ps
-docker compose --env-file .env -f compose.nas.yaml logs --tail=100 web
-```
-
-기본 바인딩이 `127.0.0.1`이므로 PC에서 `http://NAS_IP:3310`으로 바로 접속할 수 없습니다. NAS 자체에서 `http://127.0.0.1:3310`을 검사하거나, 이후 별도로 설정한 DSM 역방향 프록시를 통해 접속합니다. 내부 LAN에서 직접 확인하려면 허용된 작업 범위 안에서 `JOHNWEST_BIND_ADDRESS`를 NAS의 내부 IP 등으로 바꾸고 Compose를 재적용합니다. 이 앱의 호스트 포트를 인터넷에 직접 포트포워딩할 필요는 없습니다.
-
-## 5. 공개 전 남은 설정
-
-- 실제 NAS 프로젝트 경로, 고유 프로젝트 이름, 비어 있는 호스트 포트 확정.
-- 선택한 `developer-john.com`의 DNS·HTTPS 연결 상태 확인. 다른 주소를 쓰면 `NEXT_PUBLIC_SITE_URL`을 변경해 이미지 재빌드.
-- 해당 도메인의 DNS와 HTTPS 인증서 준비.
-- 이 사이트만을 위한 DSM 역방향 프록시 규칙 준비: 공개 HTTPS 주소 → HTTP `127.0.0.1:선택한 포트`.
-- 기존 서비스의 프록시와 네트워크 설정을 유지하며 실제 모바일·외부 HTTPS 접속 확인.
-
-공개 도메인과 NAS 주소가 없어도 로컬 화면 개발과 이미지 준비는 가능합니다. 이 문서가 해당 설정을 완료했다는 의미는 아닙니다.
-
-## 업데이트와 복구
-
-PC/CI에서 새 태그의 이미지를 빌드·검사·저장하고 NAS로 가져옵니다. 이 프로젝트 `.env`의 `JOHNWEST_IMAGE`만 새 태그로 바꾼 뒤 같은 프로젝트의 `up -d`를 실행합니다. 실행 중인 컨테이너를 단순히 재시작하는 것으로는 새 이미지가 반영되지 않습니다.
-
-이전 이미지를 확인이 끝날 때까지 보관합니다. 문제가 생기면 이 프로젝트의 `JOHNWEST_IMAGE`를 이전 태그로 되돌리고 `up -d`를 실행합니다. 사이트 확인 후 이미지 정리를 별도로 판단하며, NAS 전체 컨테이너·이미지를 지우는 명령은 사용하지 않습니다. 현재 첫 버전에는 영속 데이터가 없고, 저장 기능을 추가하면 별도의 백업 절차가 필요합니다.
+Linux 컨테이너용 Docker를 사용할 수 있는 PC·CI에서는 이미지를 미리 빌드해 TAR로 저장한 다음 NAS에 가져오는 방식도 가능합니다. 이 대안에만 PC Docker가 필요하며 위의 기본 SSH 배포는 NAS에서 빌드합니다. 수동 이미지 가져오기를 선택하면 이미지 태그와 해당 release의 실행 설정·복구 기록도 함께 관리해야 합니다.
 
 ## 공식 참고 문서
 
