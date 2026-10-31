@@ -1,0 +1,10 @@
+:root{color-scheme:light;font-family:"Cascadia Code","Cascadia Mono",Consolas,"Malgun Gothic",monospace;color:#253f45;background:#f5f1e8}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+.cover{width:1200px;height:630px;padding:32px;background:#f1ede3}
+.terminal{height:566px;overflow:hidden;border:2px solid #bdcbc3;border-radius:14px;background:#fffdf7}
+.titlebar{position:relative;display:grid;place-items:center;height:68px;background:#eae7dd;border-bottom:2px solid #cfd5cc}
+.titlebar p{margin:0;font-size:26px;font-weight:600;letter-spacing:-.04em}
+.dots{position:absolute;left:26px;display:flex;gap:10px}.dots i{width:15px;height:15px;border-radius:50%;background:#e77864}.dots i:nth-child(2){background:#e7b65e}.dots i:nth-child(3){background:#88ac91}
+.body{display:grid;place-items:center;height:494px;text-align:center}
+h1{margin:0 0 14px;font-size:64px;font-weight:700;line-height:1.65;letter-spacing:-.055em}
+nav{padding:20px 32px}nav a{color:#246b70}

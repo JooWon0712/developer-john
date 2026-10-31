@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SharePageButton } from "@/components/share-page-button";
 import { TerminalWindow } from "@/components/terminal-window";
 import { shell } from "@/data/shell";
 import { pageMetadata, siteUrl } from "@/lib/site";
@@ -15,6 +16,7 @@ const pageText = {
     title: "레드 문 언리시드", subtitle: "받은 보상, 빠짐없이.", parent: "디비전2",
     intro: "현상수배부터 이벤트 외형까지, 받을 수 있는 보상을 한곳에서. 획득 조건을 살펴보고 실제로 받은 보상을 체크하세요.",
     browse: "보상 살펴보기 ↓", official: "Ubisoft 공식 안내 ↗", schedule: "EVENT SCHEDULE",
+    shareNote: "내 체크 기록은 포함되지 않아요.",
     mainEvent: "메인 이벤트", drops: "Twitch 드롭스", mainFrom: "2026.10.15", mainTo: "11.03", dropsFrom: "2026.10.15", dropsTo: "10.22",
     dates: "공식 공지 날짜 기준 · 정확한 종료 시각은 미공지. 종료된 보상도 확인하고 수령 기록을 남길 수 있어요.",
     sourcesTitle: "정보 출처와 이용 안내",
@@ -36,6 +38,7 @@ const pageText = {
     title: "Red Moon Unleashed", subtitle: "Track every reward.", parent: "The Division 2",
     intro: "Bounties, boss drops and event cosmetics, all in one place. Review how to earn each item, then check it off only after claiming it.",
     browse: "Browse rewards ↓", official: "Official Ubisoft announcement ↗", schedule: "EVENT SCHEDULE",
+    shareNote: "Your personal checklist is not included.",
     mainEvent: "Main event", drops: "Twitch Drops", mainFrom: "Oct 15, 2026", mainTo: "Nov 3", dropsFrom: "Oct 15, 2026", dropsTo: "Oct 22",
     dates: "Dates follow the official announcements; exact end times have not been announced. You can still review expired rewards and record claims.",
     sourcesTitle: "Sources and guide information",
@@ -82,6 +85,7 @@ export function RedMoonEventPage({ language }: { language: Language }) {
           <h1 id="red-moon-title">{text.title}<span>{text.subtitle}</span></h1>
           <p className={styles.heroCopy}>{text.intro}</p>
           <div className={styles.heroLinks}><a href="#reward-results">{text.browse}</a><a href={event.sources[0].url} target="_blank" rel="noopener noreferrer">{text.official}</a></div>
+          <SharePageButton url={new URL(getEventPath(language), siteUrl).href} language={language} description={text.shareNote} />
         </div>
         <div className={styles.schedule}>
           <p className={styles.scheduleTitle}>{text.schedule}</p>

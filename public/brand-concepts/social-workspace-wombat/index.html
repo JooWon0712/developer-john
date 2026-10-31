@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="항구 카페의 웜뱃을 왼쪽 또는 오른쪽에 배치한 작은 작업실 공유 이미지 10안을 비교합니다.">
+    <title>웜뱃과 작은 작업실 · 공유 이미지 10안</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="variants.js" defer></script>
+    <script src="gallery.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#comparison">공유 이미지 비교로 건너뛰기</a>
+    <div class="container">
+      <header class="page-header">
+        <h1>웜뱃과 작은 작업실 · 공유 이미지 10안</h1>
+        <p class="lead">항구 카페의 웜뱃을 왼쪽 또는 오른쪽에 배치하고, 소개 문구 10가지를 조합했습니다.</p>
+        <p class="lead">선택한 공유 이미지: <a href="concept-06.jpg" target="_blank" rel="noopener">06 · 작업 노트 한쪽</a></p>
+        <nav class="page-links" aria-label="관련 페이지">
+          <a href="/">현재 홈 보기 <span aria-hidden="true">↗</span></a>
+          <a href="../social-workspace-terminal/index.html">이전 그림 없는 문구 10안 <span aria-hidden="true">↗</span></a>
+        </nav>
+      </header>
+      <div class="comparison-note">
+        <p>이미지를 누르면 크게 볼 수 있습니다. 확대 화면에서 이전·다음 버튼이나 좌우 방향키로 이동하세요.</p>
+        <span>웜뱃 배치·소개 문구 10안</span>
+      </div>
+      <main id="comparison" tabindex="-1" aria-label="웜뱃 공유 이미지 비교">
+        <div id="concept-grid" class="concept-grid"></div>
+      </main>
+      <footer class="page-footer">developer-john · 개발자 John의 작은 작업실</footer>
+    </div>
+
+    <dialog id="image-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-copy">
+      <header class="dialog-header">
+        <div>
+          <h2 id="dialog-title" aria-live="polite">공유 이미지 확대</h2>
+          <p id="dialog-copy"></p>
+        </div>
+        <button id="dialog-close" class="button" type="button" autofocus>닫기 <span aria-hidden="true">×</span></button>
+      </header>
+      <div class="dialog-stage"><img id="dialog-image" width="1200" height="630" alt=""></div>
+      <footer class="dialog-toolbar">
+        <div class="dialog-navigation" role="group" aria-label="시안 이동">
+          <button id="dialog-previous" class="button" type="button"><span aria-hidden="true">←</span> 이전</button>
+          <span id="dialog-counter"></span>
+          <button id="dialog-next" class="button" type="button">다음 <span aria-hidden="true">→</span></button>
+        </div>
+        <div class="dialog-files">
+          <a id="dialog-original" target="_blank" rel="noopener">원본 보기 <span aria-hidden="true">↗</span></a>
+          <a id="dialog-download" download>다운로드 <span aria-hidden="true">↓</span></a>
+        </div>
+      </footer>
+    </dialog>
+  </body>
+</html>

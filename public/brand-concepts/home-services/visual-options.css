@@ -59,6 +59,7 @@
   .visual-desk .pixel-desk-art { flex:1; min-height:0; }
   .visual-desk .pixel-desk-caption { margin:8px 22px 21px; font-size:10px; }
 }
+.visual-workspace-combined .pixel-workspace-image { display:block; width:100%; height:auto; image-rendering:pixelated; }
 @media(max-width:380px) {
   .visual-tree { padding-inline:18px; }
   .visual-tree .tree-node { gap:7px; font-size:14px; }

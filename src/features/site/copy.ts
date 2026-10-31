@@ -3,22 +3,18 @@ import { brand } from "@/data/brand";
 export const sitePageCopy = {
   ko: {
     home: {
-      title: "소개",
-      headline: "호기심을 펼쳐두는 곳.",
-      introduction: brand.description,
-      directory: {
-        label: "사이트 맵",
-        services: "서비스",
-        privacy: "개인정보처리방침",
-        caption: "일상 속 아이디어가 모이는 곳.",
-      },
+      title: "홈",
+      headline: ["개발자 John의", "작은 작업실."],
+      introduction: "일상에서 떠오른 아이디어와 개인 작업을 한곳에 모았습니다.",
+      sceneAlt: "작은 항구가 보이는 카페에서 안경을 쓴 회색 아기 웜뱃이 노트북으로 작업하는 픽셀 그림",
       browseServices: "서비스 둘러보기",
-      contactLabel: "john에게 이메일 보내기",
+      about: "John 소개",
     },
     services: {
       title: "서비스",
-      description: brand.name + "의 게임 서비스를 둘러보세요. 디비전2 이벤트 일정과 보상 정보를 확인할 수 있습니다.",
-      heading: ["호기심에서 시작한", "작은 서비스들."],
+      description: "개인적으로 쓰던 도구와 떠올린 아이디어를 서비스로 공유합니다.",
+      heading: "일상에서 건져 올린 아이디어.",
+      lead: "개인적으로 쓰던 도구와 떠올린 아이디어를 서비스로 공유합니다.",
     },
     projects: {
       title: "프로젝트",
@@ -37,22 +33,18 @@ export const sitePageCopy = {
   },
   en: {
     home: {
-      title: "About",
-      headline: "A small place for curious ideas.",
-      introduction: "I turn ideas from everyday life into small web services to share.",
-      directory: {
-        label: "Site map",
-        services: "Services",
-        privacy: "Privacy Policy",
-        caption: "A place for everyday ideas.",
-      },
+      title: "Home",
+      headline: ["Developer John’s", "little workspace."],
+      introduction: "A place for ideas from everyday life and my personal projects.",
+      sceneAlt: "Pixel art of a grey baby wombat wearing glasses and working on a laptop at a café overlooking a small harbor",
       browseServices: "Explore services",
-      contactLabel: "Email john",
+      about: "About John",
     },
     services: {
       title: "Services",
-      description: "Browse " + brand.name + "'s game services. Find The Division 2 event schedules, rewards and requirements.",
-      heading: ["Small services,", "sparked by curiosity."],
+      description: "I share personal tools and ideas as web services.",
+      heading: "Ideas from everyday life.",
+      lead: "I share personal tools and ideas as web services.",
     },
     projects: {
       title: "Projects",

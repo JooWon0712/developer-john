@@ -7,7 +7,7 @@ import { createEmptyProgress, setApparelCount, STORAGE_KEY, summarizeProgress, t
 import { readStoredProgress, writeStoredProgress, type StorageState } from "./storage";
 import { periodStatus } from "./availability";
 import { resolveRewardAnchor, type RewardAnchor } from "./navigation";
-import { getEventPath, getLocalizedEventData, getRewardSearchText, type Language } from "./localization";
+import { getLocalizedEventData, getRewardSearchText, type Language } from "./localization";
 import { getRewardCopy } from "./copy";
 import styles from "./red-moon.module.css";
 
@@ -50,9 +50,6 @@ export function RewardChecklist({ language = "ko" }: { language?: Language }) {
   const [activeImage, setActiveImage] = useState<RewardImage | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const imageTrigger = useRef<HTMLButtonElement | null>(null);
-  const [shareUrl, setShareUrl] = useState("");
-  const [shareMessage, setShareMessage] = useState("");
-  const shareInput = useRef<HTMLInputElement>(null);
   const today = useToday();
   const groupPanels = useRef(new Map<string, HTMLDetailsElement>());
   const [anchor, setAnchor] = useState<RewardAnchor | null>(null);
@@ -83,7 +80,6 @@ export function RewardChecklist({ language = "ko" }: { language?: Language }) {
     function onStorage(change: StorageEvent) {
       if ((change.key !== STORAGE_KEY && change.key !== null) || change.storageArea !== storage.current) return;
       const applied = applyStored();
-      setShareMessage("");
       setNotice(applied ? copy.otherTabApplied : copy.otherTabFailed);
     }
     window.addEventListener("storage", onStorage);
@@ -93,13 +89,6 @@ export function RewardChecklist({ language = "ko" }: { language?: Language }) {
   useEffect(() => {
     if (activeImage && dialog.current && !dialog.current.open) dialog.current.showModal();
   }, [activeImage]);
-
-  useEffect(() => {
-    if (shareUrl) {
-      shareInput.current?.focus();
-      shareInput.current?.select();
-    }
-  }, [shareUrl]);
 
   useEffect(() => {
     function followHash() {
@@ -148,20 +137,7 @@ export function RewardChecklist({ language = "ko" }: { language?: Language }) {
     setApparelDraft("0");
     setApparelError("");
     save(createEmptyProgress());
-    setShareMessage("");
     setNotice(copy.resetNotice);
-  }
-
-  async function sharePage() {
-    const url = `${window.location.origin}${getEventPath(language)}`;
-    try {
-      await navigator.clipboard.writeText(url);
-      setShareUrl("");
-      setShareMessage(copy.shareCopied);
-    } catch {
-      setShareUrl(url);
-      setShareMessage(copy.shareManual);
-    }
   }
 
   function commitApparel() {
@@ -288,10 +264,8 @@ export function RewardChecklist({ language = "ko" }: { language?: Language }) {
     <div className={styles.recordActions}>
       <div><strong>{copy.privacyTitle}</strong><p>{copy.privacyHelp}</p></div>
       <button type="button" className={styles.utilityButton} disabled={!loaded} onClick={resetProgress}>{copy.resetButton}</button>
-      <button type="button" className={styles.utilityButton} onClick={sharePage}>{copy.shareButton}</button>
     </div>
-    <p className={styles.actionNotice} role="status">{shareMessage || notice}</p>
-    {shareUrl && <label className={styles.shareFallback}>{copy.shareLabel}<input ref={shareInput} value={shareUrl} readOnly onFocus={focus => focus.currentTarget.select()} /></label>}
+    <p className={styles.actionNotice} role="status">{notice}</p>
 
     <dialog id="reward-image-dialog" ref={dialog} className={styles.dialog} aria-labelledby="reward-image-title" onClose={() => { setActiveImage(null); imageTrigger.current?.focus(); }} onClick={click => { if (click.target !== click.currentTarget) return; const rect = click.currentTarget.getBoundingClientRect(); if (click.clientX < rect.left || click.clientX > rect.right || click.clientY < rect.top || click.clientY > rect.bottom) click.currentTarget.close(); }}>
       <div className={styles.dialogHeading}><h2 id="reward-image-title">{activeImage?.title ?? copy.dialogTitle}</h2><button type="button" className={styles.utilityButton} onClick={() => dialog.current?.close()}>{copy.close}</button></div>

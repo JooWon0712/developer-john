@@ -24,7 +24,7 @@
 .warning p + p { margin-top: 8px; }
 .workbench > .warning { margin-inline: 20px; }
 .layout { display: grid; grid-template-columns: 180px minmax(0, 1fr); align-items: stretch; }
-.stepper { display: flex; flex-direction: column; align-items: stretch; gap: 6px; min-width: 0; padding: 20px 10px; border-right: 1px solid var(--line); background: #131f2b; }
+.stepper { display: flex; flex-direction: column; align-items: stretch; gap: 6px; min-width: 0; padding: 20px 10px; border-right: 1px solid var(--line); background: var(--surface-alt); }
 .stepButton { display: flex; align-items: center; gap: 10px; width: 100%; min-width: 0; min-height: 54px; padding: 10px; border: 1px solid transparent; border-left-width: 2px; border-radius: 2px; background: transparent; color: var(--muted); text-align: left; line-height: 1.65; }
 .stepButton:not(:disabled):hover { color: var(--ink); background: var(--surface-alt); }
 .stepActive { color: var(--accent); border-color: #796549; border-left-color: var(--accent); background: #e9b66d0a; }
@@ -66,7 +66,7 @@
 .secondaryButton { color: var(--accent); border-color: #796549; background: transparent; }
 .skipButton { color: var(--muted); border-color: transparent; background: transparent; text-decoration: underline; text-underline-offset: 4px; }
 .backButton:not(:disabled):hover { color: var(--ink); border-color: #7f8b92; }
-.primaryButton:not(:disabled):hover { color: var(--paper); border-color: #f2c88d; background: #f2c88d; }
+.primaryButton:not(:disabled):hover { color: var(--button-ink); border-color: var(--accent-hover); background: var(--accent-hover); }
 .secondaryButton:not(:disabled):hover { color: var(--ink); border-color: var(--accent); background: #e9b66d0a; }
 .skipButton:not(:disabled):hover { color: var(--ink); }
 .reviewGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
@@ -115,7 +115,7 @@
 .signalUnconfirmed { border-top: 2px solid #708092; }
 .signalSelfReported { border-top: 2px solid var(--accent); }
 .signalNotNeeded { border-style: dashed; }
-.reflection { padding: 22px 24px; border-top: 1px solid var(--line); background: #131f2b; }
+.reflection { padding: 22px 24px; border-top: 1px solid var(--line); background: var(--surface-alt); }
 .reflection > summary { min-height: 44px; padding-block: 8px; margin-bottom: 12px; color: var(--ink); font-size: 12px; line-height: 1.8; cursor: pointer; }
 .reflection > .reflectionChoice { margin-bottom: 18px; }
 .reflection h4 { margin: 0 0 16px; color: var(--ink); font-size: 13px; }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SharePageButton } from "@/components/share-page-button";
 import { TerminalWindow } from "@/components/terminal-window";
 import { shell } from "@/data/shell";
 import { localizePath } from "@/lib/i18n";
@@ -54,6 +55,7 @@ export function Division2Page({ language }: { language: Division2Language }) {
         <header className={styles.intro}>
           <h1 id="division2-title">{text.title}</h1>
           <p className="lead">{text.introduction}</p>
+          <SharePageButton url={new URL(division2Paths[language], siteUrl).href} language={language} />
         </header>
         <section className={styles.guides} aria-labelledby="event-guides-title">
           <div className={styles.sectionHeading}><h2 id="event-guides-title">{text.heading}</h2><span>{text.count(division2EventGuides.length)}</span></div>

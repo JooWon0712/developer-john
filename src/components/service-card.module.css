@@ -1,0 +1,10 @@
+.card { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 24px; min-width: 0; padding: 26px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); box-shadow: 0 3px 14px var(--shadow); }
+a.card:hover { border-color: var(--accent-line); background: var(--accent-soft); }
+.content { min-width: 0; }
+.category { color: var(--muted); font-size: 10px; }
+.content h3 { margin: 4px 0; color: var(--ink); font-size: 25px; }
+.feature { margin: 0 0 9px; color: var(--accent); font-size: 12px; font-weight: 600; }
+.description { max-width: 680px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.95; }
+.content small { display: block; margin-top: 12px; color: var(--muted); font-size: 10px; }
+.action { color: var(--accent); font-size: 11px; }
+@media (max-width: 760px) { .card { gap: 14px; padding: 21px 19px; } .content h3 { font-size: 23px; } .description { font-size: 11px; } .content small { font-size: 9px; line-height: 1.9; } }

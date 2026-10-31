@@ -8,8 +8,6 @@ type RewardCopy = {
   otherTabFailed: string;
   resetConfirm: string;
   resetNotice: string;
-  shareCopied: string;
-  shareManual: string;
   apparelError: string;
   statsLabel: string;
   progressLabel: (title: string) => string;
@@ -48,8 +46,6 @@ type RewardCopy = {
   privacyTitle: string;
   privacyHelp: string;
   resetButton: string;
-  shareButton: string;
-  shareLabel: string;
   dialogTitle: string;
   close: string;
   imageEvidence: string;
@@ -74,8 +70,6 @@ const copy: Record<Language, RewardCopy> = {
     otherTabFailed: "다른 탭의 기록을 읽지 못해 현재 화면을 유지했어요.",
     resetConfirm: "이 이벤트의 체크와 의류 수량을 모두 0으로 초기화할까요?",
     resetNotice: "이 이벤트의 기록을 초기화했어요.",
-    shareCopied: "페이지 주소를 복사했어요. 내 체크 기록은 포함되지 않아요.",
-    shareManual: "아래 주소를 선택해 복사하세요. 내 체크 기록은 포함되지 않아요.",
     apparelError: "0부터 43까지의 정수를 입력하세요.",
     statsLabel: "내 보상 기록",
     progressLabel: title => `${title} 진행`,
@@ -114,8 +108,6 @@ const copy: Record<Language, RewardCopy> = {
     privacyTitle: "내 기록은 이 브라우저에만",
     privacyHelp: "게임 계정과 연결되지 않으며, 체크해도 게임에서 보상이 수령되지는 않아요. 브라우저 데이터 삭제 시 기록도 사라질 수 있어요.",
     resetButton: "이벤트 기록 초기화",
-    shareButton: "페이지 주소 복사 ↗",
-    shareLabel: "공유할 페이지 주소",
     dialogTitle: "보상 이미지",
     close: "닫기 ×",
     imageEvidence: "게임에서 확인할 수 있는 보상 이미지입니다.",
@@ -138,8 +130,6 @@ const copy: Record<Language, RewardCopy> = {
     otherTabFailed: "Progress from another tab could not be read. This page has been kept as it was.",
     resetConfirm: "Reset all checkmarks and the apparel count for this event to zero?",
     resetNotice: "Progress for this event has been reset.",
-    shareCopied: "Page link copied. Your personal checklist is not included.",
-    shareManual: "Select and copy the link below. Your personal checklist is not included.",
     apparelError: "Enter a whole number from 0 to 43.",
     statsLabel: "My reward progress",
     progressLabel: title => `${title} progress`,
@@ -178,8 +168,6 @@ const copy: Record<Language, RewardCopy> = {
     privacyTitle: "Your progress stays in this browser",
     privacyHelp: "This tool is not connected to your game account. Checking an item does not claim a reward in the game. Clearing browser data may also remove your progress.",
     resetButton: "Reset event progress",
-    shareButton: "Copy page link ↗",
-    shareLabel: "Page link to share",
     dialogTitle: "Reward image",
     close: "Close ×",
     imageEvidence: "An image of the reward as shown in the game.",

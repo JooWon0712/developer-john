@@ -13,7 +13,6 @@ export function SiteFooter() {
   return <footer className="site-footer" lang={english ? "en" : "ko"}>
     <div className="container footer-inner">
       <div className="footer-info">
-        <p className="footer-message">{english ? "Ideas into everyday life." : "아이디어를 일상으로"}</p>
         {(contact.email || contact.githubUrl) && <address className="footer-contact">
           <span className="footer-contact-label" lang="en"><span aria-hidden="true">&gt; </span>contact</span>
           {contact.email && <a href={`mailto:${contact.email}`}>{contact.email}</a>}

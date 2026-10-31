@@ -17,10 +17,10 @@ function getSiteUrl(): URL {
 export const siteUrl = getSiteUrl();
 
 export const socialPreviewImage = {
-  url: new URL("/brand/social-preview-v1.png", siteUrl).href,
-  width: 1730,
-  height: 909,
-  alt: site.name,
+  url: new URL("/brand/social-preview-workspace-wombat-v4.jpg", siteUrl).href,
+  width: 1200,
+  height: 630,
+  alt: "developer-john — John's little workspace in a terminal window, with a pixel-art wombat at a harbor café on the left",
 } as const;
 
 export function pageMetadata(title: string, description: string, path: string): Metadata {

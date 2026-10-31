@@ -12,6 +12,7 @@ import { LanguageSwitch } from "./language-switch";
 const navigation = [
   { href: "/", label: "홈", englishLabel: "Home", directory: shell.home },
   { href: "/services", label: "서비스", englishLabel: "Services", directory: shell.services },
+  { href: "/about", label: "소개", englishLabel: "About", directory: "/about" },
 ];
 
 export function SiteHeader() {
@@ -37,7 +38,7 @@ export function SiteHeader() {
             const active = basePath === href ? "page" : href === "/services" && (basePath.startsWith("/services/") || basePath.startsWith("/discovery/")) ? "location" : undefined;
             const navigationLabel = english ? englishLabel : label;
             const directoryPath = localizePath(directory, language);
-            return <Link key={href} href={localizePath(href, language)} aria-label={`${directoryPath} (${navigationLabel})`} title={`${shell.user} ${navigationLabel}`} aria-current={active}><span aria-hidden="true">{directoryPath}</span><span className="nav-cursor" aria-hidden="true" /></Link>;
+            return <Link key={href} href={localizePath(href, language)} title={`${shell.user} ${navigationLabel}`} aria-current={active}><span>{navigationLabel}</span><code aria-hidden="true">{directoryPath}</code></Link>;
           })}
         </nav>
         <LanguageSwitch />

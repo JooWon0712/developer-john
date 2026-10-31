@@ -1,0 +1,6 @@
+@import url("../wombat-grey-front/style.css");
+
+.quick-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.quick-nav a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; border: 1px solid var(--line); border-radius: 4px; color: var(--muted); font-size: 12px; }
+.quick-nav a:hover { border-color: var(--accent); color: var(--accent); }
+.concept-card { scroll-margin-top: 20px; }

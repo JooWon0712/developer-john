@@ -15,7 +15,7 @@
   border-radius: 2px;
   background: var(--surface);
   color: var(--accent);
-  box-shadow: 0 4px 16px #080f1859;
+  box-shadow: 0 4px 16px var(--shadow);
   font-family: var(--mono);
   font-size: 11px;
   line-height: 1.4;

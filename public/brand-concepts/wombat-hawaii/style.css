@@ -1,0 +1,9 @@
+@import url("../wombat-cafe/style.css");
+
+.batch-nav { display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+.batch-nav a { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:8px 18px; border:1px solid var(--line); border-radius:4px; color:var(--accent); font-size:12px; }
+.batch-nav a:hover { border-color:var(--accent); background:var(--surface); }
+.number-index { margin-top:12px; }
+.number-index summary { width:fit-content; min-height:44px; padding:8px 0; color:var(--muted); cursor:pointer; font-size:11px; }
+.number-index summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+.number-index .quick-nav { margin-top:6px; }

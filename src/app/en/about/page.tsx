@@ -1,5 +1,10 @@
-import { permanentRedirect } from "next/navigation";
+import { AboutPage } from "@/features/site/about-page";
+import { aboutCopy } from "@/features/site/about-copy";
+import { pageMetadata } from "@/lib/site";
 
-export default function AboutPage() {
-  permanentRedirect("/en");
+const text = aboutCopy.en;
+export const metadata = pageMetadata(text.title, text.description, "/en/about");
+
+export default function About() {
+  return <AboutPage language="en" />;
 }

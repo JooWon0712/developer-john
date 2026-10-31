@@ -1,0 +1,10 @@
+:root{color-scheme:light;--paper:#f5f1e8;--surface:#fffdf7;--ink:#253f45;--accent:#246b70}
+*{box-sizing:border-box}html,body{margin:0;padding:0}body{background:var(--paper);color:var(--ink);font-family:"Cascadia Code","Cascadia Mono",Consolas,"Malgun Gothic",monospace;-webkit-font-smoothing:antialiased}
+.scene{position:relative;isolation:isolate;width:1200px;height:630px;overflow:hidden;background:var(--surface)}
+.scene-image{position:absolute;z-index:-2;left:0;top:-108px;display:block;width:140%;height:140%;object-fit:cover;object-position:left 54%;image-rendering:pixelated}
+.scene::before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,#f8f5ecfc 0%,#f8f5ecf5 20%,#f8f5ecc7 36%,#f8f5ec4d 51%,#f8f5ec00 64%)}
+.about{width:52%;padding:39px 16px 42px}
+.eyebrow{margin:0;color:var(--accent);font-size:14px;line-height:1.8;letter-spacing:.1em}
+h1{margin:27px 0 34px;color:var(--ink);font-size:52px;font-weight:650;line-height:1.6;letter-spacing:-.055em}
+.biography{margin:0;max-width:550px;color:var(--ink);font-size:20px;line-height:2.05;white-space:nowrap}
+.render-controls{display:flex;gap:20px;width:1200px;padding:20px;font-size:15px}.render-controls a{color:var(--accent)}
