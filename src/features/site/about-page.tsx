@@ -22,10 +22,9 @@ export function AboutPage({ language }: { language: Language }) {
           {text.browseServices}<ArrowRight width={18} height={18} />
         </Link>
 
-        <section className={styles.approach} aria-labelledby="about-approach-title">
-          <h2 id="about-approach-title">{text.approachTitle}</h2>
+        <div className={styles.approach}>
           <p>{text.approach}</p>
-        </section>
+        </div>
 
         <ul className={styles.topics} aria-label={text.interestsLabel}>
           {text.interests.map((interest) => <li key={interest}>{interest}</li>)}

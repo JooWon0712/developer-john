@@ -1,11 +1,10 @@
 export const aboutCopy = {
   ko: {
     title: "소개",
-    description: "개발자로서 해보는 작업과 개인적인 관심을 함께 담는 곳입니다.",
+    description: "개인 작업과 관심사를 함께 담는 곳입니다.",
     headline: "편하게 둘러봐 주세요.",
-    summary: "개발자로서 해보는 작업과 개인적인 관심을 함께 담는 곳입니다.",
+    summary: "개인 작업과 관심사를 함께 담는 곳입니다.",
     browseServices: "서비스 둘러보기",
-    approachTitle: "아이디어를 구현하는 방식",
     approach: "AI 코딩 에이전트를 활용해 관심 있는 아이디어를 웹서비스로 구현하고 있습니다.",
     interestsLabel: "관심사",
     interests: ["게임", "일상의 아이디어", "웹서비스"],
@@ -15,11 +14,10 @@ export const aboutCopy = {
   },
   en: {
     title: "About",
-    description: "A place for my personal projects and interests as a developer.",
+    description: "A place for my personal projects and interests.",
     headline: "Feel free to look around.",
-    summary: "A place for my personal projects and interests as a developer.",
+    summary: "A place for my personal projects and interests.",
     browseServices: "Explore services",
-    approachTitle: "How I put ideas into practice",
     approach: "I use AI coding agents to turn ideas into web services.",
     interestsLabel: "Interests",
     interests: ["Games", "Everyday ideas", "Web services"],
