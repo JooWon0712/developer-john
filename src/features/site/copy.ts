@@ -4,7 +4,7 @@ export const sitePageCopy = {
   ko: {
     home: {
       title: "홈",
-      headline: ["개발자 John의", "작은 작업실."],
+      headline: "John의 작은 작업실.",
       introduction: "일상에서 떠오른 아이디어와 개인 작업을 한곳에 모았습니다.",
       sceneAlt: "작은 항구가 보이는 카페에서 안경을 쓴 회색 아기 웜뱃이 노트북으로 작업하는 픽셀 그림",
       browseServices: "서비스 둘러보기",
@@ -34,7 +34,7 @@ export const sitePageCopy = {
   en: {
     home: {
       title: "Home",
-      headline: ["Developer John’s", "little workspace."],
+      headline: "John’s little workspace.",
       introduction: "A place for ideas from everyday life and my personal projects.",
       sceneAlt: "Pixel art of a grey baby wombat wearing glasses and working on a laptop at a café overlooking a small harbor",
       browseServices: "Explore services",

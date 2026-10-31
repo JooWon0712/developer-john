@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="description" content="상단의 developer-john과 본문의 ‘작은 작업실’을 조합한 공유 이미지 시안입니다.">
+    <meta name="color-scheme" content="light">
+    <title>작은 작업실 · 공유 이미지 미리보기</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --paper: #f5f1e8;
+        --surface: #fffdf7;
+        --sage: #e7eee5;
+        --ink: #294342;
+        --muted: #60716a;
+        --accent: #2f6b5b;
+        --line: #d4ddd0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "Cascadia Code", "Cascadia Mono", Consolas, "Malgun Gothic", monospace;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; line-height: 1.8; word-break: keep-all; overflow-wrap: anywhere; }
+      h1, p, figure { margin: 0; }
+      a { color: var(--accent); text-underline-offset: 4px; }
+      a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+      .container { width: min(1200px, calc(100% - 64px)); margin: 0 auto; }
+      header { padding: 42px 0 24px; }
+      .eyebrow { margin-bottom: 10px; color: var(--accent); font-size: 12px; }
+      h1 { font-size: clamp(26px, 4vw, 38px); font-weight: 650; line-height: 1.5; letter-spacing: -.05em; }
+      .description { margin-top: 12px; color: var(--muted); font-size: 13px; }
+      .notice { margin-bottom: 24px; padding: 13px 18px; border: 1px solid var(--line); border-radius: 6px; background: var(--sage); color: var(--muted); font-size: 12px; }
+      figure { overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+      .preview { display: block; padding: clamp(10px, 2vw, 24px); background: var(--sage); }
+      .preview:focus-visible { outline-offset: -5px; }
+      .preview img { display: block; width: 100%; height: auto; }
+      figcaption { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 20px; padding: 14px 20px; font-size: 12px; }
+      .dimensions { color: var(--muted); font-size: 11px; }
+      .links { display: flex; flex-wrap: wrap; gap: 4px 24px; padding: 15px 0 0; }
+      .links a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 12px; }
+      footer { padding: 18px 0 34px; color: var(--muted); font-size: 11px; }
+      @media (max-width: 640px) {
+        .container { width: calc(100% - 32px); }
+        header { padding-top: 28px; }
+        .notice { margin-bottom: 18px; padding: 12px 14px; }
+        figcaption { padding: 12px 14px; }
+        .links { gap: 0 20px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <p class="eyebrow">공유 이미지 미리보기 · 06번 수정안 v2</p>
+        <h1>작은 작업실</h1>
+        <p class="description">상단에는 developer-john, 본문에는 ‘작은 작업실’을 넣었습니다. 웜뱃과 소개 문구는 기존 06번 시안과 같습니다.</p>
+      </header>
+      <main>
+        <p class="notice">최종 선택한 ‘작은 작업실’ 공유 이미지와 이전 시안을 함께 보관한 페이지입니다.</p>
+        <figure>
+          <a class="preview" href="social-small-workspace-v2.jpg" target="_blank" rel="noopener" aria-label="작은 작업실 공유 이미지 원본 보기">
+            <img src="social-small-workspace-v2.jpg" width="1200" height="630" alt="상단의 developer-john과 본문의 ‘작은 작업실’ 제목, 항구 카페의 픽셀 웜뱃이 들어간 터미널 창 형태의 공유 이미지">
+          </a>
+          <figcaption>
+            <span>developer-john · 작은 작업실</span>
+            <span class="dimensions">1200 × 630 · JPG</span>
+          </figcaption>
+        </figure>
+        <nav class="links" aria-label="시안 파일과 비교">
+          <a href="social-small-workspace-v2.jpg" target="_blank" rel="noopener">원본 보기 <span aria-hidden="true">↗</span></a>
+          <a href="social-small-workspace-v2.jpg" download="social-small-workspace-v2.jpg">이미지 다운로드 <span aria-hidden="true">↓</span></a>
+          <a href="render-small.html" target="_blank" rel="noopener">렌더링 화면 <span aria-hidden="true">↗</span></a>
+          <a href="social-john-v1.jpg" target="_blank" rel="noopener">이전 v1 이미지와 비교 <span aria-hidden="true">↗</span></a>
+          <a href="render.html" target="_blank" rel="noopener">이전 v1 렌더링 <span aria-hidden="true">↗</span></a>
+          <a href="../social-workspace-wombat/concept-06.jpg" target="_blank" rel="noopener">기존 06번과 비교 <span aria-hidden="true">↗</span></a>
+        </nav>
+      </main>
+      <footer>공유 이미지 제목 수정안 v2 · 작은 작업실</footer>
+    </div>
+  </body>
+</html>

@@ -26,7 +26,7 @@ export function HomeTerminal({ language = "ko" }: { language?: Language }) {
           unoptimized
         />
         <section id="about" className={styles.about} aria-label={text.title} tabIndex={-1}>
-          <h1 id="home-title" className={styles.headline}>{text.headline[0]}{" "}<br />{text.headline[1]}</h1>
+          <h1 id="home-title" className={styles.headline}>{text.headline}</h1>
           <p className={styles.biography}>{text.introduction}</p>
           <div className={styles.actions}>
             <Link className="button" href={servicesPath}>{text.browseServices}<ArrowRight width={17} height={17} /></Link>
