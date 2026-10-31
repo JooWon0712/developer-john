@@ -117,11 +117,85 @@ http://127.0.0.1:3310/
 
 이 연결은 로컬 개발 서버 `127.0.0.1:3004`와 별개입니다. 포워딩을 다른 네트워크 인터페이스에 공개하거나 앱 포트를 인터넷으로 포트포워딩하지 않습니다. 터널은 확인이 끝나면 해당 연결만 종료합니다.
 
-## 외부 도메인 연결은 별도 단계
+## 7. 외부 도메인 연결과 HTTP → HTTPS 전환
 
 NAS 배포와 SSH 터널 확인은 웹사이트의 외부 공개를 뜻하지 않습니다. `developer-john.com`의 DNS·HTTPS 인증서와 이 사이트 전용 역방향 프록시는 별도 작업으로 설정하고 외부 네트워크에서 확인합니다. 기존 사이트의 DNS·인증서·프록시 규칙은 유지합니다.
 
 이후 프록시 대상은 NAS의 `127.0.0.1:3310`을 사용합니다. 도메인·인증서·프록시를 준비하기 위해 앱 바인딩을 바꿀 필요는 없습니다. GA4는 기존 코드의 운영 HTTPS origin 조건을 유지하므로 NAS 내부 HTTP 주소나 PC 터널 확인만으로 운영 수집을 검증한 것으로 간주하지 않습니다.
+
+### 적용할 구성과 순서
+
+아래 절차는 `https://developer-john.com`과 `https://www.developer-john.com`의 인증서·443 역방향 프록시가 이미 정상인 상태에서, HTTP 80 접속을 사이트의 HTTPS 주소로 전환할 때 사용합니다. 사이트별 HTTP 규칙이 없으면 NAS 기본 응답이 나와 JavaScript로 DSM의 `5001` 포트에 이동할 수 있습니다. 이 상태는 아래에서 확인할 사이트의 HTTP `308` 응답과 구분합니다.
+
+설정 순서는 **기존 HTTPS 두 규칙의 요청 헤더 확인 → 리다이렉트 코드 배포 → HTTP 80 두 규칙 추가 → 외부 응답 검증**입니다. 이 사이트에 해당하는 규칙만 다루며 `mon-r` 등 다른 사이트의 규칙은 편집하거나 삭제하지 않습니다.
+
+완성할 네 규칙의 값은 다음과 같습니다. **HTTPS 규칙도 대상 프로토콜은 HTTP로 유지**합니다. 외부 TLS는 NAS에서 종료하고 앱에는 loopback HTTP로 연결합니다.
+
+| 규칙 | 소스 프로토콜·호스트·포트 | 대상 프로토콜·호스트·포트 | 요청 `Host` | 요청 `X-Forwarded-Proto` |
+| --- | --- | --- | --- | --- |
+| 기존 HTTPS 기본 도메인 | HTTPS · `developer-john.com` · `443` | HTTP · `127.0.0.1` · `3310` | `developer-john.com` | `https` |
+| 기존 HTTPS www | HTTPS · `www.developer-john.com` · `443` | HTTP · `127.0.0.1` · `3310` | `www.developer-john.com` | `https` |
+| 추가 HTTP 기본 도메인 | HTTP · `developer-john.com` · `80` | HTTP · `127.0.0.1` · `3310` | `developer-john.com` | `http` |
+| 추가 HTTP www | HTTP · `www.developer-john.com` · `80` | HTTP · `127.0.0.1` · `3310` | `www.developer-john.com` | `http` |
+
+### 7-1. 기존 HTTPS 규칙의 요청 헤더 먼저 확인
+
+1. DSM의 **제어판 → 로그인 포털 → 고급 → 역방향 프록시**를 엽니다. 기존 `developer-john.com:443` 규칙을 선택해 **편집**합니다.
+2. 일반 설정에서 소스는 HTTPS·해당 도메인·`443`, 대상은 **HTTP·`127.0.0.1`·`3310`**인지 확인합니다. 대상 프로토콜을 HTTPS로 바꾸거나 대상 포트를 `443`·`5001`로 바꾸지 않습니다.
+3. **사용자 지정 머리글(Custom Header)**의 **요청 헤더**에 `X-Forwarded-Proto`를 이름으로, `https`를 값으로 지정합니다. 같은 이름의 항목이 있으면 수정해 **하나의 값으로 덮어쓰고**, `http`·`https`를 중복 추가하거나 쉼표로 합치지 않습니다. 응답 헤더에 추가하는 설정과 구분합니다.
+4. 앱이 받는 `Host`가 원래 공개 도메인으로 유지되어야 합니다. 명시적으로 지정할 경우 요청 헤더 `Host`에 이 규칙의 도메인인 `developer-john.com`을 넣습니다. 대상 주소인 `127.0.0.1:3310`을 `Host`로 전달하지 않습니다.
+5. 저장한 뒤 `www.developer-john.com:443` 규칙도 같은 방법으로 확인합니다. 이 규칙의 `Host` 값은 `www.developer-john.com`, `X-Forwarded-Proto` 값은 `https`입니다. 기존 인증서 연결과 다른 규칙은 유지합니다.
+
+역방향 프록시의 소스·대상과 사용자 지정 헤더 화면은 [Synology DSM 7 고급 설정 공식 안내](https://kb.synology.com/en-us/DSM/help/DSM/AdminCenter/system_login_portal_advanced?version=7)를 참고합니다.
+
+HTTPS 헤더를 먼저 확인해야 하는 이유는 **NAS→앱 연결 자체는 HTTP**이기 때문입니다. 현재 Next.js 런타임은 `X-Forwarded-Proto`가 없으면 내부 연결을 기준으로 `http`를 보충할 수 있습니다. 따라서 헤더가 없으면 리다이렉트하지 않는다고 가정하지 않습니다. HTTPS 프록시에 명시적인 `https`가 전달되지 않은 채 새 코드를 배포하면, 이미 HTTPS로 접속했어도 같은 HTTPS 주소로 반복 이동할 수 있습니다.
+
+### 7-2. HTTP 판별 리다이렉트 코드 배포
+
+위의 HTTPS 두 규칙을 확인한 다음 2~4절의 기존 커밋·push·NAS 배포 및 건강 상태 확인 절차를 진행합니다. `next.config.ts`의 변경이 NAS의 새 이미지에 포함되어야 하므로 컨테이너 재시작만으로 처리하지 않습니다.
+
+앱은 요청 호스트가 `developer-john.com` 또는 `www.developer-john.com`이고, 앱에서 확인한 `X-Forwarded-Proto` 값이 정확히 `http`이면 `https://developer-john.com/:path*`로 영구 리다이렉트합니다. 경로와 쿼리는 유지하며 HTTP의 www 주소도 기본 도메인 HTTPS 주소로 모읍니다. HTTPS 요청에는 이 HTTP 전환 규칙을 적용하지 않습니다. `permanent: true`의 `308` 상태와 쿼리 전달 동작은 [Next.js redirects 공식 안내](https://nextjs.org/docs/app/api-reference/config/next-config-js/redirects)를 따릅니다.
+
+배포 직후 기존 두 HTTPS 주소가 정상 페이지를 표시하며 반복 이동하지 않는지 먼저 확인합니다. 이 단계에서는 새 HTTP 80 규칙을 아직 만들지 않습니다. NAS 내부 건강 상태 확인 주소는 기존 `http://127.0.0.1:3310`을 유지합니다.
+
+### 7-3. 사이트 전용 HTTP 80 규칙 두 개 추가
+
+1. 같은 역방향 프록시 화면에서 **생성**을 누릅니다. 이름은 `developer-john HTTP 기본 도메인`처럼 구분할 수 있게 지정합니다.
+2. 소스는 **HTTP / `developer-john.com` / `80`**, 대상은 **HTTP / `127.0.0.1` / `3310`**으로 설정합니다. 소스 호스트를 비워 NAS 전체 도메인을 받는 규칙으로 만들지 않습니다.
+3. 사용자 지정 **요청 헤더**에 `X-Forwarded-Proto: http`와 `Host: developer-john.com`을 각각 지정하고 저장합니다.
+4. www용 규칙도 별도로 생성합니다. 소스는 **HTTP / `www.developer-john.com` / `80`**, 대상은 동일한 **HTTP / `127.0.0.1` / `3310`**입니다. 요청 헤더는 `X-Forwarded-Proto: http`, `Host: www.developer-john.com`입니다.
+5. 외부 80 요청이 NAS까지 도달하는지 확인합니다. 앱 포트 `3310`의 바인딩이나 외부 포트포워딩을 넓히지 않습니다. 기존 HTTPS 두 규칙과 다른 사이트의 80·443 규칙도 그대로 유지합니다.
+
+DSM의 **로그인 포털 → DSM → HTTP 연결을 HTTPS로 자동 리다이렉트**는 DSM 관리 화면과 기본 `5000`·`5001` 포트에 관한 설정입니다. 이 사이트의 80→443 전환을 해결하기 위해 전역 DSM 설정을 바꾸지 않습니다. [Synology DSM HTTPS 전환 공식 안내](https://kb.synology.com/en-us/DSM/tutorial/force_HTTPS_for_DSM)에서도 해당 설정의 대상이 DSM 데스크톱임을 확인할 수 있습니다. HSTS 체크만으로 첫 HTTP 요청의 사이트 전환을 해결했다고 판단하지 않습니다.
+
+### 7-4. 외부 네트워크에서 308·경로·쿼리 확인
+
+PC의 NAS 내부 주소나 SSH 터널이 아닌 실제 공개 도메인으로 확인합니다. 다음은 Windows PowerShell에서 사용하는 예시이며 `curl.exe`를 명시합니다. 처음 두 명령에는 `-L`을 넣지 않아 **첫 HTTP 응답**을 확인합니다.
+
+```powershell
+curl.exe -sS -D - -o NUL "http://developer-john.com/"
+curl.exe -sS -D - -o NUL "http://www.developer-john.com/en/services?from=http-check&view=all"
+
+curl.exe -sS -D - -o NUL "https://developer-john.com/"
+curl.exe -sS -D - -o NUL "https://www.developer-john.com/en/services"
+
+curl.exe -sS -L --max-redirs 5 -o NUL -w "status=%{http_code} final=%{url_effective}" "http://www.developer-john.com/en/services?from=http-check&view=all"
+```
+
+| 확인 항목 | 기대 결과 |
+| --- | --- |
+| HTTP 기본 도메인 `/` | `308`과 `Location: https://developer-john.com/` |
+| HTTP www `/en/services?from=http-check&view=all` | `308`과 `Location: https://developer-john.com/en/services?from=http-check&view=all` |
+| 기존 HTTPS 기본 도메인·www | 정상 콘텐츠와 `200`, 같은 주소로의 반복 이동 없음 |
+| `-L --max-redirs 5`로 최종 응답 확인 | 최종 `200`, 기본 도메인의 HTTPS URL에 원래 경로·쿼리 유지 |
+
+브라우저에서도 홈·소개·서비스와 KO/EN 이동을 확인합니다. 결과를 기록할 때는 첫 응답 상태·`Location`·최종 URL을 남깁니다. DSM 로그인 HTML이나 `5001`로 보내는 JavaScript가 나오면 사이트의 HTTP 규칙과 `Host` 헤더를 다시 확인합니다. `308`이 계속 반복되면 HTTPS 규칙이 앱에 보내는 `X-Forwarded-Proto` 값부터 확인합니다.
+
+### 7-5. 영구 리다이렉트 캐시와 복구
+
+`308`은 브라우저·검색엔진에 영구 리다이렉트로 캐시될 수 있으므로 잘못된 이동을 설정한 뒤에는 기존 브라우저 화면만으로 복구 여부를 판단하기 어렵습니다. `curl.exe`의 새 요청과 별도 브라우저 프로필로 다시 확인합니다.
+
+루프나 잘못된 이동이 생기면 **이번에 추가한 HTTP 80 두 규칙을 먼저 비활성화**하고 기존 HTTPS 두 규칙의 `Host`·`X-Forwarded-Proto: https` 및 HTTP 대상 `127.0.0.1:3310`을 확인합니다. HTTPS 접속 자체도 반복 이동한다면 HTTPS 요청 헤더를 바로잡고, 필요하면 4절의 이전 앱 release 복구 절차를 사용합니다. 기존 HTTPS가 정상인 상태를 회복한 뒤 HTTP 규칙을 다시 적용합니다. 다른 사이트의 규칙이나 NAS 전역 설정을 초기화하지 않습니다.
 
 ## 선택 사항: PC에서 이미지 만들기
 
@@ -134,3 +208,6 @@ Linux 컨테이너용 Docker를 사용할 수 있는 PC·CI에서는 이미지�
 - [Docker Compose 환경 변수 설정](https://docs.docker.com/compose/how-tos/environment-variables/set-environment-variables/)
 - [Synology Container Manager 프로젝트](https://kb.synology.com/en-us/DSM/help/ContainerManager/docker_project?version=7)
 - [Synology 이미지 가져오기](https://kb.synology.com/en-us/DSM/help/ContainerManager/docker_image?version=7)
+- [Synology DSM 7 역방향 프록시와 사용자 지정 헤더](https://kb.synology.com/en-us/DSM/help/DSM/AdminCenter/system_login_portal_advanced?version=7)
+- [Synology DSM 데스크톱의 HTTP → HTTPS 전환](https://kb.synology.com/en-us/DSM/tutorial/force_HTTPS_for_DSM)
+- [Next.js redirects: 호스트·헤더 조건, 경로·쿼리, 308](https://nextjs.org/docs/app/api-reference/config/next-config-js/redirects)

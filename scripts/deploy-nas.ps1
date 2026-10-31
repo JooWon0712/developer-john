@@ -102,7 +102,7 @@ try {
         if (-not (Test-Path -LiteralPath 'node_modules/typescript/bin/tsc' -PathType Leaf)) { throw 'Run npm ci before packaging.' }
         Write-Host '[1/4] Checking TypeScript and the existing tests...'
         Invoke-TaskCommand $taskNode @('node_modules/typescript/bin/tsc', '--noEmit', '--incremental', 'false')
-        Invoke-TaskCommand $taskNode @('--test', 'scripts/test-analytics.mjs', 'scripts/test-i18n.mjs', 'scripts/test-ikigai.mjs', 'scripts/test-red-moon.mjs')
+        Invoke-TaskCommand $taskNode @('--test', 'scripts/test-analytics.mjs', 'scripts/test-i18n.mjs', 'scripts/test-ikigai.mjs', 'scripts/test-red-moon.mjs', 'scripts/test-redirects.mjs')
         Assert-CleanRevision
         Assert-CommittedSource
         Get-Command tar -CommandType Application -ErrorAction Stop | Out-Null
