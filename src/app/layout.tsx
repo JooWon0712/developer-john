@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   description: site.description,
   applicationName: site.name,
   metadataBase: siteUrl,
+  other: { "google-adsense-account": "ca-pub-6235712355295705" },
   openGraph: { images: [socialPreviewImage] },
   twitter: { card: "summary_large_image", images: [socialPreviewImage] },
 };
