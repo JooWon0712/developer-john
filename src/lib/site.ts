@@ -35,7 +35,7 @@ export function pageMetadata(title: string, description: string, path: string): 
         "x-default": new URL(localizePath(path, "ko"), siteUrl).href,
       },
     },
-    openGraph: { title: `${title} | ${site.name}`, description, url: new URL(path, siteUrl).href, siteName: site.name, locale: getLanguage(path) === "en" ? "en_US" : "ko_KR", type: "website", images: [socialPreviewImage] },
-    twitter: { card: "summary_large_image", title: `${title} | ${site.name}`, description, images: [socialPreviewImage] },
+    openGraph: { title, description, url: new URL(path, siteUrl).href, siteName: site.name, locale: getLanguage(path) === "en" ? "en_US" : "ko_KR", type: "website", images: [socialPreviewImage] },
+    twitter: { card: "summary_large_image", title, description, images: [socialPreviewImage] },
   };
 }
