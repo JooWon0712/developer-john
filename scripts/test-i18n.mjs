@@ -10,7 +10,7 @@ function moduleUrl(relative, replacements = {}) {
 }
 const { getLanguage, getBasePath, localizePath } = await import(moduleUrl("src/lib/i18n.ts"));
 
-const paths = ["/", "/services", "/privacy", "/projects", "/services/game/the-division-2", "/services/game/the-division-2/red-moon-unleashed-2026", "/discovery/ikigai", "/missing-page"];
+const paths = ["/", "/services", "/privacy", "/projects", "/services/game/the-division-2", "/services/game/the-division-2/red-moon-unleashed-2026", "/services/tools/nas-desktop-app", "/services/tools/pc-internet-monitor", "/discovery/ikigai", "/missing-page"];
 
 test("every page switches language reversibly without duplicating the English prefix", () => {
   for (const path of paths) {
@@ -41,8 +41,9 @@ test("language changes preserve queries, encoded values and exact reward fragmen
 
 test("registered Division 2 service and event routes have localized wrappers under services", async () => {
   const brandUrl = moduleUrl("src/data/brand.ts");
+  const desktopToolsUrl = moduleUrl("src/features/desktop-tools/tools.ts");
   const eventUrl = moduleUrl("src/features/division2/red-moon/event.ts");
-  const { services, serviceCategories } = await import(moduleUrl("src/data/catalog.ts", { '"@/data/brand"': brandUrl }));
+  const { services, serviceCategories } = await import(moduleUrl("src/data/catalog.ts", { '"@/data/brand"': brandUrl, '"@/features/desktop-tools/tools"': desktopToolsUrl }));
   const { division2Paths, division2EventGuides } = await import(moduleUrl("src/features/division2/event-guides.ts", { '"./red-moon/event"': eventUrl }));
   const service = services.find(item => item.id === "the-division-2");
   assert.equal(service.status, "ready");
@@ -57,6 +58,22 @@ test("registered Division 2 service and event routes have localized wrappers und
       assert.ok(eventPath.startsWith(`${indexPath}/`));
       assert.equal(localizePath(guide.paths.ko, language), eventPath);
       assert.ok(readFileSync(new URL(`../src/app${eventPath}/page.tsx`, import.meta.url), "utf8").length > 0);
+    }
+  }
+});
+
+test("every ready service has a category, translated content and both page routes", async () => {
+  const { services, serviceCategories, getLocalizedServices } = await import(moduleUrl("src/data/catalog.ts", {
+    '"@/data/brand"': moduleUrl("src/data/brand.ts"),
+    '"@/features/desktop-tools/tools"': moduleUrl("src/features/desktop-tools/tools.ts"),
+  }));
+  for (const service of services.filter(item => item.status === "ready")) {
+    assert.ok(serviceCategories.some(category => category.id === service.category));
+    for (const language of ["ko", "en"]) {
+      const localized = getLocalizedServices(language, [service])[0];
+      assert.ok(localized.topic && localized.title && localized.description);
+      const path = localizePath(service.href, language);
+      assert.ok(readFileSync(new URL(`../src/app${path}/page.tsx`, import.meta.url), "utf8").length > 0, path);
     }
   }
 });

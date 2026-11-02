@@ -1,0 +1,94 @@
+import { ArrowRight } from "@/components/icons";
+import { SharePageButton } from "@/components/share-page-button";
+import { TerminalWindow } from "@/components/terminal-window";
+import { shell } from "@/data/shell";
+import { localizePath, type Language } from "@/lib/i18n";
+import { siteUrl } from "@/lib/site";
+import { getDesktopTool, type DesktopToolId } from "./tools";
+import styles from "./tool-page.module.css";
+
+const labels = {
+  ko: {
+    category: "PC 도구 · Windows 앱",
+    parent: "서비스 목록",
+    story: "필요해서 만들고, 직접 쓰고 있습니다.",
+    features: "이렇게 사용합니다",
+    requirements: "사용 환경",
+    steps: "시작하는 방법",
+    notes: "사용 전 참고",
+    download: "GitHub에서 다운로드",
+    repository: "소스 코드",
+    issues: "문제 제보",
+    releaseInfo: "릴리스 페이지에서 Windows용 파일과 사용 안내를 확인할 수 있습니다.",
+  },
+  en: {
+    category: "PC tools · Windows app",
+    parent: "Services",
+    story: "Built for a need. Part of my everyday life.",
+    features: "What it does",
+    requirements: "Requirements",
+    steps: "Getting started",
+    notes: "Before you use it",
+    download: "Download on GitHub",
+    repository: "Source code",
+    issues: "Report an issue",
+    releaseInfo: "Find the Windows files and setup instructions on the releases page.",
+  },
+};
+
+export function DesktopToolPage({ id, language }: { id: DesktopToolId; language: Language }) {
+  const tool = getDesktopTool(id);
+  const text = tool.copy[language];
+  const ui = labels[language];
+  const path = localizePath(tool.path, language);
+
+  return <article className={styles.page} lang={language} aria-labelledby="tool-title">
+    <TerminalWindow title={path} bodyClassName={styles.body} parentLink={{ href: localizePath("/services", language), label: ui.parent }}>
+      <p className="directory-command"><span aria-hidden="true">{shell.user}:~{tool.path}$</span><code lang="en">cat README</code></p>
+
+      <header className={styles.header}>
+        <p className={styles.eyebrow}>{ui.category}</p>
+        <h1 id="tool-title">{text.name}</h1>
+        <p className={styles.tagline}>{text.tagline}</p>
+      </header>
+
+      <div className={styles.overview}>
+        <section className={styles.story} aria-labelledby="tool-story">
+          <h2 id="tool-story">{ui.story}</h2>
+          <p>{text.story}</p>
+          <div className={styles.links}>
+            <a className="button" href={tool.releasesUrl}>{ui.download}<ArrowRight width={18} height={18} aria-hidden="true" /></a>
+            <a className="text-link" href={tool.repositoryUrl}>{ui.repository}<ArrowRight width={16} height={16} aria-hidden="true" /></a>
+          </div>
+          <p className={styles.releaseInfo}>{ui.releaseInfo}</p>
+        </section>
+        <aside className={styles.requirements} aria-labelledby="tool-requirements">
+          <h2 id="tool-requirements">{ui.requirements}</h2>
+          <ul>{text.requirements.map(item => <li key={item}>{item}</li>)}</ul>
+        </aside>
+      </div>
+
+      <section className={styles.section} aria-labelledby="tool-features">
+        <h2 id="tool-features">{ui.features}</h2>
+        <div className={styles.features}>{text.features.map((feature, index) => <div className={styles.feature} key={feature.title}>
+          <span className={styles.number} aria-hidden="true">0{index + 1}</span>
+          <h3>{feature.title}</h3>
+          <p>{feature.description}</p>
+        </div>)}</div>
+      </section>
+
+      <section className={styles.section} aria-labelledby="tool-steps">
+        <h2 id="tool-steps">{ui.steps}</h2>
+        <ol className={styles.steps}>{text.steps.map(step => <li key={step}>{step}</li>)}</ol>
+      </section>
+
+      <section className={`${styles.section} ${styles.notes}`} aria-labelledby="tool-notes">
+        <h2 id="tool-notes">{ui.notes}</h2>
+        <ul>{text.notes.map(note => <li key={note}>{note}</li>)}</ul>
+        <a className="text-link" href={`${tool.repositoryUrl}/issues`}>{ui.issues}<ArrowRight width={16} height={16} aria-hidden="true" /></a>
+      </section>
+
+      <SharePageButton url={new URL(path, siteUrl).href} language={language} />
+    </TerminalWindow>
+  </article>;
+}

@@ -1,7 +1,8 @@
 import { brand } from "@/data/brand";
+import { desktopTools } from "@/features/desktop-tools/tools";
 import type { Language } from "@/lib/i18n";
 
-export type ServiceCategoryId = "game" | "discovery";
+export type ServiceCategoryId = "game" | "discovery" | "tools";
 
 export type ServiceCategory = {
   id: ServiceCategoryId;
@@ -17,6 +18,12 @@ export const serviceCategories: ServiceCategory[] = [
     description: "게임 이벤트와 받을 수 있는 보상 정보를 한곳에 정리합니다.",
     pathPrefix: "/services/game",
   },
+  {
+    id: "tools",
+    title: "PC 도구",
+    description: "직접 겪은 불편함을 해결하려고 만들어 사용하는 Windows 앱입니다.",
+    pathPrefix: "/services/tools",
+  },
 ];
 
 type ServiceBase = {
@@ -26,6 +33,7 @@ type ServiceBase = {
   title: string;
   description: string;
   category: ServiceCategoryId;
+  platform?: string;
 };
 
 export type Service =
@@ -34,6 +42,17 @@ export type Service =
 
 // Add a service only when its scope is decided. A public route is required for ready services.
 export const services: Service[] = [
+  ...desktopTools.map((tool): Service => ({
+    id: tool.id,
+    directory: tool.id,
+    topic: tool.copy.ko.name,
+    title: tool.copy.ko.tagline,
+    description: tool.copy.ko.cardDescription,
+    category: "tools",
+    platform: "Windows 10 / 11 · x64",
+    status: "ready",
+    href: tool.path,
+  })),
   {
     id: "the-division-2",
     directory: "the-division-2",
@@ -67,6 +86,7 @@ export const projects: Project[] = [
 
 const englishCategories: Record<string, Pick<ServiceCategory, "title" | "description">> = {
   game: { title: "Games", description: "Game events and the rewards you can earn, gathered in one place." },
+  tools: { title: "PC tools", description: "Windows apps I built and use to solve problems I ran into myself." },
 };
 const englishServices: Record<string, Pick<Service, "topic" | "title" | "description">> = {
   "the-division-2": {
@@ -74,6 +94,11 @@ const englishServices: Record<string, Pick<Service, "topic" | "title" | "descrip
     title: "Events & rewards",
     description: "Find The Division 2 event dates, rewards and requirements, then track the rewards you have claimed.",
   },
+  ...Object.fromEntries(desktopTools.map(tool => [tool.id, {
+    topic: tool.copy.en.name,
+    title: tool.copy.en.tagline,
+    description: tool.copy.en.cardDescription,
+  }])),
 };
 const englishProjects: Record<string, Pick<Project, "description" | "status">> = {
   "johnwest-lab": {

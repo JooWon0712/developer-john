@@ -14,6 +14,7 @@ export function ServiceCard({ service, language }: { service: Service; language:
       <h3>{entry.topic}</h3>
       <p className={styles.feature}>{entry.title}</p>
       <p className={styles.description}>{entry.description}</p>
+      {entry.platform && <small>{entry.platform}</small>}
       {entry.id === "the-division-2" && <small>{english ? "No account needed · Progress saved in your browser" : "로그인 없이 이용 · 기록은 내 브라우저에 저장"}</small>}
     </div>
     <span className={styles.action}>{entry.status === "ready" ? <ArrowRight width={22} height={22} /> : english ? "Coming soon" : "준비 중"}</span>

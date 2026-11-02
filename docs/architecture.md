@@ -2,7 +2,19 @@
 
 developer-john은 Next.js App Router와 TypeScript를 사용합니다. 첫 버전은 소개·프로젝트·서비스 목록을 정적으로 생성하고, 공통 탐색·브라우저 개인 기록과 활동 탐색 질문 등 필요한 부분만 클라이언트 컴포넌트로 실행합니다. 현재 DB나 별도 API 서버는 필요하지 않습니다.
 
-사이트 표시 이름은 `developer-john`, 기본 공개 origin은 `https://developer-john.com`입니다. 도메인 구매는 확인했으며 DNS 연결·HTTPS 설정·사이트 배포는 별도 단계입니다. npm 패키지 이름, Compose 프로젝트·Docker 이미지의 내부 식별자 `johnwest-lab`은 그대로 사용합니다. 모든 개발 명령은 프로젝트 루트에서 실행합니다.
+사이트 표시 이름은 `developer-john`, 기본 공개 origin은 `https://developer-john.com`입니다. npm 패키지 이름은 `johnwest-lab`이며, NAS 배포의 Compose 프로젝트·이미지는 `developer-john`을 사용합니다. 모든 개발 명령은 프로젝트 루트에서 실행합니다.
+
+## 서비스 도메인 관리
+
+메인 사이트와 서비스용 서브도메인의 역할, 이름·경로 기준, 주소 이전과 종료는 [서비스 도메인 관리 정책](service-domain-policy.md)을 기준으로 관리합니다. 현재 저장소에서 여러 서비스를 함께 관리하고, 실행 앱·빌드·컨테이너를 나눌지는 독립 배포 필요에 따라 결정합니다. 후보 서브도메인과 실제 공개 주소는 구분합니다.
+
+현재 `src/lib/site.ts`의 기준 주소는 빌드당 하나이고, GA는 허용된 운영 origin에서만 실행됩니다. 여러 호스트를 지원할 때는 기준 주소만 바꾸는 것으로 끝내지 않고 호스트별 메타데이터·링크·리디렉션·분석 설정을 함께 처리합니다. 아래의 기존 화면·기능 기록과 향후 도메인 정책은 구분합니다.
+
+## Windows 앱 소개
+
+`src/features/desktop-tools/tools.ts`는 NAS Desktop·PC 인터넷 모니터의 한국어·영어 문구, 내부 소개 경로와 GitHub 링크를 관리합니다. `src/data/catalog.ts`는 이 데이터를 서비스 목록에 연결하며 `tools` 분야를 `PC 도구`로 표시합니다. Windows 지원 표시는 공통 `ServiceCard`의 선택적 `platform` 필드를 사용합니다.
+
+공통 서버 컴포넌트 `DesktopToolPage`는 터미널 프레임 안에 제작 계기, 기능, 사용 환경, 시작 방법과 GitHub 링크를 표시합니다. `/services/tools/nas-desktop-app`, `/services/tools/pc-internet-monitor`와 각각의 `/en` 페이지가 같은 컴포넌트를 사용하고 `pageMetadata`로 공유·언어별 주소를 설정합니다. 다운로드 파일은 홈페이지에 복사하지 않고 각 프로젝트의 GitHub 릴리스 목록으로 연결합니다.
 
 ## 파일 역할
 

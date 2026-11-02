@@ -12,9 +12,9 @@ export const sitePageCopy = {
     },
     services: {
       title: "서비스",
-      description: "개인적으로 쓰던 도구와 떠올린 아이디어를 서비스로 공유합니다.",
+      description: "일상에서 겪은 불편함을 해결하려고 만든 웹서비스와 Windows 앱을 공유합니다.",
       heading: "일상에서 건져 올린 아이디어.",
-      lead: "개인적으로 쓰던 도구와 떠올린 아이디어를 서비스로 공유합니다.",
+      lead: "필요해서 만들고, 직접 쓰고 있습니다. 일상에서 겪은 불편함을 해결하려고 만든 도구들을 공유합니다.",
     },
     projects: {
       title: "프로젝트",
@@ -42,9 +42,9 @@ export const sitePageCopy = {
     },
     services: {
       title: "Services",
-      description: "I share personal tools and ideas as web services.",
+      description: "Web services and Windows apps I built to solve problems I ran into in everyday life.",
       heading: "Ideas from everyday life.",
-      lead: "I share personal tools and ideas as web services.",
+      lead: "Built for a need. Part of my everyday life. I share the tools I built to solve problems I ran into myself.",
     },
     projects: {
       title: "Projects",
