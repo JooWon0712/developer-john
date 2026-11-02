@@ -13,11 +13,20 @@ type ToolCopy = {
   notes: string[];
 };
 
+type ToolScreenshot = {
+  src: string;
+  width: number;
+  height: number;
+  caption: Record<Language, string>;
+  alt: Record<Language, string>;
+};
+
 type DesktopTool = {
   id: DesktopToolId;
   path: string;
   repositoryUrl: string;
   releasesUrl: string;
+  screenshots: ToolScreenshot[];
   copy: Record<Language, ToolCopy>;
 };
 
@@ -27,6 +36,22 @@ export const desktopTools: DesktopTool[] = [
     path: "/services/tools/nas-desktop-app",
     repositoryUrl: "https://github.com/JooWon0712/nas-desktop-app",
     releasesUrl: "https://github.com/JooWon0712/nas-desktop-app/releases",
+    screenshots: [
+      {
+        src: "/images/desktop-tools/nas-desktop-login.png",
+        width: 1529,
+        height: 1029,
+        caption: { ko: "NAS 로그인 화면", en: "NAS sign-in screen" },
+        alt: { ko: "NAS Desktop 전용 창 안에 표시된 NAS 로그인 화면", en: "The NAS sign-in interface inside the NAS Desktop window" },
+      },
+      {
+        src: "/images/desktop-tools/nas-desktop-connected.png",
+        width: 1529,
+        height: 1029,
+        caption: { ko: "NAS에 연결한 화면", en: "Connected to the NAS" },
+        alt: { ko: "NAS Desktop에서 NAS에 연결해 관리 화면을 연 모습", en: "The NAS management interface open in NAS Desktop after connecting" },
+      },
+    ],
     copy: {
       ko: {
         name: "NAS Desktop",
@@ -77,6 +102,22 @@ export const desktopTools: DesktopTool[] = [
     path: "/services/tools/pc-internet-monitor",
     repositoryUrl: "https://github.com/JooWon0712/pc-internet-monitor",
     releasesUrl: "https://github.com/JooWon0712/pc-internet-monitor/releases",
+    screenshots: [
+      {
+        src: "/images/desktop-tools/pc-internet-monitor-running.png",
+        width: 1372,
+        height: 1146,
+        caption: { ko: "연결 검사 실행 화면", en: "Connection checks in progress" },
+        alt: { ko: "PC 인터넷 모니터에서 연결 검사 결과를 표시하는 화면", en: "PC Internet Monitor displaying connection check results" },
+      },
+      {
+        src: "/images/desktop-tools/pc-internet-monitor-history.png",
+        width: 1372,
+        height: 1146,
+        caption: { ko: "검사 실패 이력 화면", en: "Check failure history" },
+        alt: { ko: "PC 인터넷 모니터에서 기록한 검사 실패 이력을 살펴보는 화면", en: "The recorded check failure history in PC Internet Monitor" },
+      },
+    ],
     copy: {
       ko: {
         name: "PC 인터넷 모니터",

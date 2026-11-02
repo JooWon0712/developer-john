@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ArrowRight } from "@/components/icons";
 import { SharePageButton } from "@/components/share-page-button";
 import { TerminalWindow } from "@/components/terminal-window";
@@ -12,6 +13,9 @@ const labels = {
     category: "PC 도구 · Windows 앱",
     parent: "서비스 목록",
     story: "필요해서 만들고, 직접 쓰고 있습니다.",
+    screenshots: "실행 화면",
+    screenshotInfo: "개인 환경 정보는 예시 값으로 바꾼 화면입니다.",
+    openScreenshot: "크게 보기 (새 탭)",
     features: "이렇게 사용합니다",
     requirements: "사용 환경",
     steps: "시작하는 방법",
@@ -25,6 +29,9 @@ const labels = {
     category: "PC tools · Windows app",
     parent: "Services",
     story: "Built for a need. Part of my everyday life.",
+    screenshots: "App screenshots",
+    screenshotInfo: "Personal environment details have been replaced with example values.",
+    openScreenshot: "View full size (new tab)",
     features: "What it does",
     requirements: "Requirements",
     steps: "Getting started",
@@ -67,6 +74,25 @@ export function DesktopToolPage({ id, language }: { id: DesktopToolId; language:
           <ul>{text.requirements.map(item => <li key={item}>{item}</li>)}</ul>
         </aside>
       </div>
+
+      <section className={styles.section} aria-labelledby="tool-screenshots">
+        <h2 id="tool-screenshots">{ui.screenshots}</h2>
+        <p className={styles.screenshotInfo}>{ui.screenshotInfo}</p>
+        <div className={styles.screenshots}>{tool.screenshots.map(screenshot => <figure className={styles.screenshot} key={screenshot.src}>
+          <a className={styles.screenshotLink} href={screenshot.src} target="_blank" rel="noopener noreferrer" aria-label={`${screenshot.caption[language]} — ${ui.openScreenshot}`}>
+            <Image
+              className={styles.screenshotImage}
+              src={screenshot.src}
+              alt={screenshot.alt[language]}
+              width={screenshot.width}
+              height={screenshot.height}
+              sizes="(max-width: 760px) calc(100vw - 104px), (max-width: 1184px) calc((100vw - 154px) / 2), 514px"
+            />
+            <span className={styles.screenshotAction}>{ui.openScreenshot}<span aria-hidden="true"> ↗</span></span>
+          </a>
+          <figcaption>{screenshot.caption[language]}</figcaption>
+        </figure>)}</div>
+      </section>
 
       <section className={styles.section} aria-labelledby="tool-features">
         <h2 id="tool-features">{ui.features}</h2>
