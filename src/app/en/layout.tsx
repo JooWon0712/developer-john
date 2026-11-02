@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: { default: `${site.name} — Small ideas, made real`, template: `%s | ${site.name}` },
+  title: `${site.name} — Small ideas, made real`,
   description: "Turning ideas from everyday life into small web services to share.",
 };
 

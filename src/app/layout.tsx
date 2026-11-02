@@ -8,7 +8,7 @@ import { site, siteUrl, socialPreviewImage } from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: { default: `${site.name} — 작은 아이디어를 만드는 곳`, template: `%s | ${site.name}` },
+  title: `${site.name} — 작은 아이디어를 만드는 곳`,
   description: site.description,
   applicationName: site.name,
   metadataBase: siteUrl,
