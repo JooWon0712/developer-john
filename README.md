@@ -21,7 +21,10 @@
 | `/` | `/en` | 겹쳐진 소개·서비스 창과 링크형 사이트 맵 |
 | `/about` | `/en/about` | 각 언어의 홈으로 이동하는 이전 소개 주소 |
 | `/projects` | `/en/projects` | 프로젝트 소개와 구현 방향 |
-| `/services` | `/en/services` | 게임 분야의 디비전2 서비스 안내 |
+| `/services` | `/en/services` | PC 도구와 디비전2 서비스 안내 |
+| `/services/tools/nas-desktop-app` | `/en/services/tools/nas-desktop-app` | NAS Desktop 소개·사용 방법·실행 화면 |
+| `/services/tools/pc-internet-monitor` | `/en/services/tools/pc-internet-monitor` | PC 인터넷 모니터 소개·사용 방법·실행 화면 |
+| `/services/tools/codex-usage-overlay` | `/en/services/tools/codex-usage-overlay` | Codex 잔여 한도 오버레이 소개·사용 방법·실행 화면 |
 | `/privacy` | `/en/privacy` | 개인정보처리방침 |
 | `/services/game/the-division-2` | `/en/services/game/the-division-2` | 디비전2 이벤트별 가이드 목록 |
 | `/services/game/the-division-2/red-moon-unleashed-2026` | `/en/services/game/the-division-2/red-moon-unleashed-2026` | 디비전2 이벤트 보상 안내와 개인 체크리스트 |
@@ -33,6 +36,7 @@
 
 ## 주요 기능
 
+- Windows 앱 3개의 한국어·영어 소개를 공통 컴포넌트로 제공. 기능·사용 환경·실행 화면과 시작 방법을 표시하며, GitHub Releases와 Actions 빌드를 구분해 안내.
 - JW 커서 로고, 고정폭 글꼴과 네이비·샌드 터미널 창.
 - 홈은 `about` 소개 창, 타이포 링크 형태의 서비스 창, `site map` 창이 겹치는 정적 화면. 사이트 맵은 `about` → `privacy` → `services/` 순서이며 소개 영역·개인정보처리방침·서비스 목록으로 연결. 모바일에서는 소개·서비스·사이트 맵 순서로 쌓아 표시. 소개글은 `일상에서 떠오른 아이디어를 작은 웹서비스로 만들어 공유하려고 합니다.`이며 애니메이션이나 명령 입력 기능은 사용하지 않음.
 - 서비스 목록도 같은 터미널 창을 사용하며 `john:~/services$ ls` 아래 디렉토리 형태의 서비스 링크와 `[게임]` 같은 카테고리를 표시. 별도 분야 버튼과 서비스 개수는 표시하지 않음.
