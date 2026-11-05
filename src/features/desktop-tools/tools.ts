@@ -23,6 +23,7 @@ type ToolScreenshot = {
 
 type DesktopTool = {
   id: DesktopToolId;
+  addedOrder: number;
   path: string;
   repositoryUrl: string;
   distribution: { kind: "releases" | "actions"; url: string };
@@ -34,6 +35,7 @@ type DesktopTool = {
 export const desktopTools: DesktopTool[] = [
   {
     id: "nas-desktop-app",
+    addedOrder: 1,
     path: "/services/tools/nas-desktop-app",
     repositoryUrl: "https://github.com/JooWon0712/nas-desktop-app",
     distribution: { kind: "releases", url: "https://github.com/JooWon0712/nas-desktop-app/releases" },
@@ -100,6 +102,7 @@ export const desktopTools: DesktopTool[] = [
   },
   {
     id: "pc-internet-monitor",
+    addedOrder: 1,
     path: "/services/tools/pc-internet-monitor",
     repositoryUrl: "https://github.com/JooWon0712/pc-internet-monitor",
     distribution: { kind: "releases", url: "https://github.com/JooWon0712/pc-internet-monitor/releases" },
@@ -168,6 +171,7 @@ export const desktopTools: DesktopTool[] = [
   },
   {
     id: "codex-usage-overlay",
+    addedOrder: 2,
     path: "/services/tools/codex-usage-overlay",
     repositoryUrl: "https://github.com/JooWon0712/codex-usage-overlay",
     distribution: { kind: "actions", url: "https://github.com/JooWon0712/codex-usage-overlay/actions/workflows/windows-build.yml" },

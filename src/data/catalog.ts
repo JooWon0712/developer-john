@@ -28,6 +28,7 @@ export const serviceCategories: ServiceCategory[] = [
 
 type ServiceBase = {
   id: string;
+  addedOrder: number;
   directory: string;
   topic: string;
   title: string;
@@ -40,10 +41,12 @@ export type Service =
   | (ServiceBase & { status: "ready"; href: string })
   | (ServiceBase & { status: "planned"; href?: never });
 
-// Add a service only when its scope is decided. A public route is required for ready services.
-export const services: Service[] = [
+// Increase addedOrder for each new addition; keep the same value for services added together.
+// Updating an existing service does not change its addedOrder.
+const serviceEntries: Service[] = [
   ...desktopTools.map((tool): Service => ({
     id: tool.id,
+    addedOrder: tool.addedOrder,
     directory: tool.id,
     topic: tool.copy.ko.name,
     title: tool.copy.ko.tagline,
@@ -55,6 +58,7 @@ export const services: Service[] = [
   })),
   {
     id: "the-division-2",
+    addedOrder: 0,
     directory: "the-division-2",
     topic: "디비전2",
     title: "이벤트·보상 정보",
@@ -64,6 +68,9 @@ export const services: Service[] = [
     href: "/services/game/the-division-2",
   },
 ];
+
+// Stable sorting preserves the requested order within the same addition.
+export const services: Service[] = serviceEntries.sort((a, b) => b.addedOrder - a.addedOrder);
 
 export type Project = {
   id: string;
