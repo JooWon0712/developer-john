@@ -1,0 +1,12 @@
+{
+  "name": "Harbor café — wombat has gone to bed",
+  "created": "2026-11-07",
+  "mode": "built-in image_gen edit",
+  "reference": "/images/home/harbor-cafe-cozy-pixel-night-sleeping-v1.webp",
+  "original": "/images/home/harbor-cafe-cozy-pixel-night-away-v1.png",
+  "web": "/images/home/harbor-cafe-cozy-pixel-night-away-v1.webp",
+  "width": 1536,
+  "height": 1024,
+  "webEncoding": "Lossless WebP; decoded RGBA pixels verified identical to generated PNG.",
+  "prompt": "Use case: precise-object-edit.\nEdit target: the supplied 1536x1024 night harbor café pixel-art illustration.\nPrimary request: the baby wombat has finished for the night and LEFT THE CAFE TO GO TO BED ELSEWHERE. Remove the wombat completely from its seat, including head, ears, glasses, arms, paws, body and feet. Show the same now-EMPTY blue-and-cream checkered wicker chair and cream cushion at the same right-hand position, naturally reconstructing the hidden chair back, cushion, harbor water and veranda railing wherever its body used to obscure them. The image must contain NO wombat and NO other animal or person; no sleeping character in the chair, no ghost outline.\nKeep the laptop open at the SAME location on the wooden table, with the same keyboard, screen angle and proportions. Preserve the cup and saucer, flowers and palms, boats, piers, island and houses, moon, stars and clouds, reflections, wooden veranda post, awning, lantern, foreground table, chair position, camera crop and night colors. Keep the cozy warm existing lantern glow and deep blue moonlit harbor.\nPreserve the same coarse square-pixel illustration style, chunky stepped edges and restricted flat color clusters. Avoid extra details, smoothing, realistic fur or glossy rendering. Change only what is necessary to remove the wombat and reveal the empty chair/background. Do not add a bed, blanket, sign, written note, text, ZZZ, new props, logos or border. Output the full composition at 1536x1024."
+}

@@ -1,0 +1,871 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Implementation research input; not an application module or current user progress",
+  "checkedOn": "2026-11-04",
+  "displayTimeZone": "Asia/Seoul",
+  "runtimeImported": false,
+  "implementationDecision": {
+    "decidedOn": "2026-11-04",
+    "state": "deferred_by_user",
+    "annualLargeEventGuideTarget": { "minimum": 3, "maximum": 4 },
+    "reason": "Focus independent checklists on complex large events; retain this smaller-event research for reference.",
+    "canonicalPlan": "../../service-plan.md"
+  },
+  "sources": [
+    {
+      "id": "ubisoft-launch-drops",
+      "kind": "official",
+      "publishedOn": "2026-11-03",
+      "checkedOn": "2026-11-04",
+      "url": "https://www.ubisoft.com/en-us/game/the-division/the-division-2/news-updates/5EEgwKS6kDqyvUFo5PJYsB/the-division-2-echoes-of-central-park-launch-twitch-drops",
+      "title": "Echoes of Central Park Launch Twitch Drops"
+    },
+    {
+      "id": "ubisoft-y8s3-3",
+      "kind": "official",
+      "publishedOn": "2026-11-02",
+      "checkedOn": "2026-11-04",
+      "url": "https://www.ubisoft.com/en-us/game/the-division/the-division-2/news-updates/7L8TlD1Hv0XC1prOD8mdte/tuy8s33-crossplay-rollout-conflict-improvements-more",
+      "title": "TUY8S3.3 Crossplay Rollout, Conflict Improvements and More"
+    },
+    {
+      "id": "ttv-drops-metadata",
+      "kind": "third_party_index",
+      "checkedOn": "2026-11-04",
+      "url": "https://ttvdrops.lovinator.space/twitch/campaigns/3ca93244-cef5-4afc-947f-ad4bca063509/",
+      "title": "TwitchDropsMiner campaign metadata mirrored by TTVDrops"
+    },
+    {
+      "id": "ubisoft-outfit-token",
+      "kind": "official_general_system",
+      "publishedOn": "2026-08-11",
+      "checkedOn": "2026-11-04",
+      "url": "https://news.ubisoft.com/en-us/article/20x1vIjVZwX7f14yN12JaV/the-division-2-broken-rain-incursion-everything-you-need-to-know",
+      "title": "Broken Rain outfit token system explanation"
+    },
+    {
+      "id": "ubisoft-referral-terms",
+      "kind": "official_general_terms",
+      "publishedOn": "2023-10",
+      "checkedOn": "2026-11-04",
+      "url": "https://www.ubisoft.com/legal/documents/termsandconditionsreferralprogram/en-US",
+      "title": "Friend Referral Program Terms and Conditions"
+    },
+    {
+      "id": "ubisoft-referral-help-2024",
+      "kind": "official_historical_rules",
+      "checkedOn": "2026-11-04",
+      "url": "https://www.ubisoft.com/pl-pl/help/the-division-2/connectivity-and-performance/article/inviting-friends-through-the-division-2-friend-referral-program/000065235",
+      "title": "Historical referral eligibility; current applicability unverified"
+    },
+    {
+      "id": "prototrack-calendar",
+      "kind": "community_calendar",
+      "checkedOn": "2026-11-04",
+      "url": "https://prototrack.gg/seasonal-calendar.php?season=y8s3",
+      "title": "Y8S3 community calendar; not official timing authority"
+    }
+  ],
+  "publicationPlan": [
+    {
+      "id": "echoes-of-central-park-drops-2026",
+      "recommendedPhase": null,
+      "originalResearchPhase": 1,
+      "implementationState": "deferred_by_user",
+      "statusAsOfResearch": "within_announced_dates",
+      "unit": "independent_event_page",
+      "checks": 5
+    },
+    {
+      "id": "shepherd-event-2026-11",
+      "recommendedPhase": null,
+      "originalResearchPhase": 2,
+      "implementationState": "deferred_by_user",
+      "statusAsOfResearch": "upcoming",
+      "unit": "independent_event_page",
+      "checks": 6
+    },
+    {
+      "id": "master-climax-2026-11",
+      "recommendedPhase": null,
+      "originalResearchPhase": 3,
+      "implementationState": "reference_only",
+      "unit": "related_information_only",
+      "checks": 0
+    },
+    {
+      "id": "friend-referral-2026-11",
+      "recommendedPhase": null,
+      "originalResearchPhase": 3,
+      "implementationState": "reference_only",
+      "unit": "role_specific_information_only",
+      "checks": 0
+    },
+    {
+      "id": "central-park-event-pass",
+      "recommendedPhase": null,
+      "unit": "wait_for_official_rewards_and_dates",
+      "checks": 0
+    }
+  ],
+  "events": [
+    {
+      "id": "echoes-of-central-park-drops-2026",
+      "slug": "echoes-of-central-park-drops-2026",
+      "title": {
+        "ko": "센트럴 파크의 메아리 출시 기념 드롭스",
+        "en": "Echoes of Central Park Launch Twitch Drops"
+      },
+      "description": {
+        "ko": "누적 시청 조건과 보상 5종을 확인하고 받은 보상을 기록하세요.",
+        "en": "Review five watch-time rewards and track the items you have claimed."
+      },
+      "paths": {
+        "ko": "/services/game/the-division-2/echoes-of-central-park-drops-2026",
+        "en": "/en/services/game/the-division-2/echoes-of-central-park-drops-2026"
+      },
+      "schedule": {
+        "startsOn": "2026-11-03",
+        "endsOn": "2026-11-10",
+        "startsAt": null,
+        "endsAt": null,
+        "timeZone": null,
+        "precision": "date_only",
+        "authority": "official_announced_dates",
+        "sourceId": "ubisoft-launch-drops",
+        "thirdPartyObservation": {
+          "campaignId": "3ca93244-cef5-4afc-947f-ad4bca063509",
+          "sourceId": "ttv-drops-metadata",
+          "precision": "minute",
+          "startsUtc": "2026-11-03 16:00 UTC",
+          "endsUtc": "2026-11-10 15:59 UTC",
+          "startsKst": "2026-11-04 01:00 KST",
+          "endsKst": "2026-11-11 00:59 KST",
+          "useForOfficialCountdown": false
+        }
+      },
+      "storage": {
+        "key": "developer-john:division2:echoes-of-central-park-drops-2026:v1",
+        "schema": 1,
+        "initialState": {
+          "eventId": "echoes-of-central-park-drops-2026",
+          "schema": 1,
+          "checkedIds": [],
+          "savedAt": null
+        },
+        "sharedAcrossLanguages": true,
+        "automaticReceiptDetection": false
+      },
+      "entries": [
+        {
+          "id": "drops-central-park-arm-patch",
+          "check": {
+            "id": "drops-central-park-arm-patch",
+            "type": "reward",
+            "label": {
+              "ko": "보상 수령",
+              "en": "Reward claimed"
+            }
+          },
+          "names": {
+            "ko": "Central Park Arm Patch",
+            "en": "Central Park Arm Patch"
+          },
+          "nameStatus": "official_en_only",
+          "kind": {
+            "ko": "팔 휘장",
+            "en": "Arm patch"
+          },
+          "condition": {
+            "kind": "twitch_watch_time",
+            "watchMinutesTotal": 30
+          },
+          "quantity": 1,
+          "sourceIds": [
+            "ubisoft-launch-drops"
+          ],
+          "assetId": "central-park-arm-patch",
+          "researchAsset": "assets/twitch-central-park-arm-patch.png",
+          "aliases": [
+            "Arm Patch Central Park",
+            "Arm Patch Echoes of Central Park"
+          ]
+        },
+        {
+          "id": "drops-named-cache",
+          "check": {
+            "id": "drops-named-cache",
+            "type": "reward",
+            "label": {
+              "ko": "보상 수령",
+              "en": "Reward claimed"
+            }
+          },
+          "names": {
+            "ko": "네임드 상자",
+            "en": "Named Cache"
+          },
+          "nameStatus": "established_ko_term",
+          "kind": {
+            "ko": "상자",
+            "en": "Cache"
+          },
+          "condition": {
+            "kind": "twitch_watch_time",
+            "watchMinutesTotal": 60
+          },
+          "quantity": 1,
+          "sourceIds": [
+            "ubisoft-launch-drops"
+          ],
+          "assetId": "named-cache",
+          "researchAsset": "assets/twitch-named-cache.png",
+          "aliases": []
+        },
+        {
+          "id": "drops-bird-skull-backpack-trophy",
+          "check": {
+            "id": "drops-bird-skull-backpack-trophy",
+            "type": "reward",
+            "label": {
+              "ko": "보상 수령",
+              "en": "Reward claimed"
+            }
+          },
+          "names": {
+            "ko": "Bird Skull Backpack Trophy",
+            "en": "Bird Skull Backpack Trophy"
+          },
+          "nameStatus": "official_en_only",
+          "kind": {
+            "ko": "백팩 장식",
+            "en": "Backpack trophy"
+          },
+          "condition": {
+            "kind": "twitch_watch_time",
+            "watchMinutesTotal": 120
+          },
+          "quantity": 1,
+          "sourceIds": [
+            "ubisoft-launch-drops"
+          ],
+          "assetId": "bird-skull-backpack-trophy",
+          "researchAsset": "assets/twitch-bird-skull-backpack-trophy.png",
+          "aliases": [
+            "Backpack Trophy Bird Skull",
+            "Backpack Trophy Bird Skul"
+          ]
+        },
+        {
+          "id": "drops-exotic-cache",
+          "check": {
+            "id": "drops-exotic-cache",
+            "type": "reward",
+            "label": {
+              "ko": "보상 수령",
+              "en": "Reward claimed"
+            }
+          },
+          "names": {
+            "ko": "특급 상자",
+            "en": "Exotic Cache"
+          },
+          "nameStatus": "established_ko_term",
+          "kind": {
+            "ko": "상자",
+            "en": "Cache"
+          },
+          "condition": {
+            "kind": "twitch_watch_time",
+            "watchMinutesTotal": 180
+          },
+          "quantity": 1,
+          "sourceIds": [
+            "ubisoft-launch-drops"
+          ],
+          "assetId": "exotic-cache",
+          "researchAsset": "assets/twitch-exotic-cache.png",
+          "aliases": []
+        },
+        {
+          "id": "drops-outfit-token",
+          "check": {
+            "id": "drops-outfit-token",
+            "type": "reward",
+            "label": {
+              "ko": "보상 수령",
+              "en": "Reward claimed"
+            }
+          },
+          "names": {
+            "ko": "의상 토큰",
+            "en": "Outfit Token"
+          },
+          "nameStatus": "descriptive_ko_label",
+          "kind": {
+            "ko": "토큰",
+            "en": "Token"
+          },
+          "condition": {
+            "kind": "twitch_watch_time",
+            "watchMinutesTotal": 240
+          },
+          "quantity": 1,
+          "sourceIds": [
+            "ubisoft-launch-drops"
+          ],
+          "assetId": "outfit-token",
+          "researchAsset": "assets/twitch-outfit-token.png",
+          "aliases": []
+        }
+      ],
+      "heroAssetId": "drops-overview",
+      "participantSteps": {
+        "ko": [
+          "Twitch 계정과 Ubisoft Connect 계정을 연결하세요.",
+          "보상을 받을 플랫폼 계정이 Ubisoft Connect에 연결되어 있는지 확인하세요.",
+          "드롭스가 활성화된 참여 디비전2 방송을 시청하세요.",
+          "Twitch 드롭스 보관함에서 각 보상을 직접 수령하세요.",
+          "보상을 받을 플랫폼에서 디비전2에 로그인하세요."
+        ],
+        "en": [
+          "Link your Twitch account to Ubisoft Connect.",
+          "Check that your intended gaming platform is linked to Ubisoft Connect.",
+          "Watch an eligible Division 2 stream with Drops enabled.",
+          "Claim each reward in your Twitch Drops Inventory.",
+          "Log into The Division 2 on your intended platform."
+        ]
+      },
+      "links": {
+        "inventory": "https://www.twitch.tv/drops/inventory",
+        "connect": "https://drops-register.ubi.com/",
+        "streams": "https://www.twitch.tv/directory/category/tom-clancys-the-division-2"
+      },
+      "participationFacts": {
+        "watchTimeStacksAcrossParticipatingChannels": true,
+        "totalWatchMinutesForFinalReward": 240,
+        "dlcPurchaseRequirement": null,
+        "previousRewardClaimRequiredForNextTier": null,
+        "maximumDeliveryDelayHours": null
+      },
+      "notes": {
+        "ko": [
+          "시청 시간은 누적 기준입니다.",
+          "체크는 개인 기록이며 실제 Twitch 보상 수령을 대신하지 않습니다.",
+          "팔 휘장과 백팩 장식의 한국어판 이름은 미확인입니다.",
+          "정확한 마감은 Twitch 드롭스 보관함에서 확인하세요."
+        ],
+        "en": [
+          "Rewards use total watch time.",
+          "Checklist entries are personal records and do not claim Twitch rewards.",
+          "Korean in-game names for the patch and trophy remain unverified.",
+          "Check Twitch Drops Inventory for the actual deadline."
+        ]
+      }
+    },
+    {
+      "id": "shepherd-event-2026-11",
+      "slug": "shepherd-event-2026-11",
+      "title": {
+        "ko": "지원 요청 이벤트 보상 가이드",
+        "en": "Shepherd Event Rewards Guide"
+      },
+      "titleStatusKo": "descriptive_label",
+      "description": {
+        "ko": "지원 등급을 올리는 프로젝트 6단계와 보상을 확인하세요.",
+        "en": "Review six Shepherd projects and their rewards."
+      },
+      "paths": {
+        "ko": "/services/game/the-division-2/shepherd-event-2026-11",
+        "en": "/en/services/game/the-division-2/shepherd-event-2026-11"
+      },
+      "schedule": {
+        "startsOn": "2026-11-17",
+        "endsOn": "2026-11-26",
+        "startsAt": null,
+        "endsAt": null,
+        "timeZone": null,
+        "precision": "date_only",
+        "authority": "official_announced_dates",
+        "sourceId": "ubisoft-y8s3-3"
+      },
+      "storage": {
+        "key": "developer-john:division2:shepherd-event-2026-11:v1",
+        "schema": 1,
+        "initialState": {
+          "eventId": "shepherd-event-2026-11",
+          "schema": 1,
+          "checkedIds": [],
+          "savedAt": null
+        },
+        "sharedAcrossLanguages": true,
+        "automaticReceiptDetection": false
+      },
+      "entries": [
+        {
+          "id": "shepherd-project-1",
+          "check": {
+            "id": "shepherd-project-1",
+            "type": "reward_bundle",
+            "label": {
+              "ko": "프로젝트 1 보상 수령",
+              "en": "Project 1 rewards claimed"
+            }
+          },
+          "names": {
+            "ko": "프로젝트 1",
+            "en": "Project 1"
+          },
+          "condition": {
+            "kind": "shepherd_rank_gain",
+            "requiredGain": 1,
+            "rankBeforeEventCounts": null
+          },
+          "rewards": [
+            {
+              "kind": "material",
+              "names": {
+                "ko": "특급 부품",
+                "en": "Exotic Components"
+              },
+              "quantity": 10
+            },
+            {
+              "kind": "xp",
+              "names": {
+                "ko": "경험치",
+                "en": "XP"
+              },
+              "quantity": 700000
+            },
+            {
+              "kind": "cache",
+              "names": {
+                "ko": "Reconstructed Cache",
+                "en": "Reconstructed Cache"
+              },
+              "nameStatus": "official_en_only",
+              "quantity": 1
+            }
+          ],
+          "sourceIds": [
+            "ubisoft-y8s3-3"
+          ]
+        },
+        {
+          "id": "shepherd-project-2",
+          "check": {
+            "id": "shepherd-project-2",
+            "type": "reward_bundle",
+            "label": {
+              "ko": "프로젝트 2 보상 수령",
+              "en": "Project 2 rewards claimed"
+            }
+          },
+          "names": {
+            "ko": "프로젝트 2",
+            "en": "Project 2"
+          },
+          "condition": {
+            "kind": "shepherd_rank_gain",
+            "requiredGain": 1,
+            "rankBeforeEventCounts": null
+          },
+          "rewards": [
+            {
+              "kind": "material",
+              "names": {
+                "ko": "특급 부품",
+                "en": "Exotic Components"
+              },
+              "quantity": 10
+            },
+            {
+              "kind": "xp",
+              "names": {
+                "ko": "경험치",
+                "en": "XP"
+              },
+              "quantity": 700000
+            },
+            {
+              "kind": "cache",
+              "names": {
+                "ko": "Reconstructed Cache",
+                "en": "Reconstructed Cache"
+              },
+              "nameStatus": "official_en_only",
+              "quantity": 1
+            }
+          ],
+          "sourceIds": [
+            "ubisoft-y8s3-3"
+          ]
+        },
+        {
+          "id": "shepherd-project-3",
+          "check": {
+            "id": "shepherd-project-3",
+            "type": "reward_bundle",
+            "label": {
+              "ko": "프로젝트 3 보상 수령",
+              "en": "Project 3 rewards claimed"
+            }
+          },
+          "names": {
+            "ko": "프로젝트 3",
+            "en": "Project 3"
+          },
+          "condition": {
+            "kind": "shepherd_rank_gain",
+            "requiredGain": 1,
+            "rankBeforeEventCounts": null
+          },
+          "rewards": [
+            {
+              "kind": "material",
+              "names": {
+                "ko": "특급 부품",
+                "en": "Exotic Components"
+              },
+              "quantity": 10
+            },
+            {
+              "kind": "xp",
+              "names": {
+                "ko": "경험치",
+                "en": "XP"
+              },
+              "quantity": 700000
+            },
+            {
+              "kind": "cache",
+              "names": {
+                "ko": "Reconstructed Cache",
+                "en": "Reconstructed Cache"
+              },
+              "nameStatus": "official_en_only",
+              "quantity": 1
+            }
+          ],
+          "sourceIds": [
+            "ubisoft-y8s3-3"
+          ]
+        },
+        {
+          "id": "shepherd-project-4",
+          "check": {
+            "id": "shepherd-project-4",
+            "type": "reward_bundle",
+            "label": {
+              "ko": "프로젝트 4 보상 수령",
+              "en": "Project 4 rewards claimed"
+            }
+          },
+          "names": {
+            "ko": "프로젝트 4",
+            "en": "Project 4"
+          },
+          "condition": {
+            "kind": "shepherd_rank_gain",
+            "requiredGain": 1,
+            "rankBeforeEventCounts": null
+          },
+          "rewards": [
+            {
+              "kind": "material",
+              "names": {
+                "ko": "특급 부품",
+                "en": "Exotic Components"
+              },
+              "quantity": 10
+            },
+            {
+              "kind": "xp",
+              "names": {
+                "ko": "경험치",
+                "en": "XP"
+              },
+              "quantity": 700000
+            },
+            {
+              "kind": "cache",
+              "names": {
+                "ko": "Reconstructed Cache",
+                "en": "Reconstructed Cache"
+              },
+              "nameStatus": "official_en_only",
+              "quantity": 1
+            }
+          ],
+          "sourceIds": [
+            "ubisoft-y8s3-3"
+          ]
+        },
+        {
+          "id": "shepherd-project-5",
+          "check": {
+            "id": "shepherd-project-5",
+            "type": "reward_bundle",
+            "label": {
+              "ko": "프로젝트 5 보상 수령",
+              "en": "Project 5 rewards claimed"
+            }
+          },
+          "names": {
+            "ko": "프로젝트 5",
+            "en": "Project 5"
+          },
+          "condition": {
+            "kind": "shepherd_rank_gain",
+            "requiredGain": 1,
+            "rankBeforeEventCounts": null
+          },
+          "rewards": [
+            {
+              "kind": "material",
+              "names": {
+                "ko": "특급 부품",
+                "en": "Exotic Components"
+              },
+              "quantity": 10
+            },
+            {
+              "kind": "xp",
+              "names": {
+                "ko": "경험치",
+                "en": "XP"
+              },
+              "quantity": 700000
+            },
+            {
+              "kind": "cache",
+              "names": {
+                "ko": "Reconstructed Cache",
+                "en": "Reconstructed Cache"
+              },
+              "nameStatus": "official_en_only",
+              "quantity": 1
+            }
+          ],
+          "sourceIds": [
+            "ubisoft-y8s3-3"
+          ]
+        },
+        {
+          "id": "shepherd-project-6",
+          "check": {
+            "id": "shepherd-project-6",
+            "type": "reward_bundle",
+            "label": {
+              "ko": "프로젝트 6 보상 수령",
+              "en": "Project 6 rewards claimed"
+            }
+          },
+          "names": {
+            "ko": "프로젝트 6",
+            "en": "Project 6"
+          },
+          "condition": {
+            "kind": "shepherd_rank_gain",
+            "requiredGain": 1,
+            "rankBeforeEventCounts": null
+          },
+          "rewards": [
+            {
+              "kind": "material",
+              "names": {
+                "ko": "특급 부품",
+                "en": "Exotic Components"
+              },
+              "quantity": 10
+            },
+            {
+              "kind": "xp",
+              "names": {
+                "ko": "경험치",
+                "en": "XP"
+              },
+              "quantity": 700000
+            },
+            {
+              "kind": "named_weapon",
+              "names": {
+                "ko": "Malinois",
+                "en": "Malinois"
+              },
+              "nameStatus": "official_en_only",
+              "weaponModel": "Mk16",
+              "quantity": 1,
+              "assetId": null
+            }
+          ],
+          "sourceIds": [
+            "ubisoft-y8s3-3"
+          ]
+        }
+      ],
+      "projectRules": {
+        "totalProjects": 6,
+        "allProjectsAvailableFromDayOne": true,
+        "requiresDailyUnlockWait": false,
+        "automaticEndorsements": 3,
+        "projectAcceptanceUiVerified": false
+      },
+      "totals": {
+        "exoticComponents": 60,
+        "xp": 4200000,
+        "reconstructedCaches": 5,
+        "namedWeapons": [
+          {
+            "name": "Malinois",
+            "model": "Mk16",
+            "quantity": 1
+          }
+        ]
+      },
+      "heroAssetId": null,
+      "notes": {
+        "ko": [
+          "각 단계의 보상 수령을 개별 기록합니다.",
+          "마지막 단계를 체크해도 앞 단계가 자동 체크되지 않습니다.",
+          "기존 지원 등급의 소급 인정과 프로젝트 수락 UI는 미확인입니다."
+        ],
+        "en": [
+          "Track each project reward bundle individually.",
+          "Checking the last project does not automatically check previous projects.",
+          "Retroactive rank credit and project acceptance details remain unverified."
+        ]
+      }
+    }
+  ],
+  "relatedGuides": [
+    {
+      "id": "master-climax-2026-11",
+      "kind": "season_content",
+      "tracking": "information_only",
+      "placement": "drops_detail_footer",
+      "registerAsEvent": false,
+      "startsOn": "2026-11-03",
+      "endsOn": null,
+      "sourceIds": [
+        "ubisoft-y8s3-3"
+      ],
+      "reward": {
+        "names": {
+          "ko": "Loaded for Bear",
+          "en": "Loaded for Bear"
+        },
+        "nameStatus": "official_en_only",
+        "kind": "exotic_gloves",
+        "assetId": "loaded-for-bear",
+        "guarantee": {
+          "condition": "first_completion_on_Master",
+          "guaranteed": true
+        },
+        "otherDifficulties": {
+          "canDrop": true,
+          "rate": null,
+          "higherDifficultyImprovesChance": true
+        }
+      },
+      "requirements": {
+        "exactHvtCount": null,
+        "dlcPurchaseRequirement": null
+      },
+      "knownIssue": {
+        "condition": "Climax mission remains locked after completing HVT-marked Manhunt Scouts",
+        "workaround": "Log out and back in; recheck current patch notes before publication."
+      }
+    },
+    {
+      "id": "friend-referral-2026-11",
+      "kind": "referral_program",
+      "tracking": "role_specific_information_only",
+      "placement": "drops_detail_footer",
+      "registerAsEvent": false,
+      "startsOn": null,
+      "endsOn": null,
+      "sourceIds": [
+        "ubisoft-y8s3-3"
+      ],
+      "officialLink": "https://referral.ubisoft.com/the-division-2-referral/",
+      "requirements": {
+        "invitedFriendPlayHours": 2,
+        "playTogetherRequired": null,
+        "currentNewOrReturningPlayerEligibility": null
+      },
+      "rewards": [
+        {
+          "id": "referrer-first",
+          "recipient": "referrer",
+          "qualifiedReferrals": 1,
+          "name": "Cyclops Outfit",
+          "nameStatus": "official_en_only"
+        },
+        {
+          "id": "referrer-second",
+          "recipient": "referrer",
+          "qualifiedReferrals": 2,
+          "name": "Esprit de Corps Outfit",
+          "nameStatus": "official_en_only"
+        },
+        {
+          "id": "invitee",
+          "recipient": "invitee",
+          "name": "Frenzied Outfit",
+          "nameStatus": "official_en_only"
+        }
+      ],
+      "overviewAssetId": "friend-referral-outfits",
+      "individualOutfitImageMappingVerified": false,
+      "generalDeliveryRule": {
+        "sourceId": "ubisoft-referral-terms",
+        "maximumDelayHours": 24,
+        "scope": "general_referral_terms_not_a_Twitch_delivery_rule"
+      },
+      "doNotImportHistoricalRules": [
+        "2020 three co-op missions",
+        "2024 June 11 first-play eligibility cutoff without current FAQ confirmation"
+      ]
+    }
+  ],
+  "heldItems": [
+    {
+      "id": "central-park-event-pass",
+      "reason": "Official follow-up announcement exists; dates, price and reward track not verified.",
+      "sourceIds": [
+        "ubisoft-y8s3-3"
+      ],
+      "publishRewardChecks": false
+    },
+    {
+      "id": "xp-calendar",
+      "reason": "Community schedule, not verified against current official in-game calendar.",
+      "sourceIds": [
+        "prototrack-calendar"
+      ],
+      "publishRewardChecks": false
+    },
+    {
+      "id": "bloody-houndsman-uniform",
+      "reason": "Existing Red Moon follow-up item; do not duplicate in the DLC Drops event.",
+      "publishRewardChecks": false
+    }
+  ],
+  "implementationInvariants": {
+    "resetStrategy": "replace_current_key_with_empty_state",
+    "preserveExistingRedMoonIds": true,
+    "preserveExistingRedMoonStorageKey": "developer-john:division2:red-moon-unleashed-2026:v1",
+    "newVisitorCheckedIds": [],
+    "shareIdsAndStorageAcrossLanguages": true,
+    "countInformationCardsAsRewards": false,
+    "autoCheckBasedOnTimeOrOtherChecks": false,
+    "loadProgressBeforeEnablingChanges": true,
+    "doNotOverwriteCorruptStorageAutomatically": true,
+    "resetOnlyCurrentEvent": true,
+    "collectTwitchOrUbisoftCredentials": false,
+    "trackChecklistValuesInAnalytics": false,
+    "assetReference": "assets/manifest.json"
+  }
+}

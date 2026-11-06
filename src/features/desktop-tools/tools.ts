@@ -36,7 +36,7 @@ export const desktopTools: DesktopTool[] = [
   {
     id: "nas-desktop-app",
     addedOrder: 1,
-    path: "/services/tools/nas-desktop-app",
+    path: "/workspace/tools/nas-desktop-app",
     repositoryUrl: "https://github.com/JooWon0712/nas-desktop-app",
     distribution: { kind: "releases", url: "https://github.com/JooWon0712/nas-desktop-app/releases" },
     screenshots: [
@@ -103,7 +103,7 @@ export const desktopTools: DesktopTool[] = [
   {
     id: "pc-internet-monitor",
     addedOrder: 1,
-    path: "/services/tools/pc-internet-monitor",
+    path: "/workspace/tools/pc-internet-monitor",
     repositoryUrl: "https://github.com/JooWon0712/pc-internet-monitor",
     distribution: { kind: "releases", url: "https://github.com/JooWon0712/pc-internet-monitor/releases" },
     screenshots: [
@@ -172,7 +172,7 @@ export const desktopTools: DesktopTool[] = [
   {
     id: "codex-usage-overlay",
     addedOrder: 2,
-    path: "/services/tools/codex-usage-overlay",
+    path: "/workspace/tools/codex-usage-overlay",
     repositoryUrl: "https://github.com/JooWon0712/codex-usage-overlay",
     distribution: { kind: "actions", url: "https://github.com/JooWon0712/codex-usage-overlay/actions/workflows/windows-build.yml" },
     screenshotInfo: {

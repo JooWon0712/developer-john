@@ -1,0 +1,19 @@
+{
+  "name": "Harbor café — asleep on closed laptop with glasses removed",
+  "created": "2026-11-07",
+  "mode": "built-in image_gen edit",
+  "status": "selected for site dark-mode illustration",
+  "references": [
+    "/images/home/harbor-cafe-cozy-pixel-night-cleared-v1.webp",
+    "/images/home/harbor-cafe-cozy-pixel-light-clean-v1.webp"
+  ],
+  "original": "/brand-concepts/harbor-night-desk-sleep-v1/harbor-night-desk-sleep-v1.png",
+  "web": "/images/home/harbor-cafe-cozy-pixel-night-desk-sleep-v1.webp",
+  "width": 1536,
+  "height": 1024,
+  "webEncoding": "Lossless WebP; decoded RGBA pixels verified identical to generated PNG.",
+  "prompt": "Use case: precise-object-edit and compositing.\nInput image 1: EDIT TARGET and strict environment/camera/pixel-style reference, the moonlit harbor café with clear table and empty blue-and-cream wicker chair.\nInput image 2: CHARACTER IDENTITY REFERENCE ONLY: the chunky grey baby wombat, compact rounded proportions, broad dark nose, small ears, cream muzzle, round black glasses, same chair and cafe during daytime. Do not change the edit target into daylight.\nCreate ONE additional night-time concept in the exact same 1536x1024 framing and warm-lantern / deep-blue moonlit palette as image 1.\nAdd this same grey baby wombat back to the right-hand wicker chair, seated with its body and feet supported by the chair and leaning comfortably forward. It has fallen fast asleep over a CLOSED laptop laid flat on the foreground table just in front of the chair. The laptop lid is fully shut, one thin flat grey rectangular object, absolutely no raised screen and no keyboard visible. Its two small forepaws are folded gently on top of the closed lid, its head and cheek resting on its folded forepaws/lid with BOTH eyes peacefully closed, head physically supported rather than hovering, natural short neck, relaxed sleeping posture, body leaning forward at the hips without twisted neck.\nIt has REMOVED its glasses: NO glasses on its face. Place the recognizable small round black spectacles on the tabletop beside the closed laptop, slightly to its left, with two circular lenses and folded temples clearly readable in coarse pixels. Keep its face recognizable from image 2; no blush, no exaggerated eyelashes.\nKeep the table clear otherwise, NO coffee cup, NO saucer. No blanket, bed, pillow, ZZZ, captions, logos or new props.\nPreserve image 1 background composition very closely: all boats and docks, island homes, palms and hibiscus, moon, stars and cloud shapes, reflections, veranda railings, tall right post, canopy and existing warm hanging lantern; no re-layout or zoom. Keep original chair size and position, table geometry, plant pots and foreground perspective.\nUse exactly the same chunky hand-placed pixel-art treatment with large square pixels and stepped silhouettes, simple restrained flat color clusters and limited facial details. Avoid fine furry detail, smoothing, glossy AI illustration, realistic rendering or soft airbrushing. This is a cozy sleeping vignette added into the existing night café, not a new scene.",
+  "applied": "2026-11-07",
+  "siteImage": "/images/home/harbor-cafe-cozy-pixel-night-desk-sleep-v1.webp",
+  "archiveMetadata": "/brand-concepts/harbor-night-desk-sleep-v1/harbor-night-desk-sleep-v1.json"
+}

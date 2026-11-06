@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="light">
+  <title>작업실 라이트·다크 컬러 5가지</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./preview.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#palettes">시안으로 건너뛰기</a>
+  <header class="board-header">
+    <a class="board-brand" href="/about"><img src="/brand/jw-mark.svg" width="36" height="36" alt=""><span>john <small>COLOR STUDY / 02</small></span></a>
+    <span class="draft">색상 비교 시안 · 사이트 미적용</span>
+  </header>
+  <main>
+    <div class="intro">
+      <p class="eyebrow">SAME WORKSPACE, DIFFERENT MOODS</p>
+      <h1>낮과 밤, 한 쌍의 색.</h1>
+      <p>같은 소개와 항구 그림을 다섯 가지 컬러 조합으로 비교합니다.<br>각 화면의 ‘크게 보기’에서 메뉴·버튼·테두리까지 확인해 보세요.</p>
+    </div>
+    <nav class="palette-jumps" id="palette-jumps" aria-label="색상 시안 번호"></nav>
+    <div class="reading-guide"><span><i class="light-dot" aria-hidden="true"></i>왼쪽은 라이트 · 낮 그림</span><span><i class="dark-dot" aria-hidden="true"></i>오른쪽은 다크 · 밤 그림</span></div>
+    <div id="palettes" class="palettes" aria-label="라이트·다크 컬러 조합 5개" aria-busy="true"></div>
+    <noscript><p>미리보기를 보려면 JavaScript를 켜 주세요. 색상 값은 <a href="./palettes.json">palettes.json</a>에 보관되어 있습니다.</p></noscript>
+    <footer class="board-footer"><a href="/about">현재 소개 페이지 보기</a><p>그림과 구도는 동일합니다. 시안 선택·확대는 실제 사이트의 테마나 저장된 설정을 바꾸지 않습니다.</p></footer>
+  </main>
+  <dialog id="expanded" aria-labelledby="expanded-title">
+    <header class="dialog-toolbar"><div><p class="eyebrow">COLOR PREVIEW</p><h2 id="expanded-title"></h2></div><button id="close-dialog" type="button">닫기 ×</button></header>
+    <div class="mode-tabs" role="group" aria-label="확대 화면 테마"><button type="button" data-mode="light" aria-pressed="true">라이트 · 낮</button><button type="button" data-mode="dark" aria-pressed="false">다크 · 밤</button></div>
+    <div id="expanded-content"></div>
+  </dialog>
+</body>
+</html>

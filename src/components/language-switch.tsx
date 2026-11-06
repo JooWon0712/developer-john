@@ -6,8 +6,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getLanguage, localizePath, type Language } from "@/lib/i18n";
 
 const languages = [
-  { language: "ko", label: "한국어" },
-  { language: "en", label: "English" },
+  { language: "ko", label: "KO", name: "한국어" },
+  { language: "en", label: "EN", name: "English" },
 ] as const;
 
 function LanguageLinks({ pathname, language, suffix = "" }: { pathname: string; language: Language; suffix?: string }) {
@@ -21,6 +21,8 @@ function LanguageLinks({ pathname, language, suffix = "" }: { pathname: string; 
       href={localizePath(`${pathname}${suffix}`, option.language)}
       lang={option.language}
       hrefLang={option.language}
+      aria-label={option.name}
+      title={option.name}
       aria-current={language === option.language ? "page" : undefined}
       prefetch={false}
       onNavigate={event => {

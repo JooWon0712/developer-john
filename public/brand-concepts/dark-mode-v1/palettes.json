@@ -1,0 +1,7 @@
+[
+  {"number":1,"name":"깊은 바다 청록","english":"Deep Harbor","recommended":true,"description":"항구의 밤바다와 민트빛 조명. 가장 자연스럽게 이어지는 차분한 청록입니다.","paper":"#0E2024","surface":"#173238","ink":"#F1F3E8","muted":"#B2C8C3","accent":"#91D4BC","line":"#42666A"},
+  {"number":2,"name":"잉크 네이비 + 샌드","english":"Ink & Sand","recommended":false,"description":"짙은 잉크에 따뜻한 모래색. JW 마크의 네이비·골드 분위기와 잘 맞습니다.","paper":"#141D2E","surface":"#202D43","ink":"#F5EEDD","muted":"#B8C3D3","accent":"#E5BD86","line":"#52617A"},
+  {"number":3,"name":"차콜 + 세이지","english":"Quiet Sage","recommended":false,"description":"녹색이 은은하게 섞인 차콜. 오래 읽는 서비스 설명에 편안하고 담백합니다.","paper":"#1B2220","surface":"#29342E","ink":"#EFF1E8","muted":"#B8C5B6","accent":"#B6D59C","line":"#5C7162"},
+  {"number":4,"name":"에스프레소 + 앰버","english":"Late Café","recommended":false,"description":"커피빛 바탕과 앰버 조명. 덮은 노트북 위에서 잠든 웜뱃과 밤 카페의 포근함을 가장 강조합니다.","paper":"#251C19","surface":"#382A25","ink":"#F7EEE0","muted":"#D2BAA9","accent":"#F1BD77","line":"#81634F"},
+  {"number":5,"name":"슬레이트 + 라벤더","english":"Moonlit Slate","recommended":false,"description":"푸른 회색에 옅은 보라. 달빛 같은 인상으로 다섯 안 중 가장 선명한 변화를 줍니다.","paper":"#1C2030","surface":"#2B3146","ink":"#F0EDF7","muted":"#C1BFD3","accent":"#C5B7F1","line":"#686581"}
+]

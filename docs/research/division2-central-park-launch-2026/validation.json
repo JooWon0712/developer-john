@@ -1,0 +1,30 @@
+{
+  "checkedOn": "2026-11-04",
+  "checksPassed": 16,
+  "checks": [
+    "Two independent event definitions",
+    "Five Twitch rewards in cumulative minute order",
+    "Six project bundles",
+    "Eleven unique stable check IDs",
+    "Separate storage keys and empty initial state",
+    "Legacy key preserved without new-event reuse",
+    "Korean and English labels and matching route identity",
+    "Official date-only schedules have no invented times",
+    "UTC to Seoul date rollover correct",
+    "Project bundle totals match official per-project quantities",
+    "Role-specific referral rewards remain informational",
+    "Unannounced event pass has no reward checks",
+    "All source and asset references resolve",
+    "Eight images downloaded without failures",
+    "All image hashes, dimensions and decodes verified",
+    "UTF-8 documents have no replacement characters or trailing spaces"
+  ],
+  "eventCount": 2,
+  "rewardCheckCount": 11,
+  "imageCount": 8,
+  "imageBytes": 663267,
+  "applicationCodeChanged": false,
+  "applicationBuildRun": false,
+  "applicationTestsRun": false,
+  "imageVisualReview": "All eight original files inspected; referral image not mapped to individual outfits."
+}

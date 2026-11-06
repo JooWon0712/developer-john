@@ -33,7 +33,7 @@ export function ProjectsPage({ language }: { language: Language }) {
                   </div>
                 ))}
               </div>
-              <Link className="text-link" href={localizePath("/services", language)}>
+              <Link className="text-link" href={localizePath("/workspace", language)}>
                 {text.browseServices} <ArrowRight width={18} height={18} aria-hidden="true" focusable="false" />
               </Link>
             </div>

@@ -4,6 +4,7 @@ import { BackToTop } from "@/components/back-to-top";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteContent } from "@/components/site-content";
 import { GoogleAnalytics } from "@/components/google-analytics";
+import { themeInitialization } from "@/lib/theme";
 import { site, siteUrl, socialPreviewImage } from "@/lib/site";
 import "./globals.css";
 
@@ -18,7 +19,9 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="ko" data-scroll-behavior="smooth"><body>
+  return <html lang="ko" data-scroll-behavior="smooth" data-theme="light" suppressHydrationWarning><head>
+    <script id="site-theme" dangerouslySetInnerHTML={{ __html: themeInitialization }} />
+  </head><body>
     <SiteSkipLink />
     <SiteHeader />
     <SiteContent>{children}</SiteContent>

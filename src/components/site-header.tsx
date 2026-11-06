@@ -8,10 +8,11 @@ import { brand } from "@/data/brand";
 import { shell } from "@/data/shell";
 import { getBasePath, getLanguage, localizePath } from "@/lib/i18n";
 import { LanguageSwitch } from "./language-switch";
+import { ThemeControl } from "./theme-control";
 
 const navigation = [
   { href: "/", label: "홈", englishLabel: "Home", directory: shell.home },
-  { href: "/services", label: "서비스", englishLabel: "Services", directory: shell.services },
+  { href: "/workspace", label: "작업실", englishLabel: "Workspace", directory: shell.workspace },
   { href: "/about", label: "소개", englishLabel: "About", directory: "/about" },
 ];
 
@@ -35,13 +36,16 @@ export function SiteHeader() {
       <div className="header-navigation">
         <nav className="main-navigation" aria-label={english ? "Main navigation" : "주 메뉴"}>
           {navigation.map(({ href, label, englishLabel, directory }) => {
-            const active = basePath === href ? "page" : href === "/services" && (basePath.startsWith("/services/") || basePath.startsWith("/discovery/")) ? "location" : undefined;
+            const active = basePath === href ? "page" : href === "/workspace" && (basePath.startsWith("/workspace/") || basePath.startsWith("/discovery/")) ? "location" : undefined;
             const navigationLabel = english ? englishLabel : label;
             const directoryPath = localizePath(directory, language);
             return <Link key={href} href={localizePath(href, language)} title={`${shell.user} ${navigationLabel}`} aria-current={active}><span>{navigationLabel}</span><code aria-hidden="true">{directoryPath}</code></Link>;
           })}
         </nav>
-        <LanguageSwitch />
+        <div className="header-settings">
+          <LanguageSwitch />
+          <ThemeControl language={language} />
+        </div>
       </div>
     </div>
   </header>;

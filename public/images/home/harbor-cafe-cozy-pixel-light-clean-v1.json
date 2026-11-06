@@ -1,0 +1,12 @@
+{
+  "name": "Harbor café — daylight with small jetty removed",
+  "created": "2026-11-07",
+  "mode": "built-in image_gen edit",
+  "reference": "/images/home/harbor-cafe-cozy-pixel.webp",
+  "original": "/images/home/harbor-cafe-cozy-pixel-light-clean-v1.png",
+  "web": "/images/home/harbor-cafe-cozy-pixel-light-clean-v1.webp",
+  "width": 1536,
+  "height": 1024,
+  "webEncoding": "Lossless WebP; decoded RGBA pixels verified identical to generated PNG.",
+  "prompt": "Use case: precise-object-edit.\nInput image 1 is the full daylight pixel-art illustration to edit; input image 2 is only a magnified location reference of the unwanted object.\nRemove ONLY the little isolated wooden jetty in the water directly behind the wombat's upper-right ear/head (approximately x=1050 to1158,y=380 to425 in the full 1536x1024 image), including its tan upright wooden post and the small pale vertical reflection below it. Continue the surrounding turquoise-blue harbor water with simple horizontal pixel reflections instead. The close-up reference shows exactly this unwanted object; do not paste the close-up into the result.\nPreserve the full image dimensions, composition, camera framing, chunky pixel grid, existing colors and daylight. Keep the wombat's ear, face, glasses, paws, pose and body unchanged. Keep ALL other elements unchanged: sailboats and their main docking piers on the left, the far-right pier, green island and houses, sky and clouds, cafe awning and lantern, foreground veranda railings, flowerpots, table, laptop, cup and wicker chairs. Do not remove or move these other docks or foreground wooden rails. This is a tiny local object removal, not a scene redraw, lighting change, smoothing or style change. No new objects, text or watermark. Return the entire edited full illustration."
+}

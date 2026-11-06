@@ -14,11 +14,11 @@ export function ServicesPage({ language }: { language: Language }) {
       <section className="page-intro services-intro" lang={language}>
         <h1>{text.heading}</h1>
         <p className="lead">{text.lead}</p>
-        <SharePageButton url={new URL(localizePath(shell.services, language), siteUrl).href} language={language} />
+        <SharePageButton url={new URL(localizePath(shell.workspace, language), siteUrl).href} language={language} />
       </section>
       <section className="directory-panel" aria-labelledby="directory-title" lang={language}>
         <h2 id="directory-title" className="visually-hidden">{text.title}</h2>
-        <TerminalWindow title={localizePath(shell.services, language)} bodyClassName="directory-session" parentLink={{ href: localizePath("/", language), label: language === "en" ? "Home" : "홈" }}>
+        <TerminalWindow title={localizePath(shell.workspace, language)} bodyClassName="directory-session" parentLink={{ href: localizePath("/", language), label: language === "en" ? "Home" : "홈" }}>
           <ServiceDirectory services={services} language={language} />
         </TerminalWindow>
       </section>

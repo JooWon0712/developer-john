@@ -37,7 +37,7 @@ test("public HTTP home requests receive a permanent redirect to the canonical HT
 test("HTTPS upgrades preserve Korean and English deep paths and encoded query values", async () => {
   for (const host of publicHosts) {
     for (const prefix of ["", "/en"]) {
-      const path = `${prefix}/services/game/the-division-2/red-moon-unleashed-2026`;
+      const path = `${prefix}/workspace/game/the-division-2/red-moon-unleashed-2026`;
       const response = await responseFor(`http://${host}${path}?source=share&name=%EB%A0%88%EB%93%9C+%EB%AC%B8`, "http");
       assert.equal(response.status, 308);
       const destination = new URL(getRedirectUrl(response));
@@ -61,7 +61,7 @@ test("the HTTPS redirect also covers ads.txt and the public share image", async 
 
 test("HTTPS requests and the destination of an upgrade do not redirect again", async () => {
   for (const host of publicHosts) {
-    for (const path of ["/", "/en", "/services/game/the-division-2", "/ads.txt"]) {
+    for (const path of ["/", "/en", "/workspace/game/the-division-2", "/ads.txt"]) {
       await assertNoRedirect(`https://${host}${path}`, "https");
     }
   }
@@ -92,12 +92,55 @@ test("local development, health requests and unrelated or lookalike hosts are ex
 });
 
 test("proxied requests use the public Host and forwarded protocol rather than the internal HTTP URL", async () => {
-  const internalUrl = "http://127.0.0.1:3310/en/services";
+  const internalUrl = "http://127.0.0.1:3310/en/workspace";
   for (const host of publicHosts) {
     const response = await responseFor(internalUrl, "http", host);
     assert.equal(response.status, 308);
-    assert.equal(getRedirectUrl(response), `${canonical}/en/services`);
+    assert.equal(getRedirectUrl(response), `${canonical}/en/workspace`);
     await assertNoRedirect(internalUrl, "https", host);
+  }
+});
+
+test("legacy service collection, tools, game and event paths redirect directly to the localized workspace", async () => {
+  const suffixes = [
+    "", "/tools/nas-desktop-app", "/tools/pc-internet-monitor", "/tools/codex-usage-overlay",
+    "/game/the-division-2", "/game/the-division-2/red-moon-unleashed-2026", "/future/nested/entry",
+  ];
+  for (const prefix of ["", "/en"]) {
+    for (const suffix of suffixes) {
+      const url = new URL(`${canonical}${prefix}/services${suffix}?source=old-link&name=%EB%A0%88%EB%93%9C+%EB%AC%B8&empty=`);
+      const response = await responseFor(url.href, "https");
+      assert.equal(response.status, 308);
+      const destination = new URL(getRedirectUrl(response));
+      assert.equal(destination.pathname, `${prefix}/workspace${suffix}`);
+      assert.equal(destination.origin, canonical);
+      assert.deepEqual([...destination.searchParams], [...url.searchParams]);
+      await assertNoRedirect(destination.href, "https");
+    }
+  }
+});
+
+test("canonical workspace routes and similarly named routes are excluded from the migration redirect", async () => {
+  for (const prefix of ["", "/en"]) {
+    for (const suffix of ["", "/tools/nas-desktop-app", "/game/the-division-2/red-moon-unleashed-2026"]) {
+      await assertNoRedirect(`${canonical}${prefix}/workspace${suffix}?view=unchecked`, "https");
+    }
+    for (const path of ["/services-old", "/service", "/workspace-old", "/other/services"]) {
+      await assertNoRedirect(`${canonical}${prefix}${path}`, "https");
+    }
+  }
+});
+
+test("HTTP legacy service links upgrade HTTPS and then reach the canonical workspace without a loop", async () => {
+  for (const prefix of ["", "/en"]) {
+    const path = `${prefix}/services/game/the-division-2/red-moon-unleashed-2026`;
+    const upgrade = await responseFor(`http://www.developer-john.com${path}?source=old-link`, "http");
+    assert.equal(upgrade.status, 308);
+    assert.equal(getRedirectUrl(upgrade), `${canonical}${path}?source=old-link`);
+    const migration = await responseFor(getRedirectUrl(upgrade), "https");
+    assert.equal(migration.status, 308);
+    assert.equal(getRedirectUrl(migration), `${canonical}${prefix}/workspace/game/the-division-2/red-moon-unleashed-2026?source=old-link`);
+    await assertNoRedirect(getRedirectUrl(migration), "https");
   }
 });
 
@@ -106,7 +149,7 @@ test("existing Korean and English game redirects remain permanent and preserve p
     for (const suffix of ["", "/red-moon-unleashed-2026"]) {
       const response = await responseFor(`${canonical}${prefix}/game/the-division-2${suffix}?source=old-link`, "https");
       assert.equal(response.status, 308);
-      assert.equal(getRedirectUrl(response), `${canonical}${prefix}/services/game/the-division-2${suffix}?source=old-link`);
+      assert.equal(getRedirectUrl(response), `${canonical}${prefix}/workspace/game/the-division-2${suffix}?source=old-link`);
     }
   }
 });
@@ -119,12 +162,12 @@ test("HTTP legacy game links upgrade HTTPS before following the existing path re
     assert.equal(getRedirectUrl(upgrade), `${canonical}${path}?source=old-link`);
     const legacy = await responseFor(getRedirectUrl(upgrade), "https");
     assert.equal(legacy.status, 308);
-    assert.equal(getRedirectUrl(legacy), `${canonical}${prefix}/services/game/the-division-2/red-moon-unleashed-2026?source=old-link`);
+    assert.equal(getRedirectUrl(legacy), `${canonical}${prefix}/workspace/game/the-division-2/red-moon-unleashed-2026?source=old-link`);
     await assertNoRedirect(getRedirectUrl(legacy), "https");
   }
 });
 
-test("the configured HTTPS destination preserves repeated query values with Next production serialization", async () => {
+async function productionRedirect(input, forwardedProto) {
   // Next 16.4.3's experimental response helper turns query arrays into one comma-
   // joined value. Exercise the installed production matcher/destination/serializer
   // for this case; do not repair the helper's Location or duplicate redirect rules.
@@ -135,16 +178,12 @@ test("the configured HTTPS destination preserves repeated query values with Next
   const { formatUrl } = require("next/dist/shared/lib/router/utils/format-url");
   const { addRequestMeta } = require("next/dist/server/request-meta");
   const { stringifyQuery } = require("next/dist/server/server-route-utils");
-  const [rule] = await nextConfig.redirects();
-
-  for (const prefix of ["", "/en"]) {
-    const input = new URL(`http://www.developer-john.com${prefix}/services/game/the-division-2?tag=one&tag=two&name=%EB%A0%88%EB%93%9C+%EB%AC%B8&empty=`);
+  for (const rule of await nextConfig.redirects()) {
     const query = parseUrl(input.href).query;
-    const request = { headers: { host: input.host, "x-forwarded-proto": "http" } };
+    const request = { headers: { host: input.host, "x-forwarded-proto": forwardedProto } };
     const pathParams = getPathMatch(rule.source)(input.pathname);
     const headerParams = matchHas(request, query, rule.has, rule.missing);
-    assert.ok(pathParams);
-    assert.ok(headerParams);
+    if (!pathParams || !headerParams) continue;
     const { parsedDestination } = prepareDestination({
       appendParamsToQuery: false,
       destination: rule.destination,
@@ -154,7 +193,15 @@ test("the configured HTTPS destination preserves repeated query values with Next
     addRequestMeta(request, "initQuery", query);
     const { query: destinationQuery, ...target } = parsedDestination;
     target.search = stringifyQuery(request, destinationQuery);
-    const destination = new URL(formatUrl(target));
+    return new URL(formatUrl(target), input.origin);
+  }
+  return null;
+}
+
+test("the configured HTTPS destination preserves repeated query values with Next production serialization", async () => {
+  for (const prefix of ["", "/en"]) {
+    const input = new URL(`http://www.developer-john.com${prefix}/workspace/game/the-division-2?tag=one&tag=two&name=%EB%A0%88%EB%93%9C+%EB%AC%B8&empty=`);
+    const destination = await productionRedirect(input, "http");
     const response = await responseFor(input.href, "http");
     const helperDestination = new URL(getRedirectUrl(response));
     assert.equal(response.status, 308);
@@ -165,6 +212,24 @@ test("the configured HTTPS destination preserves repeated query values with Next
     assert.equal(destination.searchParams.size, input.searchParams.size);
     for (const key of new Set(input.searchParams.keys())) {
       assert.deepEqual(destination.searchParams.getAll(key), input.searchParams.getAll(key), key);
+    }
+  }
+});
+
+test("workspace and oldest game redirects preserve repeated, empty and encoded query values", async () => {
+  for (const prefix of ["", "/en"]) {
+    for (const source of ["/services/game/the-division-2", "/game/the-division-2"]) {
+      const input = new URL(`${canonical}${prefix}${source}/red-moon-unleashed-2026?tag=one&tag=two&name=%EB%A0%88%EB%93%9C+%EB%AC%B8&encoded=%23reward%2Fmask&empty=`);
+      const destination = await productionRedirect(input, "https");
+      const response = await responseFor(input.href, "https");
+      assert.equal(response.status, 308);
+      assert.equal(destination.pathname, `${prefix}/workspace/game/the-division-2/red-moon-unleashed-2026`);
+      assert.equal(new URL(getRedirectUrl(response)).pathname, destination.pathname);
+      assert.equal(destination.searchParams.size, input.searchParams.size);
+      for (const key of new Set(input.searchParams.keys())) {
+        assert.deepEqual(destination.searchParams.getAll(key), input.searchParams.getAll(key), key);
+      }
+      await assertNoRedirect(destination.href, "https");
     }
   }
 });

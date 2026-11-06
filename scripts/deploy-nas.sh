@@ -59,19 +59,33 @@ compose_at() {
 container_id() {
   "$docker_bin" ps -aq --filter "label=com.docker.compose.project=$project" --filter 'label=com.docker.compose.service=web'
 }
+release_route_prefix() {
+  # Check the release being verified, including the previous release on rollback.
+  # Never accept a different route family merely because it still returns 200.
+  if [ -f "$1/src/app/workspace/page.tsx" ]; then
+    printf '/workspace\n'
+  elif [ -f "$1/src/app/services/page.tsx" ]; then
+    printf '/services\n'
+  else
+    printf '\nERROR: Cannot determine collection routes for release %s.\n' "$1" >&2
+    return 1
+  fi
+}
 verify_http() {
-  for route in / /en /services /en/services /privacy /en/privacy /services/game/the-division-2 /en/services/game/the-division-2 /services/game/the-division-2/red-moon-unleashed-2026 /en/services/game/the-division-2/red-moon-unleashed-2026; do
+  collection_prefix=$1
+  for route in / /en "$collection_prefix" "/en$collection_prefix" /privacy /en/privacy "$collection_prefix/game/the-division-2" "/en$collection_prefix/game/the-division-2" "$collection_prefix/game/the-division-2/red-moon-unleashed-2026" "/en$collection_prefix/game/the-division-2/red-moon-unleashed-2026"; do
     code=$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' --max-time 10 "http://127.0.0.1:$http_port$route") || return 1
     [ "$code" = 200 ] || { log "Unexpected HTTP $code at $route"; return 1; }
   done
 }
 wait_ready() {
+  readiness_prefix=$(release_route_prefix "$1") || return 1
   attempts=0
   while [ "$attempts" -lt 60 ]; do
     ready_container=$(container_id)
     if [ -n "$ready_container" ]; then
       health=$("$docker_bin" inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}{{.State.Status}}{{end}}' "$ready_container" 2>/dev/null || printf unknown)
-      if [ "$health" = healthy ] && verify_http; then return 0; fi
+      if [ "$health" = healthy ] && verify_http "$readiness_prefix"; then return 0; fi
       case "$health" in exited|dead|unhealthy) return 1 ;; esac
     fi
     attempts=$((attempts + 1))
@@ -114,7 +128,7 @@ for port_container in $("$docker_bin" ps -q --filter "publish=$http_port"); do
 done
 if [ "$mode" = check ]; then
   if [ -n "$previous_release" ]; then
-    wait_ready || die 'The existing deployment is not healthy.'
+    wait_ready "$previous_dir" || die 'The existing deployment is not healthy.'
     log "Existing release is healthy: $previous_release"
   else
     log "Ready for the first $project deployment on NAS loopback port $http_port."
@@ -148,7 +162,7 @@ finish() {
   if [ "$completed" != 1 ] && [ "$changed" = 1 ]; then
     log 'The new deployment failed; restoring the previous state.'
     if [ -n "$previous_release" ]; then
-      if compose_at "$previous_dir" up -d --no-build web && wait_ready; then
+      if compose_at "$previous_dir" up -d --no-build web && wait_ready "$previous_dir"; then
         if printf '%s\n' "$previous_release" > "$app_root/current-release.rollback-$release" && mv "$app_root/current-release.rollback-$release" "$app_root/current-release"; then
           log "Previous release restored: $previous_release"
         else
@@ -233,7 +247,7 @@ compose_at "$release_dir" up -d --no-build web
 new_container=$(container_id)
 [ -n "$new_container" ] && [ "$(printf '%s\n' "$new_container" | wc -l | tr -d ' ')" = 1 ] || die 'Expected one web container.'
 [ "$("$docker_bin" inspect --format '{{len .Mounts}}' "$new_container")" = 0 ] || die 'Unexpected container mounts.'
-wait_ready || { compose_at "$release_dir" logs --tail=80 web >&2; die 'Health or HTTP verification failed.'; }
+wait_ready "$release_dir" || { compose_at "$release_dir" logs --tail=80 web >&2; die 'Health or HTTP verification failed.'; }
 if [ -f "$management_file" ]; then
   cp -p "$management_file" "$management_backup"
   management_had_file=1

@@ -11,7 +11,7 @@ export const event = {
   "id": "red-moon-unleashed-2026",
   "slug": "red-moon-unleashed-2026",
   "title": "레드 문 언리시드 보상 가이드",
-  "path": "/services/game/the-division-2/red-moon-unleashed-2026",
+  "path": "/workspace/game/the-division-2/red-moon-unleashed-2026",
   "startsOn": "2026-10-15",
   "endsOn": "2026-11-03",
   "dropsStartsOn": "2026-10-15",

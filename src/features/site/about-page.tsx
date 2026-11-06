@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "@/components/icons";
 import { TerminalWindow } from "@/components/terminal-window";
+import { ThemedImage } from "@/components/themed-image";
 import { contact } from "@/data/contact";
 import { localizePath, type Language } from "@/lib/i18n";
 import { aboutCopy } from "./about-copy";
@@ -18,7 +18,7 @@ export function AboutPage({ language }: { language: Language }) {
           <h1 id="about-title" className={styles.headline}>{text.headline}</h1>
           <p className={styles.summary}>{text.summary}</p>
         </header>
-        <Link className={styles.serviceLink} href={localizePath("/services", language)}>
+        <Link className={styles.serviceLink} href={localizePath("/workspace", language)}>
           {text.browseServices}<ArrowRight width={18} height={18} />
         </Link>
 
@@ -40,13 +40,15 @@ export function AboutPage({ language }: { language: Language }) {
 
       <figure className={styles.photo}>
         <TerminalWindow title={text.photoLabel} titleLang={language}>
-          <Image
+          <ThemedImage
             className={styles.image}
-            src="/images/home/harbor-cafe-cozy-pixel.webp"
-            alt={text.imageAlt}
+            lightSrc="/images/home/harbor-cafe-cozy-pixel-light-clean-v1.webp"
+            darkSrc="/images/home/harbor-cafe-cozy-pixel-night-desk-sleep-v1.webp"
+            lightAlt={text.imageAlt}
+            darkAlt={text.imageAltDark}
             width={1536}
             height={1024}
-            loading="eager"
+            loading="lazy"
             unoptimized
           />
         </TerminalWindow>

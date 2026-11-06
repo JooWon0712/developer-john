@@ -11,7 +11,7 @@ import styles from "./tool-page.module.css";
 const labels = {
   ko: {
     category: "PC 도구 · Windows 앱",
-    parent: "서비스 목록",
+    parent: "작업실",
     story: "필요해서 만들고, 직접 쓰고 있습니다.",
     screenshots: "실행 화면",
     screenshotInfo: "개인 환경 정보는 예시 값으로 바꾼 화면입니다.",
@@ -29,7 +29,7 @@ const labels = {
   },
   en: {
     category: "PC tools · Windows app",
-    parent: "Services",
+    parent: "Workspace",
     story: "Built for a need. Part of my everyday life.",
     screenshots: "App screenshots",
     screenshotInfo: "Personal environment details have been replaced with example values.",
@@ -55,7 +55,7 @@ export function DesktopToolPage({ id, language }: { id: DesktopToolId; language:
   const hasRelease = tool.distribution.kind === "releases";
 
   return <article className={styles.page} lang={language} aria-labelledby="tool-title">
-    <TerminalWindow title={path} bodyClassName={styles.body} parentLink={{ href: localizePath("/services", language), label: ui.parent }}>
+    <TerminalWindow title={path} bodyClassName={styles.body} parentLink={{ href: localizePath("/workspace", language), label: ui.parent }}>
       <p className="directory-command"><span aria-hidden="true">{shell.user}:~{tool.path}$</span><code lang="en">cat README</code></p>
 
       <header className={styles.header}>

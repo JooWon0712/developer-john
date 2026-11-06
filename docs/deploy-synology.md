@@ -30,7 +30,7 @@ Copy-Item deploy.nas.example.json deploy.nas.local.json
 
 예시 JSON의 NAS 호스트·SSH 사용자·SSH 포트·키 파일과 배포 경로를 실제 환경에 맞게 확인합니다. 대상 프로젝트·서비스·이미지 이름과 HTTP 포트도 Compose 실행값과 일치해야 합니다. 이 파일은 개인 PC에만 보관합니다. SSH 키 인증에 사용할 개인키를 NAS에 복사하지 않습니다.
 
-Docker 작업에 관리자 권한이 필요하면 설정의 `UseSudo`를 사용합니다. 배포 도구가 실제 별도 터미널에서 SSH의 대화형 sudo 프롬프트를 열면 **사용자가 그 터미널에 직접 비밀번호를 입력**합니다. 비밀번호를 채팅·설정 파일·환경 변수·명령 인자·파이프로 전달하거나 저장하지 않습니다.
+Docker 작업에 관리자 권한이 필요하면 설정의 `UseSudo`를 사용합니다. Codex의 내부 명령 실행 도구와 통합 터미널을 우선 사용하며, 사용자 직접 입력이 필요한 경우 실제로 입력할 수 있는 통합 터미널인지 확인합니다. 에이전트의 명령 실행 세션과 사용자가 조작하는 통합 터미널은 구분합니다. 통합 터미널에서 지원하지 않는 기능이나 실제 오류가 확인될 때만 이유를 설명하고 외부 창을 사용합니다. `Password:` 프롬프트가 나오면 **사용자가 해당 터미널에 직접 비밀번호를 입력**합니다. 비밀번호를 채팅·설정 파일·환경 변수·명령 인자·파이프로 전달하거나 저장하지 않습니다.
 
 ## 2. 전송할 커밋 확정
 
@@ -75,14 +75,14 @@ NAS 내부 점검은 `http://127.0.0.1:3310`을 사용합니다. 컨테이너가
 | 화면 | 한국어 | 영어 |
 | --- | --- | --- |
 | 홈 | `/` | `/en` |
-| 서비스 | `/services` | `/en/services` |
-| 디비전2 목록 | `/services/game/the-division-2` | `/en/services/game/the-division-2` |
-| 레드 문 보상 | `/services/game/the-division-2/red-moon-unleashed-2026` | `/en/services/game/the-division-2/red-moon-unleashed-2026` |
+| 작업실 | `/workspace` | `/en/workspace` |
+| 디비전2 목록 | `/workspace/game/the-division-2` | `/en/workspace/game/the-division-2` |
+| 레드 문 보상 | `/workspace/game/the-division-2/red-moon-unleashed-2026` | `/en/workspace/game/the-division-2/red-moon-unleashed-2026` |
 | 개인정보처리방침 | `/privacy` | `/en/privacy` |
 
 각 경로의 HTTP 성공과 실제 콘텐츠를 확인합니다. 컨테이너 상태·HTTP 확인은 외부 도메인 접속이나 브라우저 화면 검증을 대신하지 않습니다.
 
-기존 설치에서는 교체 후 점검이 실패하면 보관한 이전 release와 이미지로 복구를 시도합니다. 첫 설치가 실패하면 이전 버전이 없으므로 이번 developer-john 프로젝트만 내립니다. 다른 프로젝트를 중지하거나 NAS 전체 컨테이너·이미지를 정리하지 않습니다. 자동 복구도 실패할 수 있으므로 배포 로그와 이전 release·이미지를 보존하고 결과를 확인합니다.
+기존 설치에서는 교체 후 점검이 실패하면 보관한 이전 release와 이미지로 복구를 시도합니다. 건강 상태 확인은 대상 release의 페이지 구성을 기준으로 하며, 이전 `/services` 버전은 이전 경로로, 새 `/workspace` 버전은 새 경로로 확인합니다. 첫 설치가 실패하면 이전 버전이 없으므로 이번 developer-john 프로젝트만 내립니다. 다른 프로젝트를 중지하거나 NAS 전체 컨테이너·이미지를 정리하지 않습니다. 자동 복구도 실패할 수 있으므로 배포 로그와 이전 release·이미지를 보존하고 결과를 확인합니다.
 
 단순 컨테이너 재시작은 소스 변경을 반영하거나 이미지를 다시 빌드하지 않습니다. 다음 업데이트도 동일한 배포 스크립트로 새 커밋을 전달합니다. release·로그·이전 이미지 정리는 정상 동작을 확인한 뒤 별도로 진행합니다.
 

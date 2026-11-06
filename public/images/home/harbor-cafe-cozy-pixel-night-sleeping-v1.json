@@ -1,0 +1,12 @@
+{
+  "name": "Harbor café — sleeping at night",
+  "created": "2026-11-07",
+  "mode": "built-in image_gen edit",
+  "reference": "/images/home/harbor-cafe-cozy-pixel.webp",
+  "original": "/images/home/harbor-cafe-cozy-pixel-night-sleeping-v1.png",
+  "web": "/images/home/harbor-cafe-cozy-pixel-night-sleeping-v1.webp",
+  "width": 1536,
+  "height": 1024,
+  "webEncoding": "Lossless WebP; decoded RGBA pixels verified identical to generated PNG.",
+  "prompt": "Use case: lighting-weather and precise-object-edit. Edit target: the attached existing pixel-art harbor cafe illustration. Produce ONE night-time sleeping version, landscape 3:2, ideally 1536x1024. Preserve the reference's composition and visual identity extremely closely: the exact same fixed camera, crop, grey baby wombat proportions and position on the right, its round black glasses, blue-and-cream checkered wicker chair, big wooden table, open laptop centered left, cup and saucer bottom left, flowers and palms at both sides, sailboats and moorings, hillside homes, veranda post at right and awning and hanging lantern above. Do not rearrange or redesign the scene. Change only the time of day and the wombat's awake expression/posture enough to read as peacefully asleep: eyes gently closed behind the same glasses, head slightly drooping into a comfortable seated doze, forepaws relaxed beside the keyboard, body and feet still in the same chair position. It has finished work and fallen asleep at the cafe. Maintain the same charming coarse hand-placed 16-bit pixel-art style with clearly visible large square pixels, restrained flat color clusters and stepped edges. Not high-definition fur, no soft airbrushed illustration, no smooth vector lines, no photorealism, no fine noisy detail. Turn the bright afternoon into a calm Hawaiian harbor at night, with deep navy-indigo sky and ocean, a few subtle pixel stars and moonlight, softly illuminated boats and hill silhouettes, warm muted amber light from the EXISTING hanging lantern across the table and sleeping wombat. Night should be readable and cozy, suitable for a website dark theme, without pitch-black areas or harsh bloom. Preserve the reference's warm wood and muted grey wombat identity under night light. No other characters, no bed, no blanket, no new props, no text, no ZZZ, no logos, no border or UI. This is an edited sibling asset, not a new composition."
+}

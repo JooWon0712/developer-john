@@ -1,0 +1,12 @@
+{
+  "name": "Harbor café — work finished and table cleared",
+  "created": "2026-11-07",
+  "mode": "built-in image_gen edit",
+  "reference": "/images/home/harbor-cafe-cozy-pixel-night-away-v1.webp",
+  "original": "/images/home/harbor-cafe-cozy-pixel-night-cleared-v1.png",
+  "web": "/images/home/harbor-cafe-cozy-pixel-night-cleared-v1.webp",
+  "width": 1536,
+  "height": 1024,
+  "webEncoding": "Lossless WebP; decoded RGBA pixels verified identical to generated PNG.",
+  "prompt": "Use case: precise-object-edit.\nEdit target: supplied 1536x1024 pixel-art night harbor café, currently with an EMPTY wicker chair, open laptop, and coffee cup with saucer.\nThe wombat has gone home to bed, TAKING ITS LAPTOP and clearing its coffee. Remove the entire laptop (screen, base, keyboard, hinges) from the foreground table. Also remove the foreground coffee cup, its handle, saucer and any coffee/spoon associated with it at bottom-left. Restore the uninterrupted warm wooden tabletop underneath these objects, its chunky pixel wood grain and existing lantern lighting, without residual object-shaped shadows or outlines.\nKeep the chair empty; no character, no animals, no people. Keep the foreground flowerpot on the far LEFT and all other flowers/plants. Preserve all background details and composition: same wicker chairs and cream cushion, table shape and position, veranda railing, tall wooden post, canopy and warm glowing lantern, harbor boats and their docks, island houses, palm trees, moon, stars, clouds and reflections. Only the removed laptop/cup/saucer and their shadows should change. No replacement props, no bed, blanket, note, text, logo or UI.\nPreserve the same chunky 16-bit square-pixel style and palette, stepped edges, camera angle and full 1536x1024 framing. Do not smooth or change the scene lighting. Output the entire illustration."
+}

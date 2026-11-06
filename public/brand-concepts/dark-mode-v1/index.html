@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="dark">
+  <title>다크 모드 5가지 시안 · developer-john</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./preview.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#concepts">시안으로 건너뛰기</a>
+  <header class="board-header">
+    <a class="board-brand" href="/about"><img src="/brand/jw-mark.svg" width="36" height="36" alt=""><span>developer-john <small>DESIGN STUDY / 01</small></span></a>
+    <span class="draft-label">비교용 시안 · 사이트 미적용</span>
+  </header>
+  <main class="board-main">
+    <div class="board-intro">
+      <p class="kicker">AFTER HOURS</p>
+      <h1>해가 진 뒤의<br>developer-john.</h1>
+      <p class="intro-copy">같은 소개와 서비스 화면을 다섯 가지 색으로 비교해 보세요.<br>번호별로 크게 보고, 항구 그림의 낮과 밤도 바꿔 볼 수 있습니다.</p>
+    </div>
+    <div class="board-toolbar">
+      <nav class="concept-jumps" aria-label="다크 모드 시안 번호">
+        <a href="#concept-1">1 <span>바다 청록</span></a>
+        <a href="#concept-2">2 <span>잉크·샌드</span></a>
+        <a href="#concept-3">3 <span>차콜·세이지</span></a>
+        <a href="#concept-4">4 <span>에스프레소</span></a>
+        <a href="#concept-5">5 <span>라벤더</span></a>
+      </nav>
+      <div class="image-controls" role="group" aria-label="모든 시안의 그림 변경">
+        <span>항구 그림</span>
+        <button type="button" data-image-mode="day" aria-pressed="false">낮</button>
+        <button type="button" data-image-mode="night" aria-pressed="true">밤 · 덮은 노트북 위에서 잠든 웜뱃</button>
+      </div>
+    </div>
+    <p id="image-status" class="image-status" aria-live="polite">밤 그림으로 비교 중입니다.</p>
+    <section id="concepts" class="concept-grid" aria-label="다크 모드 시안 5개"></section>
+    <noscript><p class="no-script">시안 미리보기를 표시하려면 JavaScript를 켜 주세요. 색상 목록은 같은 폴더의 palettes.json에서 확인할 수 있습니다.</p></noscript>
+    <footer class="board-footer"><p>추천은 1번 <strong>깊은 바다 청록</strong>. 항구 그림과 이어지는 색감이면서, 밝은 민트가 링크와 조작 요소를 또렷하게 구분합니다.</p><p>이 페이지의 확대·그림 전환은 비교에만 사용됩니다. 실제 사이트의 테마와 설정은 바뀌지 않습니다.</p></footer>
+  </main>
+  <dialog id="concept-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-toolbar"><div><span class="kicker">EXPANDED PREVIEW</span><h2 id="dialog-title"></h2></div><button id="close-dialog" type="button">닫기 <span aria-hidden="true">×</span></button></div>
+    <div class="dialog-image-controls image-controls" role="group" aria-label="확대 시안의 그림 변경"><span>항구 그림</span><button type="button" data-image-mode="day" aria-pressed="false">낮</button><button type="button" data-image-mode="night" aria-pressed="true">밤 · 덮은 노트북 위에서 잠든 웜뱃</button></div>
+    <div id="dialog-content"></div>
+  </dialog>
+</body>
+</html>

@@ -3,8 +3,8 @@ import { event as redMoon } from "./red-moon/event";
 export type Division2Language = "ko" | "en";
 
 export const division2Paths: Record<Division2Language, string> = {
-  ko: "/services/game/the-division-2",
-  en: "/en/services/game/the-division-2",
+  ko: "/workspace/game/the-division-2",
+  en: "/en/workspace/game/the-division-2",
 };
 
 type LocalizedText = Record<Division2Language, string>;

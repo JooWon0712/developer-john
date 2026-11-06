@@ -16,13 +16,13 @@ export const serviceCategories: ServiceCategory[] = [
     id: "game",
     title: "게임",
     description: "게임 이벤트와 받을 수 있는 보상 정보를 한곳에 정리합니다.",
-    pathPrefix: "/services/game",
+    pathPrefix: "/workspace/game",
   },
   {
     id: "tools",
     title: "PC 도구",
     description: "직접 겪은 불편함을 해결하려고 만들어 사용하는 Windows 앱입니다.",
-    pathPrefix: "/services/tools",
+    pathPrefix: "/workspace/tools",
   },
 ];
 
@@ -65,7 +65,7 @@ const serviceEntries: Service[] = [
     description: "디비전2의 이벤트 일정과 보상, 획득 조건을 확인하고 받은 보상을 기록하세요.",
     category: "game",
     status: "ready",
-    href: "/services/game/the-division-2",
+    href: "/workspace/game/the-division-2",
   },
 ];
 

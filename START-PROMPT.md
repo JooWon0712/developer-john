@@ -8,7 +8,7 @@
 - 표시 이름은 **developer-john**, 기본 공개 주소는 `https://developer-john.com`입니다. npm 패키지·Compose 프로젝트·Docker 이미지의 내부 이름은 `johnwest-lab`을 유지합니다.
 - 홈은 CLI 형태의 정적 소개와 픽셀 웜뱃, 서비스 진입 링크로 구성합니다. 공통 터미널 프레임과 셸 표시 경로는 기존 구성 요소와 데이터를 재사용합니다.
 - 한국어 기본 경로와 `/en` 영어 경로를 제공합니다. 모든 내부 탐색과 언어 선택은 현재 언어를 유지하며 언어 전환 시 쿼리와 해시를 보존합니다.
-- 서비스 목록은 `/services`, 디비전2 목록과 이벤트 가이드는 `/services/game/the-division-2` 아래에 있습니다. 영어는 대응하는 `/en/services/game/...` 경로를 사용합니다. 이전 `/game/the-division-2` 경로와 하위 주소는 영구 리디렉션합니다.
+- 메뉴 이름은 한국어 `작업실`, 영어 `Workspace`이며 목록 주소는 `/workspace`입니다. 프로그램은 `/workspace/tools/...`, 디비전2 목록과 이벤트 가이드는 `/workspace/game/the-division-2` 아래에 있습니다. 영어는 대응하는 `/en/workspace/...` 경로를 사용합니다. 이전 `/services`·`/en/services`와 모든 하위 주소, 더 오래된 `/game/the-division-2`·영어 주소는 대응하는 새 주소로 영구 리디렉션합니다.
 - 이키가이는 서비스 목록에 노출하지 않지만 `/discovery/ikigai`, `/en/discovery/ikigai`의 직접 주소·소스·테스트를 유지합니다.
 - 개인 보상 기록과 이키가이 답변은 각 서비스의 브라우저 저장소에서 관리합니다. 체크 ID·저장 키·스키마·사용자 원문을 임의로 바꾸거나 기존 기록을 덮어쓰지 않습니다.
 

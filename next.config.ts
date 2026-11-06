@@ -16,13 +16,23 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/services/:path*",
+        destination: "/workspace/:path*",
+        permanent: true,
+      },
+      {
+        source: "/en/services/:path*",
+        destination: "/en/workspace/:path*",
+        permanent: true,
+      },
+      {
         source: "/game/the-division-2/:path*",
-        destination: "/services/game/the-division-2/:path*",
+        destination: "/workspace/game/the-division-2/:path*",
         permanent: true,
       },
       {
         source: "/en/game/the-division-2/:path*",
-        destination: "/en/services/game/the-division-2/:path*",
+        destination: "/en/workspace/game/the-division-2/:path*",
         permanent: true,
       },
     ];

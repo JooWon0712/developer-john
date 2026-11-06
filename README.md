@@ -1,6 +1,6 @@
 # developer-john
 
-개인 포트폴리오와 직접 만든 작은 웹서비스를 한곳에 모으는 사이트입니다.
+개인 포트폴리오와 직접 만든 프로그램·웹서비스를 한곳에 모으는 사이트입니다.
 
 ## 기술 스택
 
@@ -18,45 +18,48 @@
 
 | 한국어 경로 | 영어 경로 | 기능 |
 | --- | --- | --- |
-| `/` | `/en` | 겹쳐진 소개·서비스 창과 링크형 사이트 맵 |
-| `/about` | `/en/about` | 각 언어의 홈으로 이동하는 이전 소개 주소 |
+| `/` | `/en` | 항구 카페 그림과 소개, 작업실·소개 페이지 진입 링크 |
+| `/about` | `/en/about` | 프로그램·웹서비스와 관심사를 소개하는 페이지 |
 | `/projects` | `/en/projects` | 프로젝트 소개와 구현 방향 |
-| `/services` | `/en/services` | PC 도구와 디비전2 서비스 안내 |
-| `/services/tools/nas-desktop-app` | `/en/services/tools/nas-desktop-app` | NAS Desktop 소개·사용 방법·실행 화면 |
-| `/services/tools/pc-internet-monitor` | `/en/services/tools/pc-internet-monitor` | PC 인터넷 모니터 소개·사용 방법·실행 화면 |
-| `/services/tools/codex-usage-overlay` | `/en/services/tools/codex-usage-overlay` | Codex 잔여 한도 오버레이 소개·사용 방법·실행 화면 |
+| `/workspace` | `/en/workspace` | 작업실 · Windows 프로그램과 디비전2 웹서비스 안내 |
+| `/workspace/tools/nas-desktop-app` | `/en/workspace/tools/nas-desktop-app` | NAS Desktop 소개·사용 방법·실행 화면 |
+| `/workspace/tools/pc-internet-monitor` | `/en/workspace/tools/pc-internet-monitor` | PC 인터넷 모니터 소개·사용 방법·실행 화면 |
+| `/workspace/tools/codex-usage-overlay` | `/en/workspace/tools/codex-usage-overlay` | Codex 잔여 한도 오버레이 소개·사용 방법·실행 화면 |
 | `/privacy` | `/en/privacy` | 개인정보처리방침 |
-| `/services/game/the-division-2` | `/en/services/game/the-division-2` | 디비전2 이벤트별 가이드 목록 |
-| `/services/game/the-division-2/red-moon-unleashed-2026` | `/en/services/game/the-division-2/red-moon-unleashed-2026` | 디비전2 이벤트 보상 안내와 개인 체크리스트 |
-| `/discovery/ikigai` | `/en/discovery/ikigai` | 활동 탐색 도구 · 서비스 목록 미노출, 직접 주소 유지 |
+| `/workspace/game/the-division-2` | `/en/workspace/game/the-division-2` | 디비전2 이벤트별 가이드 목록 |
+| `/workspace/game/the-division-2/red-moon-unleashed-2026` | `/en/workspace/game/the-division-2/red-moon-unleashed-2026` | 디비전2 이벤트 보상 안내와 개인 체크리스트 |
+| `/discovery/ikigai` | `/en/discovery/ikigai` | 활동 탐색 도구 · 작업실 목록 미노출, 직접 주소 유지 |
 
-이전 `/game/the-division-2`와 `/en/game/the-division-2` 및 하위 이벤트 주소는 대응하는 `/services/game/the-division-2`, `/en/services/game/the-division-2` 계층으로 영구 이동합니다. 기존 체크 ID·저장 키·스키마와 보상 기록은 유지합니다.
+메뉴는 한국어 **작업실**, 영어 **Workspace**로 표시하며 목록과 상세의 대표 경로는 `/workspace`입니다. 이전 `/services`, `/en/services` 및 모든 하위 주소는 같은 콘텐츠의 `/workspace`, `/en/workspace` 주소로 308 영구 이동합니다. 쿼리와 클라이언트의 보상 위치 해시는 유지합니다.
 
-공통 헤더에서 한국어·English를 선택합니다. 언어를 바꿔도 현재 페이지의 쿼리와 해시를 유지하고, 로고·메뉴·카드·경로 탐색 링크는 현재 언어의 주소로 이동합니다. 언어는 URL로 유지하며 쿠키 저장이나 자동 선호 언어 이동은 사용하지 않습니다.
+이전 `/game/the-division-2`와 `/en/game/the-division-2` 및 하위 이벤트 주소는 대응하는 `/workspace/game/the-division-2`, `/en/workspace/game/the-division-2` 계층으로 영구 이동합니다. 기존 체크 ID·저장 키·스키마와 보상 기록은 유지합니다.
+
+공통 헤더에서 KO / EN으로 한국어·영어를 선택합니다. 언어를 바꿔도 현재 페이지의 쿼리와 해시를 유지하고, 로고·메뉴·카드·경로 탐색 링크는 현재 언어의 주소로 이동합니다. 언어는 URL로 유지하며 쿠키 저장이나 자동 선호 언어 이동은 사용하지 않습니다.
 
 ## 주요 기능
 
 - Windows 앱 3개의 한국어·영어 소개를 공통 컴포넌트로 제공. 기능·사용 환경·실행 화면과 시작 방법을 표시하며, GitHub Releases와 Actions 빌드를 구분해 안내.
 - 서비스는 공통 등록 순번(`addedOrder`)의 내림차순으로 표시. 새로 추가한 서비스가 먼저 나오고, 함께 추가한 서비스의 순서는 유지하며 내용 수정은 표시 순서에 영향을 주지 않음.
 - JW 커서 로고, 고정폭 글꼴과 네이비·샌드 터미널 창.
-- 홈은 `about` 소개 창, 타이포 링크 형태의 서비스 창, `site map` 창이 겹치는 정적 화면. 사이트 맵은 `about` → `privacy` → `services/` 순서이며 소개 영역·개인정보처리방침·서비스 목록으로 연결. 모바일에서는 소개·서비스·사이트 맵 순서로 쌓아 표시. 소개글은 `일상에서 떠오른 아이디어를 작은 웹서비스로 만들어 공유하려고 합니다.`이며 애니메이션이나 명령 입력 기능은 사용하지 않음.
-- 서비스 목록도 같은 터미널 창을 사용하며 `john:~/services$ ls` 아래 디렉토리 형태의 서비스 링크와 `[게임]` 같은 카테고리를 표시. 별도 분야 버튼과 서비스 개수는 표시하지 않음.
-- 디비전2 이벤트 목록도 같은 터미널 창을 사용. 제목은 실제 주소인 `/services/game/the-division-2`이며 영어 화면은 `/en` 접두사를 표시. 명령줄은 `john:~/services/game/the-division-2$ ls`이며 디렉토리 가지 모양의 이벤트 링크 전체를 선택해 이동.
-- 레드 문 상세도 전체 보상 내용을 공통 터미널 창으로 감쌈. 제목은 실제 주소인 `/services/game/the-division-2/red-moon-unleashed-2026`이며 영어 화면은 `/en` 접두사를 표시. 명령줄은 `john:~/services/game/the-division-2/red-moon-unleashed-2026$ cat rewards`이며 검색·보상 체크·아코디언·이미지 대화상자는 유지. 디비전2 목록·상세는 전체 경로를 나열하는 줄 없이 제목과 명령줄로 현재 위치를 표현.
-- 서비스·개인정보처리방침 페이지의 터미널 제목 표시줄 가운데에는 실제 URL을, 오른쪽에는 왼쪽 SVG 화살표와 목적지 이름으로 된 상위 이동 링크를 표시. 서비스 목록·개인정보처리방침은 `홈`/`Home`, 디비전2 목록은 `서비스 목록`/`Services`, 상세는 `디비전2`/`The Division 2`로 연결하며 주소는 링크의 title 속성으로 확인. 모바일에서는 현재 경로를 첫 줄, 한 줄짜리 이동 링크를 다음 줄에 배치. 본문은 기존 john 명령·출력으로 바로 시작하며 홈 창에는 상위 이동 링크를 두지 않음.
+- 홈은 `john:~$ whoami` 아래 항구 카페의 웜뱃 그림과 소개를 표시. 작업실·소개 페이지로 이동할 수 있으며 라이트·다크 테마에 맞춰 낮·밤 그림이 바뀜. 애니메이션이나 명령 입력 기능은 사용하지 않음.
+- 작업실 목록도 같은 터미널 창을 사용하며 `john:~/workspace$ ls` 아래 디렉토리 형태의 서비스 링크와 `[게임]` 같은 카테고리를 표시. 별도 분야 버튼과 서비스 개수는 표시하지 않음.
+- 디비전2 이벤트 목록도 같은 터미널 창을 사용. 제목은 실제 주소인 `/workspace/game/the-division-2`이며 영어 화면은 `/en` 접두사를 표시. 명령줄은 `john:~/workspace/game/the-division-2$ ls`이며 디렉토리 가지 모양의 이벤트 링크 전체를 선택해 이동.
+- 레드 문 상세도 전체 보상 내용을 공통 터미널 창으로 감쌈. 제목은 실제 주소인 `/workspace/game/the-division-2/red-moon-unleashed-2026`이며 영어 화면은 `/en` 접두사를 표시. 명령줄은 `john:~/workspace/game/the-division-2/red-moon-unleashed-2026$ cat rewards`이며 검색·보상 체크·아코디언·이미지 대화상자는 유지. 디비전2 목록·상세는 전체 경로를 나열하는 줄 없이 제목과 명령줄로 현재 위치를 표현.
+- 서비스·개인정보처리방침 페이지의 터미널 제목 표시줄 가운데에는 실제 URL을, 오른쪽에는 왼쪽 SVG 화살표와 목적지 이름으로 된 상위 이동 링크를 표시. 작업실 목록·개인정보처리방침은 `홈`/`Home`, 디비전2 목록은 `작업실`/`Workspace`, 상세는 `디비전2`/`The Division 2`로 연결하며 주소는 링크의 title 속성으로 확인. 모바일에서는 현재 경로를 첫 줄, 한 줄짜리 이동 링크를 다음 줄에 배치. 본문은 기존 john 명령·출력으로 바로 시작하며 홈 창에는 상위 이동 링크를 두지 않음.
 - 넓은 화면의 좌우 광고 배치를 위한 공통 레이아웃. 본문 최대 1120px를 유지하고 1600px 이상에서 선택적인 좌우 160px 영역을 지원하며, 작은 화면에는 측면 영역을 표시하지 않음. 광고 내용이 없으면 빈 광고 요소도 생성하지 않음.
-- 사용자 `john`을 사용하는 셸 테마. 메뉴·경로형 터미널 제목·홈의 서비스 진입 경로는 실제 웹 주소와 일치하며 영어는 `/en` 접두사를 표시. 서비스·개인정보처리방침 등의 명령 프롬프트는 언어와 관계없이 `john:~/services$`, `john:~/privacy$` 형식을 유지하며 사이트 이름은 `developer-john`.
+- 사용자 `john`을 사용하는 셸 테마. 메뉴·경로형 터미널 제목·홈의 서비스 진입 경로는 실제 웹 주소와 일치하며 영어는 `/en` 접두사를 표시. 서비스·개인정보처리방침 등의 명령 프롬프트는 언어와 관계없이 `john:~/workspace$`, `john:~/privacy$` 형식을 유지하며 사이트 이름은 `developer-john`.
 - 공통 헤더의 현재 메뉴는 정적 블록 커서와 은은한 샌드색 배경·테두리로 강조. 모든 페이지의 푸터에 슬로건, `© 2026 developer-john`, `contact` 메일 [devjw0712@gmail.com](mailto:devjw0712@gmail.com)을 표시. 메일 링크는 최소 높이 44px이며 슬로건은 한국어 `아이디어를 일상으로`, 영어 `Ideas into everyday life.`를 사용.
 - 모바일 화면 대응, 키보드 포커스와 본문 바로가기.
+- 테마 기본값은 시간 자동이며 방문자 기기의 현지 시간 07:00~19:00에는 라이트, 그 외에는 다크를 적용. 상단의 해·달 아이콘을 열어 시간 자동·기기 설정 따르기·라이트·다크를 선택하고 현재 선택은 체크로 표시. 명시한 선택은 브라우저에 저장해 다음 방문에도 적용. 시간 자동은 시간 경계와 탭 복귀를, 기기 설정은 기기 테마 변경을 반영하며 라이트·다크 고정 선택은 시간과 기기 설정보다 우선. 다른 탭의 선택 변경도 반영. 언어는 KO / EN으로 표시하며 모바일은 브랜드·설정을 첫 줄, 메뉴를 다음 줄에 배치.
 - 스크롤 시 표시되는 한국어·영어 맨 위로 이동 버튼과 모션 감소 설정 지원.
-- 디비전2 → 이벤트별 가이드로 이어지는 서비스 탐색. 서비스 카드는 실제 주소의 `/services`만 생략한 `/game/the-division-2`와 카테고리를 표시하며, 실제 이동 주소는 `/services/game/the-division-2` 또는 `/en/services/game/the-division-2`를 유지. 이벤트 카드는 `./red-moon-unleashed-2026/` 형식의 상대 디렉토리와 이름을 표시. 서비스 카드와 이벤트 카드는 전체를 선택해 다음 목록이나 보상 가이드로 이동.
+- 디비전2 → 이벤트별 가이드로 이어지는 서비스 탐색. 서비스 카드는 실제 주소의 `/workspace`만 생략한 `/game/the-division-2`와 카테고리를 표시하며, 실제 이동 주소는 `/workspace/game/the-division-2` 또는 `/en/workspace/game/the-division-2`를 유지. 이벤트 카드는 `./red-moon-unleashed-2026/` 형식의 상대 디렉토리와 이름을 표시. 서비스 카드와 이벤트 카드는 전체를 선택해 다음 목록이나 보상 가이드로 이동.
 - 준비 중·공개 가능 상태를 구분하는 서비스 메타데이터.
 - 언어별 제목·설명, canonical·hreflang과 Open Graph 로케일. 네이비·샌드 터미널 그래픽의 공통 PNG 공유 이미지와 큰 Twitter/X 미리보기 카드를 제공.
 - 한국어·영어의 없는 경로에 대한 404 안내.
 
 첫 서비스는 한국어·영어를 지원하는 디비전2 레드 문 보상 가이드입니다. 66개 체크 항목과 보상 이미지, 분류별 아코디언, 검색·분류·상태 필터, 이미지 확대와 브라우저 자동 저장을 제공합니다. 분류를 모두 펼치거나 접을 수 있고, 검색·필터 및 보상 바로가기에서는 해당 분류를 자동으로 펼칩니다. 두 언어에서 같은 체크 기록을 사용하고 한국어·영어 이름으로 검색할 수 있습니다. 언어별 공유 주소와 메타데이터를 제공합니다. 새 방문자는 빈 기록으로 시작하며 이벤트 기록만 초기화할 수 있습니다. 개인 도구의 기록 가져오기는 포함하지 않습니다.
 
-이키가이 도구는 서비스 목록에 표시하지 않으며 `/discovery/ikigai`, `/en/discovery/ikigai`에서 직접 열 수 있습니다. 질문·선택지·결과·실험·후기 화면을 모두 한국어와 영어로 제공합니다. 소스·브라우저 저장 기록·자동 테스트를 유지하고, 언어를 바꿔도 기록 키·형식·ID·추천 순서는 같습니다. 사용자가 쓴 메모와 후기는 원문으로 보존합니다. 5~10분 동안 6단계 질문에 답하고, 활동 후보 20개 중 3개를 살펴볼 수 있습니다. 선택한 관심·직접 경험·돕고 싶은 문제에 따른 근거와 보상에 대한 본인 답변, 20~60분 실험과 후기를 제공합니다. 목표와 가능한 시간을 순서에 반영하며, 모르는 답이나 수익화에 관심이 없어도 탐색할 수 있습니다. 메모와 후기는 추천 계산에 사용하지 않습니다. 답변은 브라우저에 자동 저장하고 다른 탭의 변경을 반영하며, 손상 기록을 자동 덮어쓰지 않습니다. 해당 서비스 기록만 삭제할 수 있습니다.
+이키가이 도구는 작업실 목록에 표시하지 않으며 `/discovery/ikigai`, `/en/discovery/ikigai`에서 직접 열 수 있습니다. 질문·선택지·결과·실험·후기 화면을 모두 한국어와 영어로 제공합니다. 소스·브라우저 저장 기록·자동 테스트를 유지하고, 언어를 바꿔도 기록 키·형식·ID·추천 순서는 같습니다. 사용자가 쓴 메모와 후기는 원문으로 보존합니다. 5~10분 동안 6단계 질문에 답하고, 활동 후보 20개 중 3개를 살펴볼 수 있습니다. 선택한 관심·직접 경험·돕고 싶은 문제에 따른 근거와 보상에 대한 본인 답변, 20~60분 실험과 후기를 제공합니다. 목표와 가능한 시간을 순서에 반영하며, 모르는 답이나 수익화에 관심이 없어도 탐색할 수 있습니다. 메모와 후기는 추천 계산에 사용하지 않습니다. 답변은 브라우저에 자동 저장하고 다른 탭의 변경을 반영하며, 손상 기록을 자동 덮어쓰지 않습니다. 해당 서비스 기록만 삭제할 수 있습니다.
 
 디비전2 가이드와 이키가이 도구는 계정·DB·LLM 없이 동작합니다. 검증된 심리검사나 직업·수익을 확정하는 기능은 제공하지 않습니다. GA4 설치 코드를 구성했으며 광고 연동은 아직 구현하지 않았습니다.
 
@@ -87,6 +90,8 @@ node --test scripts/test-red-moon.mjs
 node --test scripts/test-ikigai.mjs
 node --test scripts/test-i18n.mjs
 node --test scripts/test-analytics.mjs
+node --test scripts/test-theme.mjs
+node --test scripts/test-theme-control.mjs
 npm run build
 npm start
 ```

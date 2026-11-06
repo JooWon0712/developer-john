@@ -8,15 +8,15 @@ import { ServiceCard } from "./service-card";
 const copy = {
   ko: {
     planned: "준비 중",
-    emptyTitle: "서비스를 준비하고 있습니다.",
-    emptyFirst: "알아두면 좋은 정보를 모으는 작은 서비스부터 시작합니다.",
-    emptySecond: "서비스가 완성되면 이곳에서 바로 만나볼 수 있습니다.",
+    emptyTitle: "작업실을 채워가고 있습니다.",
+    emptyFirst: "일상의 필요에서 시작한 프로그램과 웹서비스를 만듭니다.",
+    emptySecond: "완성한 작업은 이곳에서 만나볼 수 있습니다.",
     about: "만드는 사람 소개",
   },
   en: {
     planned: "Coming soon",
-    emptyTitle: "Services are coming soon.",
-    emptyFirst: "Small services that bring useful information together are on the way.",
+    emptyTitle: "The workspace is taking shape.",
+    emptyFirst: "Programs and web services inspired by everyday needs are on the way.",
     emptySecond: "They will be available here when they are ready.",
     about: "Meet the developer",
   },
@@ -26,7 +26,7 @@ export function ServiceDirectory({ services, language = "ko" }: { services: Serv
   const text = copy[language];
   return (
     <>
-      <p className="directory-command"><span aria-hidden="true">{shell.user}:~/services$</span><code lang="en">ls</code></p>
+      <p className="directory-command"><span aria-hidden="true">{shell.user}:~/workspace$</span><code lang="en">ls</code></p>
       <div id="service-results">
         {services.length === 0 ? (
           <div className="empty-state">

@@ -13,7 +13,7 @@ const copy = {
     title: "디비전2",
     metadataTitle: "디비전2 이벤트·보상 정보",
     description: "디비전2의 이벤트 일정과 보상, 획득 조건을 한곳에서 확인하세요. 이벤트별 가이드에서 받은 보상을 기록할 수 있습니다.",
-    heading: "이벤트 가이드", parent: "서비스 목록",
+    heading: "이벤트 가이드", parent: "작업실",
     introduction: "이벤트 일정과 보상, 획득 조건을 한곳에 모읍니다. 이벤트를 골라 받을 수 있는 보상을 살펴보고, 받은 보상을 기록하세요.",
     mainEvent: "메인 이벤트", count: (count: number) => `${count}개`,
     dates: "날짜는 공식 공지의 메인 이벤트 기간입니다. 개별 보상의 지급 기간과 조건은 각 가이드에서 확인하세요.",
@@ -22,7 +22,7 @@ const copy = {
     title: "The Division 2",
     metadataTitle: "The Division 2 Events & Rewards",
     description: "Explore The Division 2 event schedules, rewards and requirements. Open an event guide to track the rewards you have claimed.",
-    heading: "Event guides", parent: "Services",
+    heading: "Event guides", parent: "Workspace",
     introduction: "Event schedules, rewards and requirements in one place. Choose an event to explore its rewards and track the items you have claimed.",
     mainEvent: "Main event", count: (count: number) => `${count} ${count === 1 ? "guide" : "guides"}`,
     dates: "Dates show the announced main event period. Check each guide for individual reward periods and requirements.",
@@ -50,7 +50,7 @@ export function Division2Page({ language }: { language: Division2Language }) {
   const text = copy[language];
   return (
     <article className={styles.page} lang={language} aria-labelledby="division2-title">
-      <TerminalWindow title={division2Paths[language]} bodyClassName={styles.session} parentLink={{ href: localizePath("/services", language), label: text.parent }}>
+      <TerminalWindow title={division2Paths[language]} bodyClassName={styles.session} parentLink={{ href: localizePath("/workspace", language), label: text.parent }}>
         <p className={styles.command} aria-hidden="true"><span>{shell.user}:~{shell.division2}$</span><code lang="en">ls</code></p>
         <header className={styles.intro}>
           <h1 id="division2-title">{text.title}</h1>

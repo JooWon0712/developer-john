@@ -1,0 +1,4 @@
+.image.light { display: block; }
+.image.dark { display: none; }
+:global(html[data-theme="dark"]) .image.light { display: none; }
+:global(html[data-theme="dark"]) .image.dark { display: block; }

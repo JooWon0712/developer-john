@@ -38,6 +38,7 @@ export const privacyCopy = {
         title: "보상 기록의 브라우저 저장",
         paragraphs: [
           "보상 기록은 이용자의 브라우저 저장소(localStorage)에 저장됩니다. 사이트 서버나 Google Analytics로 전송하지 않습니다.",
+          "화면 테마를 시간 자동·기기 설정 따르기·라이트·다크 중에서 선택하면 같은 브라우저에 저장해 다음 방문에 적용합니다. 기본값은 시간 자동입니다. 테마 설정은 서버나 Google Analytics로 전송하지 않으며, 브라우저에서 이 사이트의 데이터를 삭제하면 초기화됩니다.",
         ],
         details: [
           { label: "저장 항목", value: "체크한 보상 항목, 의류 수집 수량, 저장 시각과 이벤트 구분 정보" },
@@ -110,6 +111,7 @@ export const privacyCopy = {
         title: "Reward records in your browser",
         paragraphs: [
           "Reward records are stored in your browser’s local storage (localStorage). They are not sent to the site server or Google Analytics.",
+          "When you choose a theme preference (by local time, following your device, light, or dark), it is saved in this browser for future visits. The default follows local time. It is not sent to the server or Google Analytics. Clearing this site’s browser data resets the preference.",
         ],
         details: [
           { label: "Stored information", value: "Checked reward items, apparel collection count, save time and information identifying the event" },
