@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="light">
+  <title>하와이 라이트·다크 컬러 5쌍</title>
+  <link rel="stylesheet" href="../theme-palettes-v2/styles.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="../theme-palettes-v2/preview.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#palettes">시안으로 건너뛰기</a>
+  <header class="board-header">
+    <a class="board-brand" href="/"><img src="/brand/jw-mark.svg" width="36" height="36" alt=""><span>john <small>HAWAII COLOR STUDY / 01</small></span></a>
+    <span class="draft">라이트 + 다크 5쌍<br>5번 코나 코코넛 · 커피 브라운 선택</span>
+  </header>
+  <main>
+    <div class="intro">
+      <p class="eyebrow">FROM A BRIGHT SHORE TO A QUIET NIGHT</p>
+      <h1>하와이의 낮과 밤을,<br>작업실의 색으로.</h1>
+      <p>밝은 모래, 맑은 바다, 섬의 초록, 산호빛, 따뜻한 커피.<br>같은 항구 카페 그림에 다섯 가지 분위기를 입혔습니다.</p>
+      <div class="intro-links"><a href="./overview.png" target="_blank" rel="noopener">5쌍 한눈에 보기 ↗</a><a href="../theme-palettes-v2/index.html">이전 컬러 시안 보기</a></div>
+    </div>
+    <nav class="palette-jumps" id="palette-jumps" aria-label="색상 시안 번호"></nav>
+    <div class="reading-guide"><span><i class="light-dot" aria-hidden="true"></i>왼쪽 · 라이트 / 낮 그림</span><span><i class="dark-dot" aria-hidden="true"></i>오른쪽 · 다크 / 밤 그림</span><span>모바일에서는 라이트 → 다크 순서로 표시합니다.</span></div>
+    <div id="palettes" class="palettes" aria-label="하와이 라이트·다크 컬러 조합 5개" aria-busy="true"></div>
+    <noscript><p>JavaScript 없이도 <a href="./overview.png">5쌍 비교 이미지</a>를 볼 수 있습니다. 색상 값은 <a href="./palettes.json">palettes.json</a>에 보관되어 있습니다.</p></noscript>
+    <footer class="board-footer"><a href="/about">현재 소개 페이지 보기</a><p>낮·밤 그림은 현재 사용 중인 원본입니다. 시안 확대는 실제 사이트의 테마나 저장된 설정을 바꾸지 않습니다.</p></footer>
+  </main>
+  <dialog id="expanded" aria-labelledby="expanded-title">
+    <header class="dialog-toolbar"><div><p class="eyebrow">HAWAII COLOR PREVIEW</p><h2 id="expanded-title"></h2></div><button id="close-dialog" type="button">닫기 ×</button></header>
+    <div class="mode-tabs" role="group" aria-label="확대 화면 테마"><button type="button" data-mode="light" aria-pressed="true">라이트 · 낮</button><button type="button" data-mode="dark" aria-pressed="false">다크 · 밤</button></div>
+    <div id="expanded-content"></div>
+  </dialog>
+</body>
+</html>

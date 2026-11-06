@@ -1,0 +1,33 @@
+/* The existing concept renderer keeps the compared layout identical. */
+:root { color: #183f4b; background: #f6f4ed; }
+.board-header { border-color: #c5d6d5; }
+.board-brand small { color: #526b6b; }
+.draft { color: #526b6b; }
+.intro { position: relative; padding-block: 48px 26px; }
+.intro::after { content: ""; position: absolute; top: 56px; right: 4px; width: 100px; height: 100px; border-radius: 50%; background: #e8bd7c; box-shadow: -28px 28px 0 -8px #d8e9e4; z-index: -1; }
+.eyebrow { color: #226c78; }
+h1 { max-width: 780px; margin-top: 16px; font-size: clamp(30px, 4vw, 52px); line-height: 1.45; }
+.intro > p:last-of-type { color: #4b656a; font-size: 14px; line-height: 2; }
+.intro-links { display: flex; flex-wrap: wrap; gap: 14px 24px; padding-top: 20px; font-size: 12px; color: #226c78; }
+.intro-links a { min-height: 36px; display: inline-flex; align-items: center; }
+.palette-jumps a { background: #fffef9; border-color: #9eb8b8; color: #234a54; }
+.palette-jumps a:hover { background: #e8f0ed; }
+.reading-guide { color: #4b656a; border-color: #c5d6d5; }
+.palette { padding-top: 26px; border-color: #bacfcc; }
+.palette-heading { padding-bottom: 22px; }
+.palette-heading h2 { font-size: clamp(18px, 2vw, 24px); }
+.palette-heading p { max-width: 950px; line-height: 1.9; color: #4b656a; }
+.number { color: #527d7d; }
+.recommended { color: #285744; background: #e2ecdf; border-color: #8fab9a; }
+.variant-heading { color: #4b656a; }
+.open-preview { background: #fffef9; border-color: #9eb8b8; color: #234a54; min-height: 40px; }
+.open-preview:hover { background: #e8f0ed; }
+.site-preview { box-shadow: 0 8px 20px var(--shadow); }
+.scene { box-shadow: 0 5px 14px var(--shadow); }
+.swatches { padding-top: 14px; }
+.swatch { color: #4b656a; }
+.board-footer { border-color: #bacfcc; color: #4b656a; }
+dialog { background: #f6f4ed; border-color: #9eb8b8; color: #183f4b; }
+.dialog-toolbar button, .mode-tabs button { background: #fffef9; border-color: #9eb8b8; color: #234a54; }
+.mode-tabs button[aria-pressed="true"] { background: #234a54; color: #fffef9; border-color: #234a54; }
+@media(max-width:650px) { .intro::after { width: 54px; height: 54px; top: 42px; right: 6px; opacity: .7; }.intro { padding-top: 32px; }.intro > p:last-of-type { font-size: 12px; }.palette-heading { gap: 12px; }.palette-heading h2 { line-height: 1.7; } }
