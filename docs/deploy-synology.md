@@ -30,7 +30,7 @@ Copy-Item deploy.nas.example.json deploy.nas.local.json
 
 예시 JSON의 NAS 호스트·SSH 사용자·SSH 포트·키 파일과 배포 경로를 실제 환경에 맞게 확인합니다. 대상 프로젝트·서비스·이미지 이름과 HTTP 포트도 Compose 실행값과 일치해야 합니다. 이 파일은 개인 PC에만 보관합니다. SSH 키 인증에 사용할 개인키를 NAS에 복사하지 않습니다.
 
-Docker 작업에 관리자 권한이 필요하면 설정의 `UseSudo`를 사용합니다. Codex의 내부 명령 실행 도구와 통합 터미널을 우선 사용하며, 사용자 직접 입력이 필요한 경우 실제로 입력할 수 있는 통합 터미널인지 확인합니다. 에이전트의 명령 실행 세션과 사용자가 조작하는 통합 터미널은 구분합니다. 통합 터미널에서 지원하지 않는 기능이나 실제 오류가 확인될 때만 이유를 설명하고 외부 창을 사용합니다. `Password:` 프롬프트가 나오면 **사용자가 해당 터미널에 직접 비밀번호를 입력**합니다. 비밀번호를 채팅·설정 파일·환경 변수·명령 인자·파이프로 전달하거나 저장하지 않습니다.
+Docker 작업에 관리자 권한이 필요하면 설정의 `UseSudo`를 사용합니다. `Password:` 프롬프트가 나오면 **사용자가 배포를 시작한 통합 터미널에서 직접 비밀번호를 입력**합니다. 비밀번호를 채팅·설정 파일·환경 변수·명령 인자·파이프로 전달하거나 저장하지 않습니다.
 
 ## 2. 전송할 커밋 확정
 
@@ -42,16 +42,20 @@ Docker 작업에 관리자 권한이 필요하면 설정의 `UseSudo`를 사용�
 
 배포 스크립트의 최초 설치·업데이트·빌드 실패 후 재시도·상태 확인 실패 및 종료 신호 후 복구는 `node --test scripts/test-nas-deploy.mjs`로 모의 실행할 수 있습니다. 실제 NAS에 연결하지 않으며 Windows에서는 Git Bash가 필요합니다. 실제 배포의 로컬 검사와 원격 상태 확인은 아래 명령이 수행합니다.
 
+커밋과 푸시가 끝나면 Codex의 `developer-john` 프로젝트에서 상단의 **NAS 배포** 바로가기를 실행합니다. 이 바로가기는 로컬 환경 설정이며 Git과 NAS에 전송하지 않습니다. 바로가기가 보이지 않으면 통합 터미널에서 아래 명령을 실행합니다. 채팅이 상위 작업 폴더에 열려 있다면 먼저 `developer-john` 폴더로 이동합니다.
+
 ```powershell
 # NAS 접속 없이 로컬 검사·커밋 확인·배포 압축 생성
-./scripts/deploy-nas.ps1 -PackageOnly
+pwsh -NoLogo -NoProfile -ExecutionPolicy Bypass -File ./scripts/deploy-nas.ps1 -PackageOnly
 
 # SSH로 NAS의 배포 환경 확인
-./scripts/deploy-nas.ps1 -Check
+pwsh -NoLogo -NoProfile -ExecutionPolicy Bypass -File ./scripts/deploy-nas.ps1 -Check
 
 # 소스 전송 → NAS 빌드 → 최초 설치 또는 업데이트 → 상태 확인
-./scripts/deploy-nas.ps1
+pwsh -NoLogo -NoProfile -ExecutionPolicy Bypass -File ./scripts/deploy-nas.ps1
 ```
+
+`-ExecutionPolicy Bypass`는 이 명령에서 시작한 PowerShell 프로세스에만 적용됩니다. `Password:`에 입력한 뒤에는 같은 터미널에서 `Completed:` 메시지와 `dist/*.result`로 배포 결과를 확인합니다.
 
 `-PackageOnly`는 NAS에 연결하지 않습니다. `-Check`는 원격 실행 스크립트 전송과 접속·경로·Docker·Compose·포트 등 필요한 점검을 하지만 앱을 배포하지 않습니다. 기본 실행은 최초 설치와 기존 developer-john 업데이트를 지원합니다.
 
