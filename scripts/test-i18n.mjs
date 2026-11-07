@@ -15,7 +15,16 @@ function moduleUrl(relative, replacements = {}) {
 }
 const { getLanguage, getBasePath, localizePath } = await import(moduleUrl("src/lib/i18n.ts"));
 
-const paths = ["/", "/workspace", "/privacy", "/projects", "/workspace/game/the-division-2", "/workspace/game/the-division-2/red-moon-unleashed-2026", "/workspace/tools/nas-desktop-app", "/workspace/tools/pc-internet-monitor", "/workspace/tools/codex-usage-overlay", "/discovery/ikigai", "/missing-page"];
+const centralParkPath = "/workspace/game/the-division-2/echoes-of-central-park-2026";
+const paths = ["/", "/workspace", "/privacy", "/projects", "/workspace/game/the-division-2", "/workspace/game/the-division-2/red-moon-unleashed-2026", centralParkPath, "/workspace/tools/nas-desktop-app", "/workspace/tools/pc-internet-monitor", "/workspace/tools/codex-usage-overlay", "/discovery/ikigai", "/missing-page"];
+const centralParkRewardsUrl = moduleUrl("src/features/division2/central-park/rewards.ts");
+
+function guideModuleUrl(eventUrl) {
+  return moduleUrl("src/features/division2/event-guides.ts", {
+    '"./central-park/rewards"': centralParkRewardsUrl,
+    '"./red-moon/event"': eventUrl,
+  });
+}
 
 test("every page switches language reversibly without duplicating the English prefix", () => {
   for (const path of paths) {
@@ -44,16 +53,25 @@ test("language changes preserve queries, encoded values and exact reward fragmen
   assert.equal(getBasePath(`/en${route}${suffix}`), route);
 });
 
-test("registered Division 2 service and event routes have localized wrappers under workspace", async () => {
+test("Division 2 lists the DLC release and Red Moon event with localized workspace routes", async () => {
   const brandUrl = moduleUrl("src/data/brand.ts");
   const desktopToolsUrl = moduleUrl("src/features/desktop-tools/tools.ts");
   const eventUrl = moduleUrl("src/features/division2/red-moon/event.ts");
   const { services, serviceCategories } = await import(moduleUrl("src/data/catalog.ts", { '"@/data/brand"': brandUrl, '"@/features/desktop-tools/tools"': desktopToolsUrl }));
-  const { division2Paths, division2EventGuides } = await import(moduleUrl("src/features/division2/event-guides.ts", { '"./red-moon/event"': eventUrl }));
+  const { division2Paths, division2EventGuides } = await import(guideModuleUrl(eventUrl));
   const service = services.find(item => item.id === "the-division-2");
   assert.equal(service.status, "ready");
   assert.equal(service.href, "/workspace/game/the-division-2");
   assert.equal(serviceCategories.find(item => item.id === service.category).pathPrefix, "/workspace/game");
+  assert.deepEqual(division2EventGuides.map(guide => guide.id), ["echoes-of-central-park-2026", "red-moon-unleashed-2026"]);
+  const [dlc, redMoon] = division2EventGuides;
+  assert.equal(dlc.kind, "dlc");
+  assert.equal(dlc.paths.ko, centralParkPath);
+  assert.equal(dlc.releasedOn, "2026-11-03");
+  assert.ok(!Object.hasOwn(dlc, "endsOn"));
+  assert.equal(redMoon.kind, "event");
+  assert.equal(redMoon.startsOn, "2026-10-15");
+  assert.equal(redMoon.endsOn, "2026-11-03");
   for (const language of ["ko", "en"]) {
     const indexPath = localizePath(service.href, language);
     assert.equal(division2Paths[language], indexPath);
@@ -117,7 +135,7 @@ test("all workspace page wrappers emit their new canonical, hreflang and Open Gr
   const i18n = await import(i18nUrl);
   const site = await import(moduleUrl("src/lib/site.ts", { '"@/data/brand"': brandUrl, '"./i18n"': i18nUrl }));
   const tools = await import(moduleUrl("src/features/desktop-tools/tools.ts"));
-  const guides = await import(moduleUrl("src/features/division2/event-guides.ts", { '"./red-moon/event"': eventUrl }));
+  const guides = await import(guideModuleUrl(eventUrl));
   const localization = await import(moduleUrl("src/features/division2/red-moon/localization.ts", { '"./event"': eventUrl, '"./event-en"': eventEnUrl }));
   const common = {
     "react/jsx-runtime": {}, "@/data/shell": shell, "@/lib/i18n": i18n, "@/lib/site": site,
@@ -130,11 +148,17 @@ test("all workspace page wrappers emit their new canonical, hreflang and Open Gr
     ...common, "./event": await import(eventUrl), "../event-guides": guides,
     "./localization": localization, "./reward-checklist": {}, "./red-moon.module.css": {},
   });
+  const centralPark = pageModule("src/features/division2/central-park/event-page.tsx", {
+    ...common, "../event-guides": guides, "./rewards": await import(centralParkRewardsUrl),
+    "./collectibles": await import(moduleUrl("src/features/division2/central-park/collectibles.ts")),
+    "./reward-checklist": {}, "./central-park.module.css": {},
+  });
   const imports = {
     ...common, "@/features/site/services-page": {},
     "@/features/site/copy": await import(moduleUrl("src/features/site/copy.ts", { '"@/data/brand"': brandUrl })),
     "@/features/desktop-tools/tool-page": {}, "@/features/desktop-tools/tools": tools,
     "@/features/division2/game-page": game, "@/features/division2/red-moon/event-page": redMoon,
+    "@/features/division2/central-park/event-page": centralPark,
   };
   const routes = ["/workspace", ...tools.desktopTools.map(tool => tool.path), guides.division2Paths.ko, ...guides.division2EventGuides.map(guide => guide.paths.ko)];
   for (const route of routes) {
