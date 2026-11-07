@@ -91,7 +91,7 @@ try {
     Get-Command git -CommandType Application -ErrorAction Stop | Out-Null
     $taskRevision = & git rev-parse --verify HEAD
     if ($LASTEXITCODE -ne 0 -or $taskRevision -notmatch '^[0-9a-f]{40,64}$') { throw 'A committed Git revision is required.' }
-    $taskRelease = '{0}-{1}' -f $taskRelease, $taskRevision.Substring(0, 8)
+    $taskRelease = '{0}-{1}' -f $taskRevision.Substring(0, 8), $taskRelease
     Write-Host "Release: $taskRelease ($taskMode)"
 
     if (-not $Check) {
