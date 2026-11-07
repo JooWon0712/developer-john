@@ -11,7 +11,9 @@ if ($PackageOnly -and $Check) { throw 'Choose either -PackageOnly or -Check.' }
 $taskRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $taskDist = Join-Path $taskRoot 'dist'
 [System.IO.Directory]::CreateDirectory($taskDist) | Out-Null
-$taskRelease = '{0}-{1}' -f [DateTime]::UtcNow.ToString('yyyyMMddTHHmmssZ'), ([Guid]::NewGuid().ToString('N').Substring(0, 6))
+$taskDeploymentTime = [DateTimeOffset]::UtcNow.ToOffset([TimeSpan]::FromHours(9))
+$taskTimestamp = $taskDeploymentTime.ToString('yyyy-MM-dd_HH-mm-ss', [Globalization.CultureInfo]::InvariantCulture)
+$taskRelease = '{0}-kst-{1}' -f $taskTimestamp, ([Guid]::NewGuid().ToString('N').Substring(0, 6))
 $taskRevision = 'unknown'
 $taskMode = if ($Check) { 'check' } elseif ($PackageOnly) { 'package' } else { 'deploy' }
 $taskStatus = 'failed'
