@@ -42,6 +42,7 @@ export function BackToTop() {
 
   return <button
     className={styles.button}
+    data-back-to-top
     type="button"
     hidden={!visible}
     onClick={goToTop}
@@ -49,7 +50,6 @@ export function BackToTop() {
     aria-label={english ? "Back to top" : "페이지 맨 위로 이동"}
     title={english ? "Back to top" : "페이지 맨 위로 이동"}
   >
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false"><path d="M12 20V4m-6 6 6-6 6 6" /></svg>
-    <span>{english ? "Top" : "맨 위로"}</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false"><path d="M5 4h14M12 20V8m-5 5 5-5 5 5" /></svg>
   </button>;
 }

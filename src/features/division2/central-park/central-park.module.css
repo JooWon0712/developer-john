@@ -1,4 +1,5 @@
-.page {
+.page,
+body:has(.page) [data-back-to-top] {
   --paper: #e7eeeb;
   --surface: #f3f7f4;
   --surface-alt: #d4e2de;
@@ -17,11 +18,15 @@
   --window-divider: #9eb5ad;
   --shadow: #203a3924;
   --backdrop: #0d191bc2;
+}
+
+.page {
   margin-block: clamp(24px, 4vw, 48px) clamp(48px, 7vw, 88px);
   color: var(--ink);
 }
 
 :global(html[data-theme="dark"]) .page,
+:global(html[data-theme="dark"]) body:has(.page) [data-back-to-top],
 .hero {
   color-scheme: dark;
   --paper: #0e191c;
