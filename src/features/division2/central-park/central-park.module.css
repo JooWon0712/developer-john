@@ -73,7 +73,6 @@
   gap: clamp(16px, 3vw, 34px);
   padding: clamp(18px, 4vw, 44px);
   border: 1px solid var(--line);
-  border-inline-start: 3px solid var(--accent);
   border-radius: 7px;
   color: var(--ink);
   background:
