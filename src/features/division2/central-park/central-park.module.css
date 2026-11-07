@@ -177,13 +177,15 @@
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 255px), 1fr)); gap: 11px; }
 .grid:has(> .reward:only-child) { grid-template-columns: repeat(auto-fill, minmax(min(100%, 255px), 1fr)); }
 .reward { display: flex; flex-direction: column; align-items: start; min-width: 0; padding: 14px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); }
+.reward:has(.checkTarget input:enabled) { cursor: pointer; }
 .reward[data-checked] { border-color: var(--success); background: color-mix(in srgb, var(--success) 7%, var(--surface)); }
 .rewardOverview { display: flex; flex-wrap: wrap; align-items: start; gap: 8px; width: 100%; }
-.cardHeading, .rewardIdentity { flex: 1 1 108px; min-width: 0; overflow-wrap: anywhere; }
-.cardHeading { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 9px; align-items: center; }
-.cardHeading input { margin: 0; width: 20px; height: 20px; accent-color: var(--accent); }
+.cardHeading { flex: 1 1 108px; min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; overflow-wrap: anywhere; }
+.checkTarget { display: grid; place-items: center; width: 44px; height: 44px; margin-inline-start: -10px; border-radius: 5px; }
+.checkTarget input { margin: 0; width: 20px; height: 20px; accent-color: var(--accent); }
+.checkTarget:has(input:enabled), .checkTarget input:enabled, .rewardTitle label { cursor: pointer; }
+.checkTarget:has(input:enabled):hover { background: var(--accent-soft); }
 .rewardTitle { margin: 0; color: var(--ink); font-size: 1rem; line-height: 1.45; }
-.cardHeading label { cursor: pointer; }
 .kind, .alternateName { margin: 0; font-size: .76rem; color: var(--muted); }
 .kind { color: var(--accent); font-weight: 650; }
 .thumbnail { display: grid; justify-items: center; gap: 3px; width: min(100%, 104px); padding: 4px; margin-inline-start: auto; border: 1px solid var(--line); border-radius: 5px; background: var(--paper); color: var(--accent); cursor: zoom-in; }
@@ -218,6 +220,10 @@
 .dialogBody { padding: 14px; }
 .dialogBody .picture { margin-inline: auto; }
 .dialogBar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 0 0 12px; }
+
+@media (hover: hover) {
+  .reward:not([data-checked]):has(.checkTarget input:enabled):hover { border-color: var(--accent); }
+}
 
 @media (max-width: 700px) {
   .hero { grid-template-columns: minmax(0, 1fr); }

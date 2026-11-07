@@ -16,6 +16,7 @@ type StorageMode = "loading" | ReturnType<typeof loadProgress>["mode"];
 type AcquisitionFilter = "all" | "acquired" | "pending";
 type RewardPreview = { name: string; image: RewardImage };
 type OpenPreview = (preview: RewardPreview, trigger: HTMLButtonElement) => void;
+type RewardCardItem = Omit<Reward, "group">;
 
 const tiers = ["core", "bonus"] as const;
 const imageDirectory = "/games/the-division-2/echoes-of-central-park-2026/clean";
@@ -72,8 +73,34 @@ function RewardThumbnail({ image, name, language, onOpen }: RewardPreview & {
   );
 }
 
+function ChecklistCheckbox({ id, checked, disabled, onChange }: {
+  id: string;
+  checked: boolean;
+  disabled: boolean;
+  onChange: (checked: boolean) => void;
+}) {
+  return (
+    <label className={styles.checkTarget}>
+      <input id={id} type="checkbox" checked={checked} disabled={disabled} onChange={event => onChange(event.currentTarget.checked)} />
+    </label>
+  );
+}
+
+function toggleFromCard(event: MouseEvent<HTMLElement>) {
+  const { currentTarget, target } = event;
+  if (event.defaultPrevented || !(target instanceof Element) || target.closest("a, button, input, label")) return;
+
+  const selection = currentTarget.ownerDocument.getSelection();
+  if (selection && !selection.isCollapsed && selection.containsNode(currentTarget, true)) return;
+
+  const checkbox = currentTarget.querySelector<HTMLInputElement>('input[type="checkbox"]:enabled');
+  if (!checkbox) return;
+  checkbox.focus({ preventScroll: true });
+  checkbox.click();
+}
+
 function RewardCard({ item, language, checked, disabled, onCheck, onImage }: {
-  item: Reward;
+  item: RewardCardItem;
   language: Division2Language;
   checked: boolean;
   disabled: boolean;
@@ -85,10 +112,10 @@ function RewardCard({ item, language, checked, disabled, onCheck, onImage }: {
   const checkboxId = `central-park-check-${item.id}`;
   const isClockwork = item.id === "clockwork";
   return (
-    <article className={styles.reward} data-reward={item.id} data-checked={checked || undefined}>
+    <article className={styles.reward} data-reward={item.id} data-checked={checked || undefined} onClick={toggleFromCard}>
       <div className={styles.rewardOverview}>
         <div className={styles.cardHeading}>
-          <input id={checkboxId} type="checkbox" checked={checked} disabled={disabled} onChange={event => onCheck(item.id, event.currentTarget.checked)} />
+          <ChecklistCheckbox id={checkboxId} checked={checked} disabled={disabled} onChange={acquired => onCheck(item.id, acquired)} />
           <div>
             <p className={styles.kind}>{item.kind[language]}</p>
             <h4 className={styles.rewardTitle}><label htmlFor={checkboxId}>{item.name[language]}</label></h4>
@@ -129,12 +156,14 @@ function ClockworkCollectibles({ language, checkedIds, disabled, onCheck }: {
           const checked = checkedIds.has(card.id);
           const checkboxId = `central-park-collectible-${card.id}`;
           return (
-            <article className={styles.reward} key={card.id} data-checked={checked || undefined}>
-              <div className={styles.cardHeading}>
-                <input id={checkboxId} type="checkbox" checked={checked} disabled={disabled} onChange={event => onCheck(card.id, event.currentTarget.checked)} />
-                <div>
-                  <h5 className={styles.rewardTitle}><label htmlFor={checkboxId}>{card.name[language]}</label></h5>
-                  {language === "ko" && <p className={styles.alternateName} lang="en">{card.name.en}</p>}
+            <article className={styles.reward} key={card.id} data-checked={checked || undefined} onClick={toggleFromCard}>
+              <div className={styles.rewardOverview}>
+                <div className={styles.cardHeading}>
+                  <ChecklistCheckbox id={checkboxId} checked={checked} disabled={disabled} onChange={acquired => onCheck(card.id, acquired)} />
+                  <div>
+                    <h5 className={styles.rewardTitle}><label htmlFor={checkboxId}>{card.name[language]}</label></h5>
+                    {language === "ko" && <p className={styles.alternateName} lang="en">{card.name.en}</p>}
+                  </div>
                 </div>
               </div>
               <p className={styles.condition}>{card.hint[language]}</p>
@@ -283,8 +312,8 @@ export function CentralParkChecklist({ language }: { language: Division2Language
     if (event.target === event.currentTarget) event.currentTarget.close();
   }
 
-  function renderGrid(items: readonly Reward[]) {
-    return <div className={styles.grid}>{items.map(item => <RewardCard key={item.id} item={item} language={language} checked={checkedIds.has(item.id)} disabled={busy} onCheck={toggleRewardCheck} onImage={openImage} />)}</div>;
+  function renderGrid(items: readonly RewardCardItem[], onCheck = toggleRewardCheck) {
+    return <div className={styles.grid}>{items.map(item => <RewardCard key={item.id} item={item} language={language} checked={checkedIds.has(item.id)} disabled={busy} onCheck={onCheck} onImage={openImage} />)}</div>;
   }
 
   function renderHunterRewards(items: readonly Reward[]) {
@@ -419,19 +448,7 @@ export function CentralParkChecklist({ language }: { language: Division2Language
         })}
         <section id="gamescom-2026" className={styles.rewardPanel} data-coupon={gamescomPromotion.code} aria-label={text.gamescomTitle}>
           <h3 className={styles.couponHeading}><span>{text.gamescomTitle}</span><code>{gamescomPromotion.code}</code></h3>
-          <div className={styles.grid}>
-            {gamescomPromotion.items.map(item => (
-              <article className={styles.reward} key={item.image.file}>
-                <div className={styles.rewardOverview}>
-                  <div className={styles.rewardIdentity}>
-                    <p className={styles.kind}>{item.kind[language]}</p>
-                    <h4 className={styles.rewardTitle}>{item.name[language]}</h4>
-                  </div>
-                  <RewardThumbnail image={item.image} name={item.name[language]} language={language} onOpen={openImage} />
-                </div>
-              </article>
-            ))}
-          </div>
+          {renderGrid(gamescomPromotion.items, toggleCheck)}
         </section>
       </section>
 

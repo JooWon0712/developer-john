@@ -1,9 +1,9 @@
 import { guardianCards } from "./collectibles";
-import { rewards } from "./rewards";
+import { gamescomPromotion, rewards } from "./rewards";
 
 const collection = "echoes-of-central-park-2026";
 const schemaVersion = 1;
-const validIds = new Set([...rewards, ...guardianCards].map(item => item.id));
+const validIds = new Set([...rewards, ...guardianCards, ...gamescomPromotion.items].map(item => item.id));
 
 export const storageKey = `developer-john:division2:${collection}:v${schemaVersion}`;
 export const maxBackupBytes = 256 * 1024;

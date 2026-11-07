@@ -13,7 +13,7 @@ const rewardsUrl = moduleUrl("rewards");
 const collectiblesUrl = moduleUrl("collectibles");
 const { loadProgress, maxBackupBytes, parseBackup, saveProgress, serializeBackup, storageKey } =
   await import(moduleUrl("progress", { '"./rewards"': rewardsUrl, '"./collectibles"': collectiblesUrl }));
-const { rewards } = await import(rewardsUrl);
+const { gamescomPromotion, rewards } = await import(rewardsUrl);
 const { guardianCards } = await import(collectiblesUrl);
 
 function archiveBackup(checked, extra = {}) {
@@ -60,6 +60,23 @@ test("Guardian card checks share reward storage and backups without counting as 
   assert.deepEqual(loadProgress(storage), { checked, mode: "ready" });
   assert.deepEqual(parseBackup(serializeBackup(checked)), checked);
   assert.deepEqual(parseBackup(archiveBackup(["clockwork"])), ["clockwork"]);
+});
+
+test("Gamescom checks persist and round-trip in backups outside the 33 DLC rewards", () => {
+  const ids = gamescomPromotion.items.map(item => item.id);
+  const checked = ["ratel", ...ids];
+  const values = new Map([[storageKey, archiveBackup(["ratel"])]]);
+  const storage = {
+    getItem(key) { return values.get(key) ?? null; },
+    setItem(key, value) { values.set(key, value); },
+  };
+
+  assert.equal(new Set(ids).size, 2);
+  assert.equal(rewards.filter(item => !ids.includes(item.id)).length, 33);
+  assert.deepEqual(loadProgress(storage), { checked: ["ratel"], mode: "ready" });
+  assert.equal(saveProgress(storage, checked), true);
+  assert.deepEqual(loadProgress(storage), { checked, mode: "ready" });
+  assert.deepEqual(parseBackup(serializeBackup(checked)), checked);
 });
 
 test("malformed, foreign, and oversized backups are rejected", () => {

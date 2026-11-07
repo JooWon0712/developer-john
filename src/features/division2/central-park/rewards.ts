@@ -195,14 +195,18 @@ export const gamescomPromotion = {
   code: "TD2-GMZ-C26-BKP",
   items: [
     {
+      id: "gamescom-2026-shirt",
       name: localized("게임스컴 2026 셔츠", "Gamescom 2026 Shirt"),
       kind: localized("상의", "Top"),
       image: { file: "gamescom-2026-shirt.png", width: 144, height: 155 },
+      sources: [],
     },
     {
+      id: "gamescom-2026-arm-patch",
       name: localized("게임스컴 2026", "Gamescom 2026"),
       kind: localized("휘장", "Arm patch"),
       image: { file: "gamescom-2026-arm-patch.png", width: 155, height: 161 },
+      sources: [],
     },
   ],
 };
