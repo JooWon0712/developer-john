@@ -12,13 +12,14 @@ $taskRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $taskDist = Join-Path $taskRoot 'dist'
 [System.IO.Directory]::CreateDirectory($taskDist) | Out-Null
 $taskDeploymentTime = [DateTimeOffset]::UtcNow.ToOffset([TimeSpan]::FromHours(9))
-$taskTimestamp = $taskDeploymentTime.ToString('yyyy-MM-dd_HH-mm-ss', [Globalization.CultureInfo]::InvariantCulture)
-$taskRelease = '{0}-kst-{1}' -f $taskTimestamp, ([Guid]::NewGuid().ToString('N').Substring(0, 6))
+$taskTimestamp = $taskDeploymentTime.ToString("yyyyMMdd_HHmmss'kst'", [Globalization.CultureInfo]::InvariantCulture)
 $taskRevision = 'unknown'
 $taskMode = if ($Check) { 'check' } elseif ($PackageOnly) { 'package' } else { 'deploy' }
 $taskStatus = 'failed'
 $taskExitCode = 0
 $taskHttpPort = $null
+$taskReleaseLock = $null
+$taskResultPath = $null
 
 function Invoke-TaskCommand {
     param([string]$Executable, [string[]]$Arguments)
@@ -93,7 +94,19 @@ try {
     Get-Command git -CommandType Application -ErrorAction Stop | Out-Null
     $taskRevision = & git rev-parse --verify HEAD
     if ($LASTEXITCODE -ne 0 -or $taskRevision -notmatch '^[0-9a-f]{40,64}$') { throw 'A committed Git revision is required.' }
-    $taskRelease = '{0}-{1}' -f $taskRevision.Substring(0, 8), $taskRelease
+    $taskRelease = '{0}-{1}' -f $taskRevision.Substring(0, 6), $taskTimestamp
+    $taskResultCandidate = Join-Path $taskDist "$taskRelease.result"
+    $taskArchive = Join-Path $taskDist "developer-john-$taskRelease.tar.gz"
+    $taskRunner = Join-Path $taskDist "deploy-$taskRelease.sh"
+    # Claim the tag before writing any local artifacts and hold it until the result is saved.
+    $taskReleaseLock = [System.IO.FileStream]::new(
+        "$taskResultCandidate.lock", [System.IO.FileMode]::CreateNew, [System.IO.FileAccess]::Write,
+        [System.IO.FileShare]::None, 4096, [System.IO.FileOptions]::DeleteOnClose
+    )
+    if ((Test-Path -LiteralPath @($taskResultCandidate, $taskArchive, $taskRunner)) -contains $true) {
+        throw 'This release already exists locally. Retry to use a new timestamp.'
+    }
+    $taskResultPath = $taskResultCandidate
     Write-Host "Release: $taskRelease ($taskMode)"
 
     if (-not $Check) {
@@ -108,7 +121,6 @@ try {
         Assert-CleanRevision
         Assert-CommittedSource
         Get-Command tar -CommandType Application -ErrorAction Stop | Out-Null
-        $taskArchive = Join-Path $taskDist "developer-john-$taskRelease.tar.gz"
         Write-Host '[2/4] Packaging the committed source only...'
         Invoke-TaskCommand git @('archive', '--format=tar.gz', "--output=$taskArchive", 'HEAD')
         $taskArchiveEntries = & tar -tzf $taskArchive
@@ -157,10 +169,9 @@ try {
         $taskScpOptions = $taskSharedOptions + @('-O', '-P', [string][int]$taskConfig.SshPort)
         $taskUploadDirectory = ".developer-john-deploy/$taskRelease"
         if ($taskUploadDirectory -notmatch '^\.developer-john-deploy/[A-Za-z0-9][A-Za-z0-9._-]+$') { throw 'Invalid release upload directory.' }
-        $taskBootstrap = 'umask 077; cd || exit 1; mkdir -p {0}' -f (ConvertTo-ShellArgument $taskUploadDirectory)
+        $taskBootstrap = 'umask 077; cd || exit 1; mkdir -p .developer-john-deploy && mkdir {0}' -f (ConvertTo-ShellArgument $taskUploadDirectory)
         Write-Host '[3/4] Uploading through the existing SSH key or agent...'
         Invoke-TaskCommand $taskSsh ($taskSshOptions + @($taskDestination, $taskBootstrap))
-        $taskRunner = Join-Path $taskDist "deploy-$taskRelease.sh"
         $taskRunnerText = [System.IO.File]::ReadAllText((Join-Path $PSScriptRoot 'deploy-nas.sh')).Replace("`r`n", "`n")
         [System.IO.File]::WriteAllText($taskRunner, $taskRunnerText, [System.Text.UTF8Encoding]::new($false))
         Invoke-TaskCommand $taskScp ($taskScpOptions + @($taskRunner, "${taskDestination}:$taskUploadDirectory/deploy-nas.sh"))
@@ -180,10 +191,16 @@ catch {
     Write-Warning $_.Exception.Message
 }
 finally {
-    $taskResult = [ordered]@{ release = $taskRelease; mode = $taskMode; status = $taskStatus; exitCode = $taskExitCode; revision = $taskRevision; httpPort = $taskHttpPort; finishedAt = [DateTime]::UtcNow.ToString('o') }
-    $taskResultPath = Join-Path $taskDist "$taskRelease.result"
-    [System.IO.File]::WriteAllText($taskResultPath, ($taskResult | ConvertTo-Json), [System.Text.UTF8Encoding]::new($false))
-    Write-Host "Result: dist/$taskRelease.result"
-    Pop-Location
+    try {
+        if ($taskResultPath) {
+            $taskResult = [ordered]@{ release = $taskRelease; mode = $taskMode; status = $taskStatus; exitCode = $taskExitCode; revision = $taskRevision; httpPort = $taskHttpPort; finishedAt = [DateTime]::UtcNow.ToString('o') }
+            [System.IO.File]::WriteAllText($taskResultPath, ($taskResult | ConvertTo-Json), [System.Text.UTF8Encoding]::new($false))
+            Write-Host "Result: dist/$taskRelease.result"
+        }
+    }
+    finally {
+        if ($null -ne $taskReleaseLock) { $taskReleaseLock.Dispose() }
+        Pop-Location
+    }
 }
 exit $taskExitCode
