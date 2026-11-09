@@ -209,6 +209,7 @@ function mount(browser, language, guide) {
 test("both languages show text-only rewards and credit pictured rewards in previews", () => {
   const textOnlyIds = new Set(["huntsman", "catalyst", "smart-cover-precision", "smart-cover-fortified"]);
   const captureNames = new Map([
+    ["hunter-merry", "메리"],
     ["connect-brooklyn-bats-cap", "브루클린 배츠 캡모자"],
     ["connect-brooklyn-bats-jersey", "브루클린 배츠 저지"],
     ["connect-brooklyn-bats-weapon-skin", "브루클린 배츠 무기 스킨"],
@@ -230,7 +231,7 @@ test("both languages show text-only rewards and credit pictured rewards in previ
     }
     const pictured = [
       ...core.filter(reward => !textOnlyIds.has(reward.id)),
-      ...Array.from(captureNames.keys(), id => rewards.find(reward => reward.id === id)),
+      ...rewards.filter(reward => captureNames.has(reward.id) && !core.includes(reward)),
     ];
     for (const reward of pictured) {
       const { id } = reward;
@@ -244,6 +245,7 @@ test("both languages show text-only rewards and credit pictured rewards in previ
       assert.equal(previewImage.props.alt, reward.image.caption?.[language] ?? reward.name[language]);
       if (captureNames.has(id)) {
         assert.equal(reward.name.ko, captureNames.get(id));
+        assert.ok(!reward.localizedNameUnconfirmed, id);
         const credit = language === "ko" ? "사용자 제공 인게임 캡처" : "User-provided in-game capture";
         checklist.element(node => node.type === "span" && Array.isArray(node.props.children) && node.props.children.includes(credit), preview);
         assert.equal(checklist.elements(node => node.type === "a", preview).length, 0);

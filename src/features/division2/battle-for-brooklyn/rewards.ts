@@ -60,7 +60,7 @@ export const ashChest = {
   tier: "core",
   title: { ko: "브리지 정착지 Ash 상자 보상", en: "Ash chest rewards at The Bridge" },
   note: {
-    ko: "기존 브루클린 헌터 8명이 떨어뜨리는 잿빛 열쇠(Ash Key) 8개로 브리지 정착지의 Ash 상자를 여세요. 헌츠맨과 Hunter of Hunters 무기 스킨을 함께 받습니다.",
+    ko: "기존 브루클린 헌터 8명이 떨어뜨리는 잿빛 열쇠(Ash Key) 8개로 브리지 정착지의 Ash 상자를 여세요. 헌츠맨과 사냥꾼들의 사냥꾼 무기 스킨을 함께 받습니다.",
     en: "Collect the eight Ash Keys from the original Brooklyn Hunters and open the Ash chest at The Bridge settlement. You’ll receive both the Huntsman and the Hunter of Hunters weapon skin.",
   },
   video: { href: "https://www.youtube.com/watch?v=rCGLpsK9_Rk", label: { ko: "Ash 상자 획득 영상", en: "Ash chest walkthrough" } },
@@ -86,9 +86,13 @@ const hunterMaskCapture = {
   credit: "Gamerch",
 };
 
+const playerCapture = {
+  credit: { ko: "사용자 제공 인게임 캡처", en: "User-provided in-game capture" },
+};
+
 const originalHunters = [
   ["lumen", "루멘", "Lumen", "2:16", 136, 368],
-  ["merry", "메리", "Merry", "4:59", 299, 360],
+  ["merry", "메리", "Merry", "4:59", 299, 267, 168],
   ["cipher", "암호", "Cipher", "6:50", 410, 363],
   ["craver", "갈구자", "Craver", "8:11", 491, 334],
   ["conqueror", "정복자", "Conqueror", "9:33", 573, 327],
@@ -97,11 +101,11 @@ const originalHunters = [
   ["necronos", "네크로노스", "Necronos", "17:54", 1074, 366],
 ] as const;
 
-const hunterMasks: BrooklynReward[] = originalHunters.map(([id, ko, en, timestamp, seconds, size]) => ({
+const hunterMasks: BrooklynReward[] = originalHunters.map(([id, ko, en, timestamp, seconds, width, height = width]) => ({
   id: `hunter-${id}`,
   group: "hunter-masks",
   name: { ko, en },
-  localizedNameUnconfirmed: true,
+  localizedNameUnconfirmed: id !== "merry",
   requirement: {
     ko: "브루클린의 전용 퍼즐을 풀어 헌터를 소환하고 처치하면 마스크와 Ash 열쇠를 얻습니다.",
     en: "Solve the Brooklyn Hunter’s puzzle, then defeat the Hunter for the mask and an Ash Key.",
@@ -114,7 +118,7 @@ const hunterMasks: BrooklynReward[] = originalHunters.map(([id, ko, en, timestam
     href: `https://www.youtube.com/watch?v=dPvGGc4YRn0&t=${seconds}s`,
     label: { ko: `RogueGold · ${ko} (${timestamp})`, en: `RogueGold · ${en} (${timestamp})` },
   }],
-  image: { file: `hunter-${id}.webp`, width: size, height: size, source: hunterMaskCapture },
+  image: { file: `hunter-${id}.webp`, width, height, source: id === "merry" ? playerCapture : hunterMaskCapture },
 }));
 
 const connectRequirement = {
@@ -126,10 +130,6 @@ const connectLinks = [{
   href: "https://www.reddit.com/r/thedivision/comments/1ky20zc/",
   label: { ko: "플레이어 수령 사례", en: "Player claim reports" },
 }];
-
-const playerCapture = {
-  credit: { ko: "사용자 제공 인게임 캡처", en: "User-provided in-game capture" },
-};
 
 const deluxeRequirement = {
   ko: "브루클린 전투 디럭스 DLC 에디션에 포함됩니다.",
@@ -175,8 +175,7 @@ export const rewards: readonly BrooklynReward[] = [
       { href: "https://www.youtube.com/watch?v=zgnC0obDtFc", label: { ko: "아미 터미널 획득 영상", en: "Army Terminal gameplay (Korean)" } }],
   },
   {
-    id: "hunter-of-hunters", group: "weapon-skins", name: { ko: "Hunter of Hunters", en: "Hunter of Hunters" },
-    localizedNameUnconfirmed: true,
+    id: "hunter-of-hunters", group: "weapon-skins", name: { ko: "사냥꾼들의 사냥꾼", en: "Hunter of Hunters" },
     requirement: { ko: "범용 무기 스킨", en: "Universal weapon skin" },
     ashChest: true,
     image: { file: "hunter-of-hunters.webp", width: 214, height: 192, source: ashCapture },
