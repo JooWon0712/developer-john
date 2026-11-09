@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "@/components/icons";
-import type { Service } from "@/data/catalog";
+import { getLocalizedCategories, type Service } from "@/data/catalog";
 import { localizePath, type Language } from "@/lib/i18n";
 import { shell } from "@/data/shell";
 import { ServiceCard } from "./service-card";
@@ -24,6 +24,8 @@ const copy = {
 
 export function ServiceDirectory({ services, language = "ko" }: { services: Service[]; language?: Language }) {
   const text = copy[language];
+  const categories = getLocalizedCategories(language);
+  const groups = Map.groupBy(services, service => service.category);
   return (
     <>
       <p className="directory-command"><span aria-hidden="true">{shell.user}:~/workspace$</span><code lang="en">ls</code></p>
@@ -32,16 +34,30 @@ export function ServiceDirectory({ services, language = "ko" }: { services: Serv
           <div className="empty-state">
             <span className="empty-symbol" aria-hidden="true">+</span>
             <span className="badge">{text.planned}</span>
-            <h3>{text.emptyTitle}</h3>
+            <h2>{text.emptyTitle}</h2>
             <p>{text.emptyFirst}<br />{text.emptySecond}</p>
             <Link className="text-link" href={localizePath("/about", language)}>
               {text.about} <ArrowRight width={18} height={18} aria-hidden="true" focusable="false" />
             </Link>
           </div>
         ) : (
-          <div className="service-list">
-            {services.map(service => <ServiceCard key={service.id} service={service} language={language} />)}
-          </div>
+          Array.from(groups, ([categoryId, entries]) => {
+            const headingId = `service-category-${categoryId}`;
+            const title = categories.find(category => category.id === categoryId)?.title ?? categoryId;
+            return (
+              <section key={categoryId} className="service-group" aria-labelledby={headingId}>
+                <div className="service-group-heading">
+                  <h2 id={headingId}>{title}</h2>
+                  <span>{language === "ko" ? `${entries.length}개` : `${entries.length} ${entries.length === 1 ? "item" : "items"}`}</span>
+                </div>
+                <ul className="service-list" role="list">
+                  {entries.map(service => (
+                    <li key={service.id}><ServiceCard service={service} language={language} /></li>
+                  ))}
+                </ul>
+              </section>
+            );
+          })
         )}
       </div>
     </>

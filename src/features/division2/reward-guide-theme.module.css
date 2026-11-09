@@ -1,0 +1,176 @@
+article.warlords,
+body:has(article.warlords) [data-back-to-top] {
+  --paper: #eee5d8;
+  --surface: #faf5ed;
+  --surface-alt: #ddd1c1;
+  --ink: #2a241f;
+  --muted: #63564b;
+  --accent: #923410;
+  --accent-hover: #722708;
+  --accent-soft: #e9dfd0;
+  --accent-line: #927e68;
+  --line: #baaa95;
+  --success: #356044;
+  --warning: #78441b;
+  --button-ink: #fff7ec;
+  --window-bar: #e6d9c8;
+  --window-border: #8c765f;
+  --window-divider: #b6a18b;
+  --shadow: #3b261d29;
+  --backdrop: #1f1612c9;
+}
+
+:global(html[data-theme="dark"]) article.warlords,
+:global(html[data-theme="dark"]) body:has(article.warlords) [data-back-to-top] {
+  --paper: #1a1714;
+  --surface: #241f1a;
+  --surface-alt: #3c3128;
+  --ink: #f7eee1;
+  --muted: #d1c0ac;
+  --accent: #ff9b52;
+  --accent-hover: #ffbc82;
+  --accent-soft: #31271f;
+  --accent-line: #8f6c50;
+  --line: #64513f;
+  --success: #a9d0a6;
+  --warning: #ffc380;
+  --button-ink: #24110a;
+  --window-bar: #2e2720;
+  --window-border: #9a785b;
+  --window-divider: #725b46;
+  --shadow: #10080592;
+  --backdrop: #100b09df;
+}
+
+article.washington,
+body:has(article.washington) [data-back-to-top] {
+  --paper: #e9e9e3;
+  --surface: #f8f8f1;
+  --surface-alt: #d6dee2;
+  --ink: #202a31;
+  --muted: #495863;
+  --accent: #933c17;
+  --accent-hover: #6e2a0b;
+  --accent-soft: #e4e9eb;
+  --accent-line: #798d9b;
+  --line: #abb8be;
+  --success: #305e48;
+  --warning: #78441b;
+  --button-ink: #fff9ef;
+  --window-bar: #dce5e8;
+  --window-border: #738894;
+  --window-divider: #9faeb6;
+  --shadow: #263b4e26;
+  --backdrop: #101a22c9;
+}
+
+:global(html[data-theme="dark"]) article.washington,
+:global(html[data-theme="dark"]) body:has(article.washington) [data-back-to-top] {
+  --paper: #17212a;
+  --surface: #202b35;
+  --surface-alt: #374654;
+  --ink: #f1f2ee;
+  --muted: #c6d1d8;
+  --accent: #ffae70;
+  --accent-hover: #ffca9f;
+  --accent-soft: #293744;
+  --accent-line: #758b9a;
+  --line: #4e6271;
+  --success: #a8d6b7;
+  --warning: #f8cb91;
+  --button-ink: #211913;
+  --window-bar: #293a47;
+  --window-border: #78909d;
+  --window-divider: #587181;
+  --shadow: #0a101788;
+  --backdrop: #0b141ddf;
+}
+
+.warlords .hero {
+  --paper: #1d1814;
+  --surface: #281e19;
+  --ink: #fff3e3;
+  --muted: #e0cfc0;
+  --accent: #ff9b52;
+  --accent-hover: #ffc38c;
+  --accent-soft: #3a2a20;
+  --accent-line: #b1875e;
+  --line: #7c6149;
+  --button-ink: #24110a;
+  background:
+    radial-gradient(ellipse at 94% 103%, #702c22 0%, transparent 51%),
+    radial-gradient(ellipse at 76% -15%, #756646, transparent 58%),
+    linear-gradient(110deg, #1c1815 24%, #302a23 100%);
+}
+
+.washington .hero {
+  --paper: #19252f;
+  --surface: #202d38;
+  --ink: #f6f5ee;
+  --muted: #dde5e8;
+  --accent: #ffad70;
+  --accent-hover: #ffd0a4;
+  --accent-soft: #304354;
+  --accent-line: #8299a8;
+  --line: #607888;
+  --button-ink: #211913;
+  background:
+    radial-gradient(ellipse at 95% 85%, #806b49 0%, transparent 50%),
+    radial-gradient(ellipse at 91% -9%, #506d86 0%, transparent 64%),
+    linear-gradient(110deg, #18222b 26%, #344957 100%);
+}
+
+.warlords .hero::before {
+  background: repeating-linear-gradient(96deg, transparent 0 42px, #e3bc8420 42px 43px, transparent 43px 62px);
+}
+
+.washington .hero::before {
+  background: repeating-linear-gradient(0deg, transparent 0 32px, #c3d6e617 32px 33px, transparent 33px 49px);
+}
+
+.warlords .releaseCard {
+  background: radial-gradient(ellipse at 88% 19%, #806247, transparent 65%), linear-gradient(144deg, #3b3028, #1f1715 80%);
+  --landmark-ink: #ffd9a4;
+}
+
+.washington .releaseCard {
+  background: radial-gradient(ellipse at 79% 49%, #8b8062, transparent 50%), linear-gradient(145deg, #486276, #202f3b 80%);
+  --landmark-ink: #e4e9db;
+}
+
+.releaseCard::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(to top, var(--paper) 4%, transparent 76%);
+  content: "";
+  pointer-events: none;
+}
+
+.releaseCard > div {
+  z-index: 2;
+}
+
+.landmark {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--landmark-ink);
+  opacity: .52;
+  pointer-events: none;
+}
+
+@media (max-width: 700px) {
+  .warlords .hero,
+  .washington .hero {
+    background-color: var(--paper);
+    background-image: none;
+  }
+
+  .landmark {
+    inset-inline-start: auto;
+    width: min(68%, 320px);
+    opacity: .32;
+  }
+}

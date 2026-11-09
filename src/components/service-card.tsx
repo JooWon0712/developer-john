@@ -1,16 +1,14 @@
 import Link from "next/link";
 import { ArrowRight } from "@/components/icons";
-import { getLocalizedCategories, getLocalizedServices, type Service } from "@/data/catalog";
+import { getLocalizedServices, type Service } from "@/data/catalog";
 import { localizePath, type Language } from "@/lib/i18n";
 import styles from "./service-card.module.css";
 
 export function ServiceCard({ service, language }: { service: Service; language: Language }) {
   const entry = getLocalizedServices(language, [service])[0];
-  const category = getLocalizedCategories(language).find(item => item.id === entry.category);
   const english = language === "en";
   const content = <>
     <div className={styles.content}>
-      <span className={styles.category}>[ {category?.title ?? entry.category} ]</span>
       <h3>{entry.topic}</h3>
       <p className={styles.feature}>{entry.title}</p>
       <p className={styles.description}>{entry.description}</p>

@@ -16,8 +16,7 @@ export function ServicesPage({ language }: { language: Language }) {
         <p className="lead">{text.lead}</p>
         <SharePageButton url={new URL(localizePath(shell.workspace, language), siteUrl).href} language={language} />
       </section>
-      <section className="directory-panel" aria-labelledby="directory-title" lang={language}>
-        <h2 id="directory-title" className="visually-hidden">{text.title}</h2>
+      <section className="directory-panel" aria-label={text.title} lang={language}>
         <TerminalWindow title={localizePath(shell.workspace, language)} bodyClassName="directory-session" parentLink={{ href: localizePath("/", language), label: language === "en" ? "Home" : "홈" }}>
           <ServiceDirectory services={services} language={language} />
         </TerminalWindow>

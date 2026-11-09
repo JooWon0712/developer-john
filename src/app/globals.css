@@ -132,7 +132,12 @@ p { color: var(--muted); }
 .directory-command { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin: 0 0 14px; color: var(--ink); font-size: 14px; }
 .directory-command > span { color: var(--accent); }
 .directory-command > code { font: inherit; }
-.service-list { display: flex; flex-direction: column; gap: 14px; }
+.service-group { padding-top: 22px; border-top: 1px solid var(--line); }
+.service-group + .service-group { margin-top: 24px; }
+.service-group-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.service-group-heading h2 { margin: 0; font-size: 22px; }
+.service-group-heading span { color: var(--muted); font-size: 12px; }
+.service-list { display: flex; flex-direction: column; gap: 14px; margin: 0; padding: 0; list-style: none; }
 .badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px; border: 1px solid var(--success); border-radius: 2px; color: var(--success); background: var(--surface-alt); font-size: 10px; line-height: 1.7; }
 .tag { display: inline-block; font-family: var(--mono); font-size: 10px; padding: 3px 8px; border: 1px solid var(--line); border-radius: 2px; background: var(--surface-alt); color: var(--muted); }
 .project-tags { display: flex; flex-wrap: wrap; gap: 7px; }

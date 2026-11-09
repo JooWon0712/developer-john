@@ -180,6 +180,7 @@ test("all workspace page wrappers emit their new canonical, hreflang and Open Gr
     "./base-game/rewards": await import(moduleUrl("src/features/division2/base-game/rewards.ts")),
     "./warlords-of-new-york/rewards": await import(moduleUrl("src/features/division2/warlords-of-new-york/rewards.ts")),
     "./reward-checklist": {}, "./central-park/central-park.module.css": {},
+    "./reward-guide-theme.module.css": {},
   });
   const imports = {
     ...common, "@/features/site/services-page": {},
