@@ -76,11 +76,6 @@ const smartCoverLinks = [launchSource, {
   label: { ko: "스마트 엄폐 해금 순서", en: "Smart Cover unlock walkthrough" },
 }];
 
-const ashCapture = {
-  href: "https://blast.tv/gaming/news/the-division-2-how-to-get-the-huntsman-auto-rifle",
-  credit: "Ubisoft / BLAST",
-};
-
 const hunterMaskCapture = {
   href: "https://gamerch.com/td2/844436",
   credit: "Gamerch",
@@ -92,7 +87,7 @@ const playerCapture = {
 
 const originalHunters = [
   ["lumen", "루멘", "Lumen", "2:16", 136, 368],
-  ["merry", "메리", "Merry", "4:59", 299, 267, 168],
+  ["merry", "메리", "Merry", "4:59", 299, 360],
   ["cipher", "암호", "Cipher", "6:50", 410, 363],
   ["craver", "갈구자", "Craver", "8:11", 491, 334],
   ["conqueror", "정복자", "Conqueror", "9:33", 573, 327],
@@ -101,7 +96,7 @@ const originalHunters = [
   ["necronos", "네크로노스", "Necronos", "17:54", 1074, 366],
 ] as const;
 
-const hunterMasks: BrooklynReward[] = originalHunters.map(([id, ko, en, timestamp, seconds, width, height = width]) => ({
+const hunterMasks: BrooklynReward[] = originalHunters.map(([id, ko, en, timestamp, seconds, size]) => ({
   id: `hunter-${id}`,
   group: "hunter-masks",
   name: { ko, en },
@@ -118,7 +113,7 @@ const hunterMasks: BrooklynReward[] = originalHunters.map(([id, ko, en, timestam
     href: `https://www.youtube.com/watch?v=dPvGGc4YRn0&t=${seconds}s`,
     label: { ko: `RogueGold · ${ko} (${timestamp})`, en: `RogueGold · ${en} (${timestamp})` },
   }],
-  image: { file: `hunter-${id}.webp`, width, height, source: id === "merry" ? playerCapture : hunterMaskCapture },
+  image: { file: `hunter-${id}.webp`, width: size, height: size, source: hunterMaskCapture },
 }));
 
 const connectRequirement = {
@@ -178,7 +173,7 @@ export const rewards: readonly BrooklynReward[] = [
     id: "hunter-of-hunters", group: "weapon-skins", name: { ko: "사냥꾼들의 사냥꾼", en: "Hunter of Hunters" },
     requirement: { ko: "범용 무기 스킨", en: "Universal weapon skin" },
     ashChest: true,
-    image: { file: "hunter-of-hunters.webp", width: 214, height: 192, source: ashCapture },
+    image: { file: "hunter-of-hunters.webp", width: 169, height: 136, source: playerCapture },
   },
   {
     id: "smart-cover-precision", group: "skills", name: { ko: "스마트 엄폐물 (정밀화)", en: "Precision Smart Cover" },

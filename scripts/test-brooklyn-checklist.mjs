@@ -209,7 +209,7 @@ function mount(browser, language, guide) {
 test("both languages show text-only rewards and credit pictured rewards in previews", () => {
   const textOnlyIds = new Set(["huntsman", "catalyst", "smart-cover-precision", "smart-cover-fortified"]);
   const captureNames = new Map([
-    ["hunter-merry", "메리"],
+    ["hunter-of-hunters", "사냥꾼들의 사냥꾼"],
     ["connect-brooklyn-bats-cap", "브루클린 배츠 캡모자"],
     ["connect-brooklyn-bats-jersey", "브루클린 배츠 저지"],
     ["connect-brooklyn-bats-weapon-skin", "브루클린 배츠 무기 스킨"],
