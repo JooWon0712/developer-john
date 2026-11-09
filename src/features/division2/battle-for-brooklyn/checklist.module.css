@@ -1,0 +1,70 @@
+article.page,
+body:has(article.page) [data-back-to-top] {
+  --paper: #ece8df;
+  --surface: #f8f6f0;
+  --surface-alt: #d8dce0;
+  --ink: #232b32;
+  --muted: #4b565f;
+  --accent: #973c16;
+  --accent-hover: #70290d;
+  --accent-soft: #e7e4dd;
+  --accent-line: #818b91;
+  --line: #aeb6ba;
+  --success: #326044;
+  --warning: #744719;
+  --button-ink: #fff8f0;
+  --window-bar: #d9dee0;
+  --window-border: #77848b;
+  --window-divider: #a4afb4;
+  --shadow: #25343e26;
+  --backdrop: #121921c9;
+}
+
+:global(html[data-theme="dark"]) article.page,
+:global(html[data-theme="dark"]) body:has(article.page) [data-back-to-top],
+.page .hero {
+  color-scheme: dark;
+  --paper: #1a2026;
+  --surface: #22292f;
+  --surface-alt: #363f46;
+  --ink: #f1efea;
+  --muted: #c4c9ca;
+  --accent: #ffab76;
+  --accent-hover: #ffcb9f;
+  --accent-soft: #2b343b;
+  --accent-line: #79858b;
+  --line: #56626a;
+  --success: #a5d2ad;
+  --warning: #f9cc91;
+  --button-ink: #241a14;
+  --window-bar: #303a42;
+  --window-border: #7b8992;
+  --window-divider: #626f78;
+  --shadow: #0a0d118c;
+  --backdrop: #0c1117df;
+}
+
+.page .hero {
+  background:
+    radial-gradient(ellipse at 89% 112%, #785034 0%, transparent 58%),
+    linear-gradient(107deg, #171c22 22%, #303c48 69%, #4c5d6d);
+}
+
+.page .hero::before {
+  background:
+    repeating-linear-gradient(121deg, transparent 0 32px, #ccd6dd20 32px 33px, transparent 33px 56px),
+    repeating-linear-gradient(59deg, transparent 0 32px, #ccd6dd17 32px 33px, transparent 33px 56px);
+}
+
+.page .releaseCard {
+  background:
+    linear-gradient(#b4c0c319 1px, transparent 1px),
+    linear-gradient(90deg, #b4c0c319 1px, transparent 1px),
+    linear-gradient(156deg, #3f4d59, #23282e 68%, #443022);
+  background-size: 24px 24px, 24px 24px, auto;
+}
+
+.page .map {
+  color: #d6c1a9;
+  opacity: .56;
+}

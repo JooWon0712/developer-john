@@ -11,21 +11,21 @@ import styles from "./division2.module.css";
 const copy = {
   ko: {
     title: "디비전2",
-    metadataTitle: "디비전2 DLC·이벤트 보상 가이드",
-    description: "디비전2 센트럴 파크의 메아리 DLC와 레드 문 언리시드의 보상 및 획득 조건을 확인하고 수령 내역을 기록하세요.",
+    metadataTitle: "디비전2 본편·DLC·이벤트 보상 가이드",
+    description: "디비전2의 본편, DLC, 이벤트별 보상과 획득 조건을 확인하고 수령 내역을 기록하세요.",
     heading: "보상 가이드", parent: "작업실",
-    introduction: "DLC와 이벤트의 보상, 획득 조건을 한곳에서 살펴보고 받은 보상을 기록하세요.",
-    dlcRelease: "DLC 출시", mainEvent: "메인 이벤트", count: (count: number) => `${count}개`,
-    dates: "DLC 출시일과 메인 이벤트 기간은 공식 공지 기준입니다. 개별 보상의 기간과 조건은 각 가이드에서 확인하세요.",
+    introduction: "본편, DLC, 이벤트의 보상과 획득 조건을 살펴보고 받은 보상을 기록하세요.",
+    baseRelease: "본편 출시", dlcRelease: "DLC 출시", mainEvent: "메인 이벤트", count: (count: number) => `${count}개`,
+    dates: "출시일과 메인 이벤트 기간은 공식 공지 기준입니다. 개별 보상의 기간과 조건은 각 가이드에서 확인하세요.",
   },
   en: {
     title: "The Division 2",
-    metadataTitle: "The Division 2 DLC & Event Reward Guides",
-    description: "Explore rewards and requirements for The Division 2: Echoes of Central Park DLC and Red Moon Unleashed, and track the rewards you have claimed.",
+    metadataTitle: "The Division 2 Base Game, DLC & Event Reward Guides",
+    description: "Explore rewards and requirements for The Division 2’s base game, expansions and events, and track what you have collected.",
     heading: "Reward guides", parent: "Workspace",
-    introduction: "Explore DLC and event rewards, find out how to earn them and track the rewards you have claimed.",
-    dlcRelease: "DLC release", mainEvent: "Main event", count: (count: number) => `${count} ${count === 1 ? "guide" : "guides"}`,
-    dates: "Dates follow the announced DLC release date and main event period. Check each guide for individual reward periods and requirements.",
+    introduction: "Find out how to earn rewards across the base game, DLC and events, and track what you have claimed.",
+    baseRelease: "Base game release", dlcRelease: "DLC release", mainEvent: "Main event", count: (count: number) => `${count} ${count === 1 ? "guide" : "guides"}`,
+    dates: "Release dates and main event periods follow official announcements. Check each guide for individual reward periods and requirements.",
   },
 };
 
@@ -66,10 +66,10 @@ export function Division2Page({ language }: { language: Division2Language }) {
                   <div>
                     <h3 id={`event-guide-${guide.id}-title`}><code className={styles.directory}>./{guide.directory}/</code><span className={styles.eventName}>{guide.title[language]}</span></h3>
                     <p className={styles.dates}>
-                      {guide.kind === "dlc" ? (
-                        <><span>{text.dlcRelease}</span><time dateTime={guide.releasedOn}>{guide.releasedOn.replaceAll("-", ".")}</time></>
-                      ) : (
+                      {guide.kind === "event" ? (
                         <><span>{text.mainEvent}</span><time dateTime={guide.startsOn}>{guide.startsOn.replaceAll("-", ".")}</time><span aria-hidden="true">–</span><time dateTime={guide.endsOn}>{guide.endsOn.replaceAll("-", ".")}</time></>
+                      ) : (
+                        <><span>{guide.kind === "base" ? text.baseRelease : text.dlcRelease}</span><time dateTime={guide.releasedOn}>{guide.releasedOn.replaceAll("-", ".")}</time></>
                       )}
                     </p>
                     <p className={styles.description}>{guide.description[language]}</p>

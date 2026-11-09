@@ -12,7 +12,11 @@ function moduleUrl(name, replacements = {}) {
 const rewardsUrl = moduleUrl("rewards");
 const collectiblesUrl = moduleUrl("collectibles");
 const { loadProgress, maxBackupBytes, parseBackup, saveProgress, serializeBackup, storageKey } =
-  await import(moduleUrl("progress", { '"./rewards"': rewardsUrl, '"./collectibles"': collectiblesUrl }));
+  await import(moduleUrl("progress", {
+    '"./rewards"': rewardsUrl,
+    '"./collectibles"': collectiblesUrl,
+    '"../checklist-progress"': moduleUrl("../checklist-progress"),
+  }));
 const { gamescomPromotion, rewards } = await import(rewardsUrl);
 const { guardianCards } = await import(collectiblesUrl);
 

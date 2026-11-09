@@ -1,0 +1,11 @@
+.rewardName {
+  padding-block-start: max(0px, calc((44px - 1.45rem) / 2));
+}
+
+.groupProgress {
+  white-space: nowrap;
+}
+
+.panelSource {
+  margin-block: 0 12px;
+}

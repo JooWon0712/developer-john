@@ -16,7 +16,10 @@ function moduleUrl(relative, replacements = {}) {
 const { getLanguage, getBasePath, localizePath } = await import(moduleUrl("src/lib/i18n.ts"));
 
 const centralParkPath = "/workspace/game/the-division-2/echoes-of-central-park-2026";
-const paths = ["/", "/workspace", "/privacy", "/projects", "/workspace/game/the-division-2", "/workspace/game/the-division-2/red-moon-unleashed-2026", centralParkPath, "/workspace/tools/nas-desktop-app", "/workspace/tools/pc-internet-monitor", "/workspace/tools/codex-usage-overlay", "/discovery/ikigai", "/missing-page"];
+const brooklynPath = "/workspace/game/the-division-2/battle-for-brooklyn-2025";
+const warlordsPath = "/workspace/game/the-division-2/warlords-of-new-york-2020";
+const baseGamePath = "/workspace/game/the-division-2/base-game-2019";
+const paths = ["/", "/workspace", "/privacy", "/projects", "/workspace/game/the-division-2", "/workspace/game/the-division-2/red-moon-unleashed-2026", centralParkPath, brooklynPath, warlordsPath, baseGamePath, "/workspace/tools/nas-desktop-app", "/workspace/tools/pc-internet-monitor", "/workspace/tools/codex-usage-overlay", "/discovery/ikigai", "/missing-page"];
 const centralParkRewardsUrl = moduleUrl("src/features/division2/central-park/rewards.ts");
 
 function guideModuleUrl(eventUrl) {
@@ -53,7 +56,7 @@ test("language changes preserve queries, encoded values and exact reward fragmen
   assert.equal(getBasePath(`/en${route}${suffix}`), route);
 });
 
-test("Division 2 lists the DLC release and Red Moon event with localized workspace routes", async () => {
+test("Division 2 lists the DLC, base game and event guides with localized workspace routes", async () => {
   const brandUrl = moduleUrl("src/data/brand.ts");
   const desktopToolsUrl = moduleUrl("src/features/desktop-tools/tools.ts");
   const eventUrl = moduleUrl("src/features/division2/red-moon/event.ts");
@@ -63,12 +66,26 @@ test("Division 2 lists the DLC release and Red Moon event with localized workspa
   assert.equal(service.status, "ready");
   assert.equal(service.href, "/workspace/game/the-division-2");
   assert.equal(serviceCategories.find(item => item.id === service.category).pathPrefix, "/workspace/game");
-  assert.deepEqual(division2EventGuides.map(guide => guide.id), ["echoes-of-central-park-2026", "red-moon-unleashed-2026"]);
-  const [dlc, redMoon] = division2EventGuides;
+  assert.deepEqual(division2EventGuides.map(guide => guide.id), [
+    "echoes-of-central-park-2026", "battle-for-brooklyn-2025", "warlords-of-new-york-2020", "base-game-2019", "red-moon-unleashed-2026",
+  ]);
+  const [dlc, brooklyn, warlords, baseGame, redMoon] = division2EventGuides;
   assert.equal(dlc.kind, "dlc");
   assert.equal(dlc.paths.ko, centralParkPath);
   assert.equal(dlc.releasedOn, "2026-11-03");
   assert.ok(!Object.hasOwn(dlc, "endsOn"));
+  assert.equal(brooklyn.kind, "dlc");
+  assert.equal(brooklyn.paths.ko, brooklynPath);
+  assert.equal(brooklyn.releasedOn, "2025-05-27");
+  assert.ok(!Object.hasOwn(brooklyn, "endsOn"));
+  assert.equal(warlords.kind, "dlc");
+  assert.equal(warlords.paths.ko, warlordsPath);
+  assert.equal(warlords.releasedOn, "2020-03-03");
+  assert.ok(!Object.hasOwn(warlords, "endsOn"));
+  assert.equal(baseGame.kind, "base");
+  assert.equal(baseGame.paths.ko, baseGamePath);
+  assert.equal(baseGame.releasedOn, "2019-03-15");
+  assert.ok(!Object.hasOwn(baseGame, "endsOn"));
   assert.equal(redMoon.kind, "event");
   assert.equal(redMoon.startsOn, "2026-10-15");
   assert.equal(redMoon.endsOn, "2026-11-03");
@@ -153,12 +170,25 @@ test("all workspace page wrappers emit their new canonical, hreflang and Open Gr
     "./collectibles": await import(moduleUrl("src/features/division2/central-park/collectibles.ts")),
     "./reward-checklist": {}, "./central-park.module.css": {},
   });
+  const brooklyn = pageModule("src/features/division2/battle-for-brooklyn/event-page.tsx", {
+    ...common, "../event-guides": guides, "./rewards": await import(moduleUrl("src/features/division2/battle-for-brooklyn/rewards.ts")),
+    "./checklist.module.css": {},
+    "./reward-checklist": {}, "../central-park/central-park.module.css": {},
+  });
+  const rewardGuide = pageModule("src/features/division2/reward-guide-page.tsx", {
+    ...common, "./event-guides": guides,
+    "./base-game/rewards": await import(moduleUrl("src/features/division2/base-game/rewards.ts")),
+    "./warlords-of-new-york/rewards": await import(moduleUrl("src/features/division2/warlords-of-new-york/rewards.ts")),
+    "./reward-checklist": {}, "./central-park/central-park.module.css": {},
+  });
   const imports = {
     ...common, "@/features/site/services-page": {},
     "@/features/site/copy": await import(moduleUrl("src/features/site/copy.ts", { '"@/data/brand"': brandUrl })),
     "@/features/desktop-tools/tool-page": {}, "@/features/desktop-tools/tools": tools,
     "@/features/division2/game-page": game, "@/features/division2/red-moon/event-page": redMoon,
     "@/features/division2/central-park/event-page": centralPark,
+    "@/features/division2/battle-for-brooklyn/event-page": brooklyn,
+    "@/features/division2/reward-guide-page": rewardGuide,
   };
   const routes = ["/workspace", ...tools.desktopTools.map(tool => tool.path), guides.division2Paths.ko, ...guides.division2EventGuides.map(guide => guide.paths.ko)];
   for (const route of routes) {
