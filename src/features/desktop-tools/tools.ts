@@ -26,11 +26,13 @@ type DesktopTool = {
   addedOrder: number;
   path: string;
   repositoryUrl: string;
-  distribution: { kind: "releases" | "actions"; url: string };
+  release: { url: string; version?: string };
   screenshots: ToolScreenshot[];
   screenshotInfo?: Record<Language, string>;
   copy: Record<Language, ToolCopy>;
 };
+
+const overlayVersion = "v1.2.1";
 
 export const desktopTools: DesktopTool[] = [
   {
@@ -38,7 +40,7 @@ export const desktopTools: DesktopTool[] = [
     addedOrder: 1,
     path: "/workspace/tools/nas-desktop-app",
     repositoryUrl: "https://github.com/JooWon0712/nas-desktop-app",
-    distribution: { kind: "releases", url: "https://github.com/JooWon0712/nas-desktop-app/releases" },
+    release: { url: "https://github.com/JooWon0712/nas-desktop-app/releases" },
     screenshots: [
       {
         src: "/images/desktop-tools/nas-desktop-login.png",
@@ -105,7 +107,7 @@ export const desktopTools: DesktopTool[] = [
     addedOrder: 1,
     path: "/workspace/tools/pc-internet-monitor",
     repositoryUrl: "https://github.com/JooWon0712/pc-internet-monitor",
-    distribution: { kind: "releases", url: "https://github.com/JooWon0712/pc-internet-monitor/releases" },
+    release: { url: "https://github.com/JooWon0712/pc-internet-monitor/releases" },
     screenshots: [
       {
         src: "/images/desktop-tools/pc-internet-monitor-running.png",
@@ -174,84 +176,87 @@ export const desktopTools: DesktopTool[] = [
     addedOrder: 2,
     path: "/workspace/tools/codex-usage-overlay",
     repositoryUrl: "https://github.com/JooWon0712/codex-usage-overlay",
-    distribution: { kind: "actions", url: "https://github.com/JooWon0712/codex-usage-overlay/actions/workflows/windows-build.yml" },
+    release: {
+      url: `https://github.com/JooWon0712/codex-usage-overlay/releases/tag/${overlayVersion}`,
+      version: overlayVersion,
+    },
     screenshotInfo: {
-      ko: "오버레이의 수치는 촬영 당시의 값이며, 설정 미리보기는 예시 데이터입니다. 현재 계정의 실시간 한도를 보여주는 화면은 아닙니다.",
-      en: "The overlay values were captured at the time of the screenshot; the settings preview uses example data. These images do not show your account’s live limits.",
+      ko: "아래는 v1.2.0에서 예시 데이터로 촬영한 화면입니다.",
+      en: "These screenshots show v1.2.0 with sample data.",
     },
     screenshots: [
       {
-        src: "/images/desktop-tools/codex-usage-overlay-light.png",
-        width: 601,
-        height: 247,
-        caption: { ko: "밝은 테마의 잔여 한도 표시", en: "Remaining limits in the light theme" },
-        alt: { ko: "Codex 창 위에 주간 잔여 한도와 초기화 일정을 표시한 밝은 테마 오버레이", en: "A light overlay displaying the remaining weekly limit and reset schedule over the Codex window" },
+        src: "/images/desktop-tools/codex-usage-overlay-detailed.png",
+        width: 480,
+        height: 314,
+        caption: { ko: "상세형 배지", en: "Detailed badge" },
+        alt: { ko: "Codex 주간 한도와 Claude Code 현재 세션·주간 한도를 막대와 초기화 일정으로 보여주는 배지", en: "Badge with bars and reset times for Codex’s weekly limit and Claude Code’s current session and weekly limits" },
       },
       {
-        src: "/images/desktop-tools/codex-usage-overlay-dark.png",
-        width: 570,
-        height: 264,
-        caption: { ko: "어두운 테마의 잔여 한도 표시", en: "Remaining limits in the dark theme" },
-        alt: { ko: "Codex 창 위에 주간 잔여 한도와 초기화 일정을 표시한 어두운 테마 오버레이", en: "A dark overlay displaying the remaining weekly limit and reset schedule over the Codex window" },
+        src: "/images/desktop-tools/codex-usage-overlay-compact.png",
+        width: 516,
+        height: 176,
+        caption: { ko: "간결형 배지", en: "Compact badge" },
+        alt: { ko: "Codex와 Claude Code의 잔여 한도와 초기화 일정을 한 줄씩 표시한 배지", en: "Badge showing each Codex and Claude Code limit with its reset time on one line" },
       },
       {
         src: "/images/desktop-tools/codex-usage-overlay-settings.png",
-        width: 900,
-        height: 1011,
-        caption: { ko: "표시 항목과 투명도 설정", en: "Display options and opacity settings" },
-        alt: { ko: "예시 한도 미리보기와 투명도, 초기화 일정, 요금제 표시 옵션이 있는 설정 화면", en: "Settings with a sample limit preview, opacity control, and options for the reset schedule and subscription plan" },
+        width: 912,
+        height: 1239,
+        caption: { ko: "배지 형식과 표시 항목 설정", en: "Badge format and display settings" },
+        alt: { ko: "배지 미리보기와 투명도, Codex 초기화 일정, Claude Code 한도 표시 옵션이 있는 설정 화면", en: "Settings with a badge preview, opacity slider, Codex reset options, and a Claude Code limit toggle" },
       },
       {
         src: "/images/desktop-tools/codex-usage-overlay-position-theme.png",
-        width: 900,
-        height: 1011,
+        width: 912,
+        height: 1239,
         caption: { ko: "표시 위치와 테마 설정", en: "Position and theme settings" },
-        alt: { ko: "세션 제목 아래 배치, 위치 보정과 어두운 테마를 선택하는 설정 화면", en: "Settings for placing the overlay below the session title, adjusting its position and selecting the dark theme" },
+        alt: { ko: "세션 제목 아래 배치, 위치 보정, Codex 테마 따라가기 옵션이 있는 설정 화면", en: "Settings for placing the overlay below the session title, adjusting its position, and following the Codex theme" },
       },
     ],
     copy: {
       ko: {
         name: "Codex Usage Overlay",
         tagline: "남은 사용 한도를, 작업 화면에서 바로.",
-        cardDescription: "Codex의 남은 사용 한도를 작업 중에도 바로 확인하고 싶어 직접 만들었습니다. 주간·5시간 잔여 한도와 초기화 일정을 Codex 창 위에 작게 표시하는 Windows 앱입니다.",
-        story: "Codex를 사용하면서 남은 한도를 확인하느라 작업 흐름을 끊고 싶지 않았습니다. 필요한 정보를 작업 화면 위에 작게 띄워두려고 만들었습니다. Codex가 제공하는 한도 정보를 조회하며, 대화 내용이나 토큰 수로 잔여 한도를 추정하지 않습니다.",
+        cardDescription: "Codex 주간 잔여 한도와 초기화 일정을 Codex 창 위에 표시하는 Windows 앱입니다. Claude Code의 5시간·주간 한도도 함께 볼 수 있습니다.",
+        story: "Codex에서 작업하다가 잔여 한도를 보려면 다른 화면을 열어야 해서, 작업 창에서 바로 확인하는 배지를 만들었습니다. Codex와 Claude Code의 한도는 각 CLI에 로그인된 계정에서 가져옵니다.",
         features: [
-          { title: "잔여 한도와 초기화 일정", description: "계정에서 제공하는 주간·5시간 잔여 한도, 요금제와 주간 초기화 시각·D-day를 확인합니다." },
-          { title: "작업 화면 위에 작게", description: "세션 제목 아래나 사이드바에 배치합니다. Codex가 전면에 있을 때 표시하고, 마우스 클릭은 아래 창으로 전달합니다." },
-          { title: "내게 맞는 표시와 갱신", description: "위치·테마·투명도를 조절합니다. Codex가 전면에 있을 때 60초 간격으로 갱신하며, 오래된 값이나 조회 실패를 구분해 표시합니다." },
+          { title: "Codex 주간 한도", description: "주간 잔여 비율, 초기화 시각과 D-day를 확인합니다. 계정의 구독 요금제도 함께 표시할 수 있습니다." },
+          { title: "Claude Code 한도", description: "설정에서 켜면 5시간 단위의 현재 세션과 주간 잔여 한도, 초기화 일정을 함께 표시합니다. 앱이 실행 중이면 보통 15분마다 자동으로 갱신합니다." },
+          { title: "배지 형식과 위치", description: "막대가 있는 상세형과 한 줄씩 표시하는 간결형을 전환합니다. 세션 제목 아래 또는 사이드바에 배치하고 테마와 투명도를 조절할 수 있습니다." },
         ],
-        requirements: ["Windows 10 / 11 · 64비트(x64)", ".NET Framework 4.8", "Windows용 Codex 데스크톱 앱(MSIX 버전)", "Node.js와 ChatGPT 계정으로 로그인한 Codex CLI", "한도 정보를 조회할 수 있는 인터넷 연결"],
+        requirements: ["Windows 10 / 11 · 64비트(x64)", ".NET Framework 4.8", "Windows용 Codex 데스크톱 앱", "Node.js와 ChatGPT 계정으로 로그인한 Codex CLI", "선택 항목 · 구독 계정으로 로그인한 Windows 네이티브 Claude Code CLI 2.1.273 이상(2.x)"],
         steps: [
-          "GitHub 빌드 목록에서 성공한 실행을 열고, 로그인 후 Artifacts의 Windows x64 파일을 받습니다. 아직 정식 릴리스는 없으며 빌드 파일은 보관기간이 지나면 내려받을 수 없습니다.",
-          "포함된 ZIP의 전체 내용을 압축 해제하고 UsageOverlay.exe를 실행합니다. 함께 제공되는 파일을 같은 폴더에 두고, Node.js와 Codex CLI를 먼저 준비합니다.",
-          "Codex를 열어 한도 표시를 확인하고 위치·테마를 조정합니다. X나 종료를 누르면 완전히 종료되며, 업데이트할 때는 종료 후 전체 폴더의 파일을 교체합니다.",
+          "GitHub 릴리스의 Assets에서 Windows x64 ZIP을 받습니다.",
+          "ZIP 전체를 압축 해제한 뒤 UsageOverlay.exe를 실행합니다. 설정에서 ‘앱에서 확인’을 누르면 Codex로 돌아가 배지를 볼 수 있습니다.",
+          "Claude Code 한도도 보고 싶다면 Claude Code CLI에 로그인한 뒤 오버레이 설정에서 ‘한도 표시’를 켭니다. 기본값은 꺼짐입니다.",
         ],
         notes: [
-          "OpenAI의 공식 앱이나 확장 기능이 아닌 개인 보조 프로그램입니다. 기존 Codex CLI의 로그인 계정을 사용하므로 데스크톱 앱과 CLI가 같은 계정인지 확인하세요.",
-          "Codex 창의 구조를 이용해 위치를 맞추므로 앱 업데이트에 따라 배치가 달라질 수 있습니다. 모든 DPI·가상 데스크톱 환경의 호환성을 확인한 것은 아닙니다.",
-          "설치 프로그램·트레이 상주·자동 시작·자동 업데이트 기능은 없습니다. 배포 파일에는 Windows 게시자 서명이 없으므로 GitHub의 실행 안내를 확인하세요.",
+          "개인이 만든 보조 프로그램입니다. Codex 데스크톱과 CLI에 같은 계정으로 로그인하면 해당 계정의 한도가 표시됩니다.",
+          "업데이트할 때는 X 또는 ‘종료’로 앱을 닫은 뒤 압축을 푼 폴더 전체를 교체합니다. 사용자 설정은 유지됩니다. runtime-paths.json을 직접 수정했다면 새 폴더에 옮기세요.",
+          "Windows에서 게시자 확인 경고가 표시될 수 있습니다. GitHub 릴리스에서 SHA-256 체크섬과 실행 안내를 확인할 수 있습니다.",
         ],
       },
       en: {
         name: "Codex Usage Overlay",
         tagline: "Keep your remaining limits in view.",
-        cardDescription: "I built this to check my remaining Codex limits without leaving my work. It is a small Windows overlay showing weekly and five-hour limits and the reset schedule over the Codex window.",
-        story: "I wanted to keep an eye on my remaining Codex limits without interrupting my work, so I built a small overlay. It reads the limit information provided by Codex, rather than estimating it from conversation content or token counts.",
+        cardDescription: "A Windows overlay that shows your remaining weekly Codex limit and its reset time over the Codex window. You can also show Claude Code’s five-hour and weekly limits.",
+        story: "I built a badge to check my remaining Codex usage without leaving the window where I work. The overlay reads usage limits from the accounts signed in to the Codex and Claude Code CLIs.",
         features: [
-          { title: "Limits and reset schedule", description: "See the weekly and five-hour limits provided for your account, your subscription plan, and the weekly reset time and countdown." },
-          { title: "A small overlay while you work", description: "Place it below the session title or in the sidebar. It appears while Codex is in the foreground, and mouse clicks pass through to the window below." },
-          { title: "Display and refresh options", description: "Adjust the position, theme and opacity. It refreshes every 60 seconds while Codex is in the foreground and distinguishes stale data from failed requests." },
+          { title: "Codex weekly limit", description: "See your remaining weekly percentage, reset time, and countdown. You can also display your subscription plan." },
+          { title: "Claude Code limits", description: "Enable this option to show the current five-hour session and weekly limits with their reset times. They normally refresh every 15 minutes while the overlay is running." },
+          { title: "Badge format and placement", description: "Switch between a detailed badge with bars and a compact one-line-per-limit badge. Place it below the session title or in the sidebar, and adjust the theme and opacity." },
         ],
-        requirements: ["Windows 10 / 11 · 64-bit (x64)", ".NET Framework 4.8", "Codex desktop app for Windows (MSIX version)", "Node.js and Codex CLI signed in with a ChatGPT account", "An internet connection to retrieve limit information"],
+        requirements: ["Windows 10 / 11 · 64-bit (x64)", ".NET Framework 4.8", "Codex desktop app for Windows", "Node.js and Codex CLI signed in with a ChatGPT account", "Optional · Native Windows Claude Code CLI 2.1.273 or later in the 2.x series, signed in with a subscription"],
         steps: [
-          "Open a successful run in the GitHub build list, sign in and download the Windows x64 artifact. There is no formal release yet, and build files are only available within their retention period.",
-          "Extract the entire included ZIP and run UsageOverlay.exe. Keep all included files together, and set up Node.js and Codex CLI first.",
-          "Open Codex to see the overlay and adjust its position and theme. Close it with X or Exit to fully stop the app. Exit before replacing the complete folder when updating.",
+          "Download the Windows x64 ZIP from Assets on the GitHub release page.",
+          "Extract the entire ZIP and run UsageOverlay.exe. Use the button at the bottom of the settings window to return to Codex and see the badge.",
+          "To see Claude Code limits, sign in to the Claude Code CLI and enable its limit display in the overlay settings. This option is off by default.",
         ],
         notes: [
-          "This is an independently made companion, not an official OpenAI app or extension. It uses the existing Codex CLI sign-in, so check that the CLI and desktop app use the same account.",
-          "Positioning depends on the structure of the Codex window and may be affected by app updates. Compatibility with every DPI and virtual desktop setup has not been verified.",
-          "There is no installer, system tray, automatic startup or automatic update feature. The files are not signed with a Windows publisher certificate; read the setup guidance on GitHub before running them.",
+          "This is an independently made companion. Use the same account in Codex desktop and Codex CLI to display the limits for that account.",
+          "To update, close the app with X or Exit, then replace the whole extracted folder. Your settings are preserved. If you edited runtime-paths.json, copy it to the new folder.",
+          "Windows may show a publisher warning. The GitHub release includes a SHA-256 checksum and setup guidance.",
         ],
       },
     },

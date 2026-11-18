@@ -6,7 +6,7 @@
 
 | 항목 | 구성 |
 | --- | --- |
-| 프레임워크 | Next.js 16.4.3 · App Router |
+| 프레임워크 | Next.js 16.4.6 · App Router |
 | UI | React 19.3.1 |
 | 언어 | TypeScript 7.0.2 |
 | 스타일 | 네이비·샌드 CLI 테마 · CSS · 반응형 레이아웃 |

@@ -21,11 +21,10 @@ const labels = {
     steps: "시작하는 방법",
     notes: "사용 전 참고",
     download: "GitHub에서 다운로드",
-    builds: "GitHub 빌드 확인",
+    downloadRelease: (version: string) => `GitHub에서 ${version} 다운로드`,
     repository: "소스 코드",
     issues: "문제 제보",
     releaseInfo: "릴리스 페이지에서 Windows용 파일과 사용 안내를 확인할 수 있습니다.",
-    buildInfo: "GitHub Actions의 성공한 빌드에서 Windows ZIP을 받을 수 있습니다. 파일을 받으려면 GitHub 로그인이 필요합니다.",
   },
   en: {
     category: "PC tools · Windows app",
@@ -39,11 +38,10 @@ const labels = {
     steps: "Getting started",
     notes: "Before you use it",
     download: "Download on GitHub",
-    builds: "View GitHub builds",
+    downloadRelease: (version: string) => `Download ${version} on GitHub`,
     repository: "Source code",
     issues: "Report an issue",
     releaseInfo: "Find the Windows files and setup instructions on the releases page.",
-    buildInfo: "Get the Windows ZIP from a successful GitHub Actions build. A GitHub sign-in is required to download the files.",
   },
 };
 
@@ -52,7 +50,7 @@ export function DesktopToolPage({ id, language }: { id: DesktopToolId; language:
   const text = tool.copy[language];
   const ui = labels[language];
   const path = localizePath(tool.path, language);
-  const hasRelease = tool.distribution.kind === "releases";
+  const downloadLabel = tool.release.version ? ui.downloadRelease(tool.release.version) : ui.download;
 
   return <article className={styles.page} lang={language} aria-labelledby="tool-title">
     <TerminalWindow title={path} bodyClassName={styles.body} parentLink={{ href: localizePath("/workspace", language), label: ui.parent }}>
@@ -69,10 +67,10 @@ export function DesktopToolPage({ id, language }: { id: DesktopToolId; language:
           <h2 id="tool-story">{ui.story}</h2>
           <p>{text.story}</p>
           <div className={styles.links}>
-            <a className="button" href={tool.distribution.url}>{hasRelease ? ui.download : ui.builds}<ArrowRight width={18} height={18} aria-hidden="true" /></a>
+            <a className="button" href={tool.release.url}>{downloadLabel}<ArrowRight width={18} height={18} aria-hidden="true" /></a>
             <a className="text-link" href={tool.repositoryUrl}>{ui.repository}<ArrowRight width={16} height={16} aria-hidden="true" /></a>
           </div>
-          <p className={styles.releaseInfo}>{hasRelease ? ui.releaseInfo : ui.buildInfo}</p>
+          <p className={styles.releaseInfo}>{ui.releaseInfo}</p>
         </section>
         <aside className={styles.requirements} aria-labelledby="tool-requirements">
           <h2 id="tool-requirements">{ui.requirements}</h2>
